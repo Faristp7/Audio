@@ -7,3 +7,9 @@ export function getshop(req ,res){
 export function shopSingle(req ,res){
     res.render("user/shopSingle")
 }
+export function login(req ,res){
+    res.render("user/login")
+}
+export function signup(req ,res){
+    res.render("user/signup")
+}

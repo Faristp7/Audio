@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 
 // Router
 connectDb()
-
+log
 dotenv.config()
 app.use("/", userindex);
 app.use("/admin", adminindex);

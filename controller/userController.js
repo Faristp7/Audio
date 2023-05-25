@@ -1,15 +1,36 @@
 export function getHome(req ,res){
-    res.render("user/index")
+    try {
+        res.render("user/index")
+    } catch (error) {
+        console.log(error);
+    }
 }
 export function getshop(req ,res){
-    res.render("user/shop")
+    try {
+        res.render("user/shop")
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 export function shopSingle(req ,res){
-    res.render("user/shopSingle")
+    try {
+        res.render("user/shopSingle")
+    } catch (error) {
+        console.log(error);
+    }
 }
 export function login(req ,res){
-    res.render("user/login")
+    try {
+        res.render("user/login")  
+    } catch (error) {
+        console.log(error);
+    }
 }
 export function signup(req ,res){
-    res.render("user/signup")
+    try {
+        res.render("user/signup")
+    } catch (error) {
+        console.log(error);
+    }
 }

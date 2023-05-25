@@ -34,3 +34,4 @@ export function signup(req ,res){
         console.log(error);
     }
 }
+

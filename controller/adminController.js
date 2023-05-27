@@ -15,7 +15,29 @@ export function dashboard(req, res) {
     console.log(error);
   }
 }
+export function table(req, res) {
+  try {
+    res.render("admin/table");
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function product(req, res) {
+  try {
+    res.render("admin/product");
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function addProduct(req, res) {
+  try {
+    res.render("admin/addProduct");
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+// verify the admin login
 export async function postadminLogin(req, res) {
   try {
     const admin = await adminModel.findOne({ email: req.body.email });

@@ -78,3 +78,13 @@ export async function postadminLogin(req, res) {
     console.log(error);
   }
 }
+
+//add product
+
+export function postAddProduct(req ,res){
+  try {
+    
+  } catch (error) {
+    console.log(error);
+  }
+}

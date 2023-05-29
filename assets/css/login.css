@@ -1,9 +1,17 @@
+body {
+  background: rgb(230, 229, 242);
+  background: linear-gradient(90deg,
+          rgba(230, 229, 242, 1) 0%,
+          rgba(69, 153, 205, 1) 120%);
+}
 .btn-color{
     background-color: #0e1c36;
     color: #fff;
     
   }
-  
+  #showErr{
+    color: red;
+  }
   .profile-image-pic{
     height: 200px;
     width: 200px;

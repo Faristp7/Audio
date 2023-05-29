@@ -16,13 +16,13 @@
             <div class="col-md-5 offset-md-3">
                 <h1 class="text-center text-dark mt-3 mb-3 font-weight-bold">ADD PRODUCT</h1>
                 <div class="card my-3">
-                    <form class="card-body cardbody-color p-lg-5">
+                    <form method="POST" action="/addProduct" class="card-body cardbody-color p-lg-5">
                         <div class="mb-4">
                             <input type="text" class="form-control" id="Productname" placeholder="Product name" required/>
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
                           </div>
                         <div class="mb-4">
                             <input type="number" class="form-control" id="price" placeholder="Product price" required/>

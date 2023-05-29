@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+  status:{
+    type:String,
+    default:'Not Verified'
+  },
+  otp:{
+    type:Number,
+  }
+},{timestamps:true});
 const userModel = mongoose.model("users", userSchema);
 export default userModel;

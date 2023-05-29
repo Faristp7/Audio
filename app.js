@@ -14,7 +14,7 @@ const app = express();
 app.use(logger("dev"));
 
 app.set("view engine", "ejs");
-const __dirname = path.resolve();
+const __dirname = path.resolve()
 
 // session 
 app.use(session({

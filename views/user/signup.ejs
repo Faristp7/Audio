@@ -17,7 +17,7 @@
         }
 
         /* Firefox */
-        input[type=number] {
+        input[type="number"] {
             -webkit-appearance: textfield;
             /* Safari and Chrome */
             -moz-appearance: textfield;
@@ -36,7 +36,7 @@
                 <div class="card my-3">
                     <form class="card-body cardbody-color p-lg-5" id="signupForm">
                         <div class="mb-4">
-                            <input type="text" class="form-control" id="name" name="name"placeholder="Full Name"
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"
                                 required />
                         </div>
                         <div class="mb-4">
@@ -48,8 +48,8 @@
                                 required />
                         </div>
                         <div class="mb-4">
-                            <input type="password" class="form-control" id="password" name="password"
-                                required placeholder="password" onkeyup="checkConfirmPassword()" />
+                            <input type="password" class="form-control" id="password" name="password" required
+                                placeholder="password" onkeyup="checkConfirmPassword()" />
                         </div>
                         <div class="mb-4">
                             <input type="password" class="form-control" id="confirmPassword"
@@ -82,17 +82,22 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">OTP verification</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                            OTP verification
+                        </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p>an otp send to send to your Email</p>
-                        <input type="number" class="form-control" id="otpInput" name="otp" placeholder="OTP"
-                                required />
+                        <input type="number" class="form-control" id="otpInput" name="otp" placeholder="OTP" required />
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="submitOtp()">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="submitOtp()">
+                            Submit
+                        </button>
                     </div>
                 </div>
             </div>
@@ -104,7 +109,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-
     <script>
         const signupForm = document.getElementById("signupForm");
         const name = document.getElementById("name");
@@ -113,48 +117,58 @@
         const password = document.getElementById("password");
         const confirmPassword = document.getElementById("confirmPassword");
         const showErr = document.getElementById("showErr");
-        const signupButton = document.getElementById('signupButton')
-        const otpModal = document.getElementById('otpModal');
+        const signupButton = document.getElementById("signupButton");
+        const otpModal = document.getElementById("otpModal");
         const modal = new bootstrap.Modal(otpModal);
 
         signupForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
             if (checkConfirmPassword()) {
-                axios.post('/signup', { name: name.value, phone: phone.value, email: email.value, password: password.value }).then(({ data }) => {
-                    if (data) {
-                        modal.show()
-                    }
-                })
+                axios
+                    .post("/signup", {
+                        name: name.value,
+                        phone: phone.value,
+                        email: email.value,
+                        password: password.value,
+                    })
+                    .then(({ data }) => {
+                        if (data.error) {
+                            showErr.innerHTML = data.message
+                        } else {
+                            modal.show();   
+                        }
+                    });
             }
         });
         const checkConfirmPassword = () => {
             if (password.value !== confirmPassword.value) {
                 showErr.innerHTML = "Password Do not Match";
-                signupButton.disabled = true
+                signupButton.disabled = true;
                 return false;
             }
 
             showErr.innerHTML = "";
-            signupButton.disabled = false
+            signupButton.disabled = false;
 
             return true;
         };
- 
-       const submitOtp =  ()=>{
-        const otp = document.getElementById('otpInput').value
-        if(otp.length !== 4) alert('Please Enter Otp')
-        else{
-            axios.post('/verifyOtp',{email:email.value,otp}).then(({data})=>{
-                if(data === "Error"){
-                    alert('OTP NOT CORRECT')
-                }
-                else if(data === 'Success'){
-                    window.location.href = '/login'
-                }
-            })
-        }
-       }
+
+        const submitOtp = () => {
+            const otp = document.getElementById("otpInput").value;
+            if (otp.length !== 4) alert("Please Enter Otp");
+            else {
+                axios
+                    .post("/verifyOtp", { email: email.value, otp })
+                    .then(({ data }) => {
+                        if (data === "Error") {
+                            alert("OTP NOT CORRECT");
+                        } else if (data === "Success") {
+                            window.location.href = "/";
+                        }
+                    });
+            }
+        };
     </script>
 </body>
 

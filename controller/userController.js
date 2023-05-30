@@ -25,7 +25,12 @@ export function shopSingle(req, res) {
 }
 export function login(req, res) {
   try {
-    res.render("user/login");
+    if(! req.session.user.email){
+      res.render("user/login");
+    }
+    else{
+      res.render("user/profile")
+    }
   } catch (error) {
     console.log(error);
   }
@@ -41,43 +46,34 @@ export function signup(req, res) {
   }
 }
 
-// verify the admin
+// verify the user
 export async function userSignup(req, res) {
   try {
     const { name, email, phone, password } = req.body;
     if (email == "" || name == "" || password == "" || phone == "") {
-      res.render("user/signup", {
-        error: true,
-        message: "all fields must be filled",
-      });
-    }
-    else if(phone.length < 10){
+      res.send({ error: true, message: "fill all the field" });
+    } else if (phone.length < 10 || phone.length > 10) {
       console.log(1);
-      res.render("user/signup", {
-        error: true,
-        message: "Number must be 10 digits",
-      });
-    }
-    else{
-      const user = await userModel.findOne({ email });
-    if (user) {
-      res.send({error : true , message : "fill all the field"})
+      res.send({ error: true, message: "Number must be 10 digits" });
     } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(hashedPassword);
-      const userSchema = new userModel({
-        name,
-        email,
-        password: hashedPassword,
-        phone,
-      });
-      await userSchema.save();
-      const otp = Math.floor(1000 + Math.random() * 9000);
-      await userModel.updateOne({ email }, { otp });
-      console.log(otp);
-      await sendOTP(req.body.email, otp);
-      res.send(true);
-    }
+      const user = await userModel.findOne({ email });
+      if (user) {
+        res.send({ error: true, message: "Email already exists" });
+      } else {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const userSchema = new userModel({
+          name,
+          email,
+          password: hashedPassword,
+          phone,
+        });
+        await userSchema.save();
+        const otp = Math.floor(1000 + Math.random() * 9000);
+        await userModel.updateOne({ email }, { otp });
+        console.log(otp);
+        await sendOTP(req.body.email, otp);
+        res.send(true);
+      }
     }
   } catch (error) {
     console.log(error);
@@ -86,15 +82,58 @@ export async function userSignup(req, res) {
 
 export async function verifyOtp(req, res) {
   try {
-    const userData = await userModel.findOne({email:req.body.email})
-    if(req.body.otp == userData.otp){
-      await userModel.updateOne({email:req.body.email},{status:'Verified'})
-      await userModel.updateOne({email:req.body.email},{$unset : {otp : req.body.otp}})
-      res.send('Success')
+    const otp = parseInt(req.body?.otp);
+    const userData = await userModel.findOne({
+      email: req.body.email ? req.body.email : req.session?.user.email,
+    });
+    console.log(req.body);
+    if (otp == userData?.otp) {
+      await userModel.updateOne(
+        { email: req.body.email },
+        { $set: { status: "Verified" } }
+      );
+      await userModel.updateOne(
+        { email: req.body.email },
+        { $unset: { otp: req.body.otp } }
+      );
+      res.send("Success");
+    } else {
+      res.send("Error");
     }
-    else{
-      res.send('Error')
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function postUserLogin(req, res) {
+  try {
+    const user = await userModel.findOne({ email: req.body.email });
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (isPasswordValid) {
+        if (user.status === "Not Verified") {
+          res.send({ error: true, message: "Not Verified" });
+        } else {
+          req.session.user.email = req.body.email
+          res.send("success");
+        }
+      } else {
+        res.send("password invalid");
+      }
+    } else {
+      res.send("No user");
     }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function profile(req, res) {
+  try {
+    res.render("user/profile");
   } catch (error) {
     console.log(error);
   }

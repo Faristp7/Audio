@@ -26,7 +26,7 @@
             <div class="mb-4">
               <input type="password" class="form-control" id="password" name="password" placeholder="password" />
             </div>
-            <div  class="form-text text-center mb-3 text-dark">
+            <div class="form-text text-center mb-3 text-dark">
               <p id="Errmsg" class="text-danger"></p>
             </div>
             <div class="text-center">
@@ -81,26 +81,26 @@
     const modal = new bootstrap.Modal(verifyModal)
     const email = document.getElementById("email");
     const password = document.getElementById("password");
-    function postLogin() {
-      axios.post("/login", { email: email.value, password: password.value }).then(({ data }) => {
-        if(data === 'success'){
-          window.location.href = '/'
+    function postLogin() {  
+      axios.post("/login", {email: email.value, password: password.value }).then(({ data }) => {
+        if (data === 'success') {
+          window.location.href = '/profile'
         }
         else if (data.message === "Not Verified") {
           console.log(data);
           modal.show()
         }
-        else if(data === "password invalid"){
+        else if (data === "password invalid") {
           document.getElementById('Errmsg').innerHTML = "Password mismatch"
         }
-        else if(data === "No user"){
+        else if (data === "No user") {
           document.getElementById('Errmsg').innerHTML = "No user has been found"
         }
       })
     }
     function submitOtp() {
       const otp = document.getElementById("otpInput").value
-      axios.post('/verifyOtp', { otp ,email: email.value}).then(({ data }) => {
+      axios.post('/verifyOtp', { otp, email: email.value }).then(({ data }) => {
         if (data == "Error") {
           document.getElementById('otpError').innerHTML = "Invalid OTP"
         }

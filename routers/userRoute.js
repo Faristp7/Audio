@@ -1,15 +1,31 @@
-import express ,{Router} from "express"
-import { getHome, getshop, login, postUserLogin, profile, shopSingle, signup, userSignup,verifyOtp } from "../controller/userController.js"
-const router = Router()
-router.get('/',getHome )
-router.get('/shop',getshop)
-router.get('/shopSingle',shopSingle)
-router.get('/login',login)
-router.get('/signup',signup)
-router.get('/profile',profile)
+import express, { Router } from "express";
+import {
+  getHome,
+  getshop,
+  login,
+  logout,
+  postUserLogin,
+  profile,
+  resendOtp,
+  shopSingle,
+  signup,
+  userSignup,
+  verifyOtp,
+} from "../controller/userController.js";
+import { userAuth } from "../middleware/userAuth.js"
 
-router.post("/signup",userSignup) 
-router.post("/verifyOtp",verifyOtp) 
-router.post("/login",postUserLogin)
+const router = Router();
+router.get("/", getHome);
+router.get("/shop", getshop);
+router.get("/shopSingle", shopSingle);
+router.get("/login",login);
+router.get("/logout",userAuth,logout);
+router.get("/signup", signup);
+router.get("/profile", profile);
 
-export default router
+router.post("/signup", userSignup);
+router.post("/verifyOtp", verifyOtp);
+router.post("/login", postUserLogin);
+router.post('/resendOtp',resendOtp)
+
+export default router;

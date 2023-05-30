@@ -15,7 +15,7 @@ export default function sendOTP(email ,otp){
         to:email,
         subject:"AUDIO email verification",
         html: `
-        <h1> Verify Your account</h1>
+        <h1 style="color: lightgreen;"> Verify Your account</h1>
         <h3>use this code to verify you email</h3>
         <h2>${otp}</h2>`
     }

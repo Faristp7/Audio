@@ -1,4 +1,4 @@
-export function adminAuth(req, res, next) {
+export function userAuth(req, res, next) {
     if (req.session.user) {
         next();
     } else {

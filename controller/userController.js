@@ -25,12 +25,19 @@ export function shopSingle(req, res) {
 }
 export function login(req, res) {
   try {
-    if(! req.session.user.email){
+    if (!req.session.user) {
       res.render("user/login");
+    } else {
+      res.render("user/profile");
     }
-    else{
-      res.render("user/profile")
-    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function logout(req, res) {
+  try {
+    req.session.user = null;
+    res.redirect("/");
   } catch (error) {
     console.log(error);
   }
@@ -86,7 +93,7 @@ export async function verifyOtp(req, res) {
     const userData = await userModel.findOne({
       email: req.body.email ? req.body.email : req.session?.user.email,
     });
-    console.log(req.body);
+    console.log(req.body.otp);
     if (otp == userData?.otp) {
       await userModel.updateOne(
         { email: req.body.email },
@@ -105,6 +112,20 @@ export async function verifyOtp(req, res) {
   }
 }
 
+export async function resendOtp(req, res) {
+  try {
+    const email = req.body.email;
+    const otp = Math.floor(1000 + Math.random() * 9000);
+    await userModel.updateOne({ email }, { otp });
+    console.log(`resended otp ${otp}`);
+    await sendOTP(req.body.email, otp);
+    res.send("otp sended");
+    res.send(true);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function postUserLogin(req, res) {
   try {
     const user = await userModel.findOne({ email: req.body.email });
@@ -117,7 +138,7 @@ export async function postUserLogin(req, res) {
         if (user.status === "Not Verified") {
           res.send({ error: true, message: "Not Verified" });
         } else {
-          req.session.user.email = req.body.email
+          req.session.user = req.body.email;
           res.send("success");
         }
       } else {

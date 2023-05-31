@@ -119,8 +119,6 @@ export async function resendOtp(req, res) {
     await userModel.updateOne({ email }, { otp });
     console.log(`resended otp ${otp}`);
     await sendOTP(req.body.email, otp);
-    res.send("otp sended");
-    res.send(true);
   } catch (error) {
     console.log(error);
   }

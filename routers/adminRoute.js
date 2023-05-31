@@ -3,11 +3,13 @@ import {
   addProduct,
   adminLogin,
   dashboard,
+  doUserUnBlock,
+  doUserblock,
   logout,
   postAddProduct,
   postadminLogin,
   product,
-  table,
+  user,
 } from "../controller/adminController.js";
 import { adminAuth } from "../middleware/adminAuth.js";
 
@@ -15,10 +17,12 @@ const router = Router();
 router.get("/logout", adminAuth, logout);
 router.get("/", adminLogin);
 router.get("/dashboard", adminAuth, dashboard);
-router.get("/table", table); //user
+router.get("/user", user);
 router.get("/product", product);
 router.get("/addProduct", adminAuth, addProduct);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);
+router.post("/doUserblock",doUserblock);
+router.post("/doUserUnBlock",doUserUnBlock);
 export default router;

@@ -132,6 +132,18 @@
                 signupButton.disabled = true;
                 return false;
             }
+            if(password.value.length < 6){
+                showErr.innerHTML = "password must be more than 6 charactor"
+                signupButton.disabled =true
+                return false
+            }
+            const hasLetter = /[a-zA-Z]/.test(password.value);
+            const hasNumber = /\d/.test(password.value);
+            if (!hasLetter || !hasNumber) {
+            showErr.innerHTML = "Password should contain both letters and numbers";
+            signupButton.disabled = true;
+            return false;
+        }
 
             showErr.innerHTML = "";
             signupButton.disabled = false;

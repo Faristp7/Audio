@@ -50,8 +50,8 @@
                         <input type="number" class="form-control" id="otpInput" name="otp" placeholder="OTP" required />
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
+                      <button type="button" class="btn btn-secondary" id="myButton" onclick="resendOtp()">
+                        Resend OTP
                       </button>
                       <button type="button" class="btn btn-primary" onclick="submitOtp()">
                         Submit
@@ -109,7 +109,22 @@
         }
       })
     }
-
+    const resendOtp = () => {
+            const button = document.getElementById('myButton')
+            button.style.display = 'none'
+            axios.post("/resendOtp", {email : email.value})
+            .then(({data}) => {
+                if(data === "otp sended"){
+                    document.getElementById('otpError').innerHTML = "OTP sended successfully"
+                }
+                else{
+                    document.getElementById('otpError').innerHTML = "try after some couple minutes"
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
   </script>
 </body>
 

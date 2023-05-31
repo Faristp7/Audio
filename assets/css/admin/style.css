@@ -107,6 +107,28 @@
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
 
+
+.blockButton{
+    color: red !important;
+    outline: auto !important;
+    outline-color: red !important;
+}  
+
+.blockButton:hover{
+    color: white !important;
+    background-color: red;
+}  
+.unBlockButton{
+    color: green !important;
+    outline: auto !important;
+    outline-color: green !important;
+}  
+
+.unBlockButton:hover{
+    color: white !important;
+    background-color: green;
+}  
+
 @-webkit-keyframes flash {
     0% {
         opacity: 1;

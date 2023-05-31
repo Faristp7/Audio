@@ -1,4 +1,5 @@
 import adminModel from "../models/adminModel.js";
+import helper from "../databaseHelper/adminHelper.js";
 let err;
 export function adminLogin(req, res) {
   try {
@@ -23,9 +24,10 @@ export function dashboard(req, res) {
     console.log(error);
   }
 }
-export function table(req, res) {
+export async function user(req, res) {
   try {
-    res.render("admin/table");
+    const users = await helper.getUsers()
+    res.render("admin/user",{users});
   } catch (error) {
     console.log(error);
   }
@@ -48,6 +50,24 @@ export function logout(req, res) {
   try {
     req.session.admin = null;
     res.redirect("/admin");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function doUserblock(req,res){
+  try {
+    let status = await  helper.doUserBlock(req.body.id)
+    status ? res.send(true) : res.send(false)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function doUserUnBlock(req ,res){
+  try {
+    let status = await helper.doUserUnBlock(req.body.id)
+    status ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

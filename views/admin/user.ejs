@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Breeze Admin</title>
+    <link rel="stylesheet" href="/css/admin/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="/css/admin/style.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css"
+        integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-profile">
+                    <a href="#" class="nav-link">
+                        <div class="nav-profile-image">
+                            <span class="login-status online"></span>
+                            <!--change to offline or busy as needed-->
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/dashboard">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="menu-title pl-2">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/product">
+                        <i class="fa-brands fa-product-hunt"></i>
+                        <span class="menu-title pl-2">Products</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/table">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="menu-title pl-2">Orders</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/table">
+                        <i class="fa-solid fa-gift"></i>
+                        <span class="menu-title pl-2">Coupons</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/table">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span class="menu-title pl-2">Banners</span>
+                    </a>
+                </li>
+            </ul>
+            <style>
+                .audio {
+                    font-size: 100px;
+                    font-weight: bold;
+                }
+            </style>
+            <div class="text-center">
+                <h1 class="audio">A</h1>
+                <h1 class="audio">U</h1>
+                <h1 class="audio">D</h1>
+                <h1 class="audio">I</h1>
+                <h1 class="audio">O</h1>
+            </div>
+        </nav>
+        <div class="col-lg-10 grid-margin mt-5 ">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-hover display">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>User name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% users.forEach((element,index) => { %>
+                                 
+                                    <tr>
+                                        <td><%=index+1%></td>
+                                        <td><%-element.name %></td>
+                                        <td><%-element.email %></td>
+                                        <td><%-element.phone %></td>
+                                        <% if (element.status === "Verified") { %>
+                                            <td>
+                                                <label class="badge badge-success"><%-element.status %></label>
+                                            </td>
+                                        <% }  else if (element.status === "Not Verified") { %>
+                                            <td>
+                                                <label class="badge badge-warning"><%-element.status %></label>
+                                            </td>
+                                        <% }  else if (element.status === "Blocked") { %>
+                                            <td>
+                                                <label class="badge badge-danger"><%-element.status %></label>
+                                            </td>
+                                        <% }%> 
+                                        
+                                        <% if (element.status === "Blocked") { %>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a href="#"><button  type="button" class="btn unBlockButton" onclick="doUnblock('<%= element._id %>')">Unblock</button></a>
+                                                </div>
+                                            </td> 
+                                        <% } else { %>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a href="#"><button type="button" class="btn blockButton" onclick="doblock('<%= element._id %>')">Block</button></a>
+                                                </div>
+                                            </td>
+                                        <% } %> %>
+                                    </tr>
+                                <% }) %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script> 
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready( function () {
+        $('#myTable').DataTable();
+        } );
+
+        function doblock(id){
+            axios.post('/admin/doUserBlock', {id})
+            .then(({data}) => {
+                if(data){
+                    window.location.href = '/admin/user'
+                }
+                else{
+                    alert('Sorry Something Wrong')
+                }
+            })
+        }
+        function doUnblock(id){
+            axios.post('/admin/doUserUnBlock',{id})
+            .then(({data}) => {
+                if(data){
+                    window.location.href = '/admin/user'
+                }
+                else{
+                    alert('Something went wrong')
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

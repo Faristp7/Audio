@@ -124,6 +124,11 @@
     outline-color: green !important;
 }  
 
+.hiddenDiv{
+    display: none;
+}
+
+
 .unBlockButton:hover{
     color: white !important;
     background-color: green;

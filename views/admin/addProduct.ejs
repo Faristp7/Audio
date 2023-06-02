@@ -10,6 +10,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="sweetalert2.min.css" />
     <link rel="stylesheet" href="/css/login.css" />
   </head>
 
@@ -21,7 +22,7 @@
             ADD PRODUCT
           </h1>
           <div class="card my-3">
-            <form class="card-body cardbody-color p-lg-5" id="Product">
+            <form class="card-body cardbody-color p-lg-5" id="productForm">
               <div class="mb-4">
                 <input
                   type="text"
@@ -84,9 +85,9 @@
               </div>
               <div class="text-center">
                 <button
+                  onclick=""
                   type="submit"
                   class="btn btn-color my-3 w-50"
-                  onclick="addProduct()"
                 >
                   Add product
                 </button>
@@ -107,9 +108,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-      const Product = document.getElementById("Product");
+      const productForm = document.getElementById("productForm");
       const productName = document.getElementById("productname");
       const Description = document.getElementById("Description");
       const productPrice = document.getElementById("price");
@@ -119,16 +121,13 @@
       const img1 = document.getElementById("img1");
       const img2 = document.getElementById("img2");
 
-      Product.addEventListener("submit", (e) => {
-        console.log(coverImag);
+      productForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-      });
-      async function addProduct() {
         const coverimg = await convertBase64(coverImage.files[0]);
         const imageOne = await convertBase64(img1.files[0]);
         const imageTwo = await convertBase64(img2.files[0]);
 
-        const images = [coverimg,imageOne,imageTwo]
+        const images = [coverimg, imageOne, imageTwo];
         axios
           .post("/admin/addProduct", {
             productName: productName.value,
@@ -136,14 +135,19 @@
             productPrice: productPrice.value,
             quantity: quantity.value,
             category: category.value,
-            images
+            images,
           })
+
           .then(({ data }) => {
             if (data) {
-              window.location.href = "/admin/product";
+              Swal.fire("Product Adding", "Click the button", "success").then(
+                () => {
+                  window.location.href = "/admin/product";
+                }
+              );
             }
           });
-      }
+      });
 
       function convertBase64(file) {
         return new Promise((resolve, reject) => {

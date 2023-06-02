@@ -5,11 +5,12 @@ import {
   dashboard,
   doUserUnBlock,
   doUserblock,
-  imageUpload,
+  listProduct,
   logout,
   postAddProduct,
   postadminLogin,
   product,
+  unListProduct,
   user,
 } from "../controller/adminController.js";
 import { adminAuth } from "../middleware/adminAuth.js";
@@ -26,5 +27,6 @@ router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);
 router.post("/doUserblock", doUserblock);
 router.post("/doUserUnBlock", doUserUnBlock);
-router.post("/imageUpload", imageUpload);
+router.post("/unlistProduct",unListProduct);
+router.post("/listProduct",listProduct);
 export default router;

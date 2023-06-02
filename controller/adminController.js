@@ -119,5 +119,15 @@ export async function postAddProduct(req, res) {
   }
 }
 
-export function imageUpload(req, res) {
+export function unListProduct(req,res){
+  const id = req.body
+  console.log(id);
+   const productList = helper.doUnlist(id)
+   productList ? res.send(true) : res.send(false);
+}
+export function listProduct(req,res){
+  const id = req.body
+  console.log(id);
+   const productList = helper.doList(id)
+   productList ? res.send(true) : res.send(false);
 }

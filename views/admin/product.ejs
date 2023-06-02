@@ -20,8 +20,7 @@
 <body>
   <div class="container-scroller">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-      </div>
+      <div class="text-center sidebar-brand-wrapper d-flex align-items-center"></div>
       <ul class="nav">
         <li class="nav-item nav-profile">
           <a href="#" class="nav-link">
@@ -38,7 +37,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/table">
+          <a class="nav-link" href="/admin/user">
             <i class="fa-solid fa-user"></i>
             <span class="menu-title pl-3">Users</span>
           </a>
@@ -91,9 +90,11 @@
       }
     </style>
     <div class="col-md-12 mt-3">
-      <div class=" bg-danger position-relative">
+      <div class="bg-danger position-relative">
         <div class="addProduct-btn">
-          <a href="/admin/addProduct"><button type="button" class="btn btn-dark">Add product</button></a>
+          <a href="/admin/addProduct"><button type="button" class="btn btn-dark">
+              Add product
+            </button></a>
         </div>
       </div>
       <div class="col-lg-10 grid-margin stretch-card mt-5">
@@ -109,12 +110,15 @@
                     <th>Amount</th>
                     <th>Category</th>
                     <th>Quantity</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% product.forEach((element,index) => { %>
+                  <% product.forEach((element,index)=> { %>
                     <tr>
-                      <td><%=index+1 %></td>
+                      <td>
+                        <%=index+1 %>
+                      </td>
                       <td class="py-1">
                         <img src="<%-element.coverImage%>" alt="image" />
                       </td>
@@ -122,8 +126,29 @@
                       <td><%-element.productPrice %></td>
                       <td><%-element.category %></td>
                       <td><%-element.quantity %></td>
+                      <td>
+                        <div style="display: flex;">
+                          <button type="button" class="btn btn-dark">
+                            Edit
+                          </button>
+
+                          <div class="<%= element.productList ? '' : 'hiddenDiv' %>" id="unlistdiv<%=element._id %>">
+                            <button type="button" id="unlistBtn<%-element._id %>"
+                              onclick="doUnlist('<%=element._id %>')" class="btn blockButton">
+                              Unlist
+                            </button>
+                          </div>
+
+                          <div class="<%= element.productList ? 'hiddenDiv' : '' %>" id="listdiv<%=element._id %>">
+                            <button type="button" id="listBtn<%-element._id %>" onclick="doList('<%=element._id %>')"
+                              class="btn unBlockButton">
+                              List
+                            </button>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
-                  <% }) %>
+                    <% }) %>
                 </tbody>
               </table>
             </div>
@@ -131,14 +156,52 @@
         </div>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-      $(document).ready( function () {
-      $('#myTable').DataTable();
-      } );
+      $(document).ready(function () {
+        $("#myTable").DataTable();
+      });
     </script>
-    <!-- striped -->
+    <script>
+      function doUnlist(id) {
+        var unlistdiv = document.getElementById("unlistdiv" + id);
+        var listdiv = document.getElementById("listdiv" + id);
+
+        const listbutton = document.getElementById("unlistBtn" + id);
+
+        axios
+          .post("/admin/unlistProduct", { id })
+          .then(({ data }) => {
+            if (data) {
+              unlistdiv.style.display = "none";
+              listdiv.style.display = "block";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      function doList(id) {
+        var unlistdiv = document.getElementById("unlistdiv" + id);
+        var listdiv = document.getElementById("listdiv" + id);
+        const listbutton = document.getElementById("listBtn" + id);
+        console.log(listbutton, 34563456345634563456);
+        axios
+          .post("/admin/listProduct", { id })
+          .then(({ data }) => {
+            if (data) {
+              unlistdiv.style.display = "block";
+              listdiv.style.display = "none";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    </script>
   </div>
 </body>
 

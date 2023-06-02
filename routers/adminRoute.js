@@ -5,6 +5,7 @@ import {
   dashboard,
   doUserUnBlock,
   doUserblock,
+  imageUpload,
   logout,
   postAddProduct,
   postadminLogin,
@@ -23,6 +24,7 @@ router.get("/addProduct", adminAuth, addProduct);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);
-router.post("/doUserblock",doUserblock);
-router.post("/doUserUnBlock",doUserUnBlock);
+router.post("/doUserblock", doUserblock);
+router.post("/doUserUnBlock", doUserUnBlock);
+router.post("/imageUpload", imageUpload);
 export default router;

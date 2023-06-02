@@ -93,7 +93,6 @@
                             </thead>
                             <tbody>
                                 <% users.forEach((element,index) => { %>
-                                 
                                     <tr>
                                         <td><%=index+1%></td>
                                         <td><%-element.name %></td>
@@ -116,13 +115,13 @@
                                         <% if (element.status === "Blocked") { %>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="#"><button  type="button" class="btn unBlockButton" onclick="doUnblock('<%= element._id %>')">Unblock</button></a>
+                                                    <a href="#"><button  type="button" id="unBlockBtn" class="btn unBlockButton" onclick="doUnblock('<%= element._id %>')">Unblock</button></a>
                                                 </div>
                                             </td> 
                                         <% } else { %>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="#"><button type="button" class="btn blockButton" onclick="doblock('<%= element._id %>')">Block</button></a>
+                                                    <a href="#"><button type="button" class="btn blockButton" id="blockBtn" onclick="doblock('<%= element._id %>')">Block</button></a>
                                                 </div>
                                             </td>
                                         <% } %> %>

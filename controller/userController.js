@@ -133,7 +133,10 @@ export async function postUserLogin(req, res) {
         user.password
       );
       if (isPasswordValid) {
-        if (user.status === "Not Verified") {
+        if(user.status === "Blocked"){
+          res.send("Blocked")
+        }
+        else if (user.status === "Not Verified") {
           res.send({ error: true, message: "Not Verified" });
         } else {
           req.session.user = req.body.email;

@@ -1,5 +1,7 @@
 import adminModel from "../models/adminModel.js";
+import productModel from "../models/productModel.js";
 import helper from "../databaseHelper/adminHelper.js";
+import { cloudinaryUploadImage } from "../helper/cloudinary.js";
 let err;
 export function adminLogin(req, res) {
   try {
@@ -26,15 +28,16 @@ export function dashboard(req, res) {
 }
 export async function user(req, res) {
   try {
-    const users = await helper.getUsers()
-    res.render("admin/user",{users});
+    const users = await helper.getUsers();
+    res.render("admin/user", { users });
   } catch (error) {
     console.log(error);
   }
 }
-export function product(req, res) {
+export async function product(req, res) {
   try {
-    res.render("admin/product");
+    const product = await helper.getProducts();
+    res.render("admin/product", { product });
   } catch (error) {
     console.log(error);
   }
@@ -55,19 +58,19 @@ export function logout(req, res) {
   }
 }
 
-export async function doUserblock(req,res){
+export async function doUserblock(req, res) {
   try {
-    let status = await  helper.doUserBlock(req.body.id)
-    status ? res.send(true) : res.send(false)
+    let status = await helper.doUserBlock(req.body.id);
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function doUserUnBlock(req ,res){
+export async function doUserUnBlock(req, res) {
   try {
-    let status = await helper.doUserUnBlock(req.body.id)
-    status ? res.send(true) : res.send(false)
+    let status = await helper.doUserUnBlock(req.body.id);
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }
@@ -88,7 +91,7 @@ export async function postadminLogin(req, res) {
         res.redirect("/admin/dashboard");
       } else {
         err = true;
-        res.render("admin/adminLogin", {err});
+        res.render("admin/adminLogin", { err });
       }
     } else {
       res.redirect("/admin");
@@ -101,10 +104,20 @@ export async function postadminLogin(req, res) {
 
 //add product
 
-export function postAddProduct(req ,res){
+export async function postAddProduct(req, res) {
   try {
-    
+    cloudinaryUploadImage(req.body.images)
+    .then(async (urls) => {
+      const status = await helper.addproduct(req.body,urls);
+      if (status) res.send(true);
+      else res.send(false);
+      console.log(urls);
+    })
+    .catch((err) => res.status(500).send(err))
   } catch (error) {
     console.log(error);
   }
+}
+
+export function imageUpload(req, res) {
 }

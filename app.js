@@ -23,6 +23,10 @@ app.use(session({
   resave:false,
   store:MongoStore.create({mongoUrl : process.env.MONGODB})
 }))
+
+app.use(express.json({
+  limit: '50mb'
+}));
 app.use((req, res, next) => {
   res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate');
   next();

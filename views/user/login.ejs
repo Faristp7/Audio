@@ -96,6 +96,9 @@
         else if (data === "No user") {
           document.getElementById('Errmsg').innerHTML = "No user has been found"
         }
+        else if (data === "Blocked"){
+          document.getElementById('Errmsg').innerHTML = "Account has been blocked"
+        }
       })
     }
     function submitOtp() {

@@ -2,6 +2,7 @@ import sendOTP from "../helper/sendOtp.js";
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import helper from "../databaseHelper/adminHelper.js";
+import userHelper from "../databaseHelper/userHelper.js";
 
 export function getHome(req, res) {
   try {
@@ -18,9 +19,10 @@ export async function getshop(req, res) {
     console.log(error);
   }
 }
-export function shopSingle(req, res) {
+export async function shopSingle(req, res) {
   try {
-    res.render("user/shopSingle");
+    const singleProduct = await userHelper.getProduct(req.params.id)
+    res.render("user/shopSingle",{singleProduct});
   } catch (error) {
     console.log(error);
   }

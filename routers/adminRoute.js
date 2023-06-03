@@ -5,9 +5,11 @@ import {
   dashboard,
   doUserUnBlock,
   doUserblock,
+  editProduct,
   listProduct,
   logout,
   postAddProduct,
+  postEditProduct,
   postadminLogin,
   product,
   unListProduct,
@@ -22,11 +24,13 @@ router.get("/dashboard", adminAuth, dashboard);
 router.get("/user", user);
 router.get("/product", product);
 router.get("/addProduct", adminAuth, addProduct);
+router.get("/editProduct/:id", editProduct);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);
 router.post("/doUserblock", doUserblock);
 router.post("/doUserUnBlock", doUserUnBlock);
-router.post("/unlistProduct",unListProduct);
-router.post("/listProduct",listProduct);
+router.post("/unlistProduct", unListProduct);
+router.post("/listProduct", listProduct);
+router.post("/postEditProduct",postEditProduct);
 export default router;

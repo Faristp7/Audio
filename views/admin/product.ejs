@@ -128,10 +128,10 @@
                       <td><%-element.quantity %></td>
                       <td>
                         <div style="display: flex;">
-                          <button type="button" class="btn btn-dark">
+                          <a href="/admin/editProduct/<%-element._id %>"><button type="button" class="btn btn-dark">
                             Edit
                           </button>
-
+                        </a>
                           <div class="<%= element.productList ? '' : 'hiddenDiv' %>" id="unlistdiv<%=element._id %>">
                             <button type="button" id="unlistBtn<%-element._id %>"
                               onclick="doUnlist('<%=element._id %>')" class="btn blockButton">

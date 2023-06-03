@@ -2,6 +2,7 @@ import adminModel from "../models/adminModel.js";
 import productModel from "../models/productModel.js";
 import helper from "../databaseHelper/adminHelper.js";
 import { cloudinaryUploadImage } from "../helper/cloudinary.js";
+import userHelper from "../databaseHelper/userHelper.js";
 let err;
 export function adminLogin(req, res) {
   try {
@@ -130,4 +131,23 @@ export function listProduct(req,res){
   console.log(id);
    const productList = helper.doList(id)
    productList ? res.send(true) : res.send(false);
+}
+
+export async function editProduct(req,res){
+  try {
+    const productInfo = await userHelper.getProduct(req.params.id)
+    res.render('admin/editProduct',{productInfo})
+  } catch (error) {
+    console.log(error)  
+  }
+}
+
+export async function postEditProduct(req,res){
+  // cloudinaryUploadImage(req.body.images)
+  // const status = await helper.addproduct(req.body,urls);
+  //     if (status) res.send(true);
+  //     else res.send(false);
+  //     console.log(urls);
+  const EditProduct = req.body
+  console.log(EditProduct)
 }

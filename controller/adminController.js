@@ -112,7 +112,7 @@ export async function postAddProduct(req, res) {
       const status = await helper.addproduct(req.body,urls);
       if (status) res.send(true);
       else res.send(false);
-      console.log(urls);
+      console.log("image url", urls);
     })
     .catch((err) => res.status(500).send(err))
   } catch (error) {
@@ -149,5 +149,5 @@ export async function postEditProduct(req,res){
   //     else res.send(false);
   //     console.log(urls);
   const EditProduct = req.body
-  console.log(EditProduct)
+  console.log(EditProduct);
 }

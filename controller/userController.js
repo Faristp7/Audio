@@ -22,7 +22,8 @@ export async function getshop(req, res) {
 export async function shopSingle(req, res) {
   try {
     const singleProduct = await userHelper.getProduct(req.params.id)
-    res.render("user/shopSingle",{singleProduct});
+    const relatedProduct = await userHelper.relatedProduct(req.params.id)
+    res.render("user/shopSingle",{singleProduct,relatedProduct});
   } catch (error) {
     console.log(error);
   }

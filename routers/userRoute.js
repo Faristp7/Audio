@@ -8,6 +8,7 @@ import {
   postUserLogin,
   profile,
   resendOtp,
+  searchProduct,
   shopSingle,
   signup,
   userSignup,
@@ -29,5 +30,6 @@ router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);
 router.post("/login", postUserLogin);
 router.post("/resendOtp", resendOtp);
+router.post("/searchProduct", searchProduct);
 
 export default router;

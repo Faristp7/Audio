@@ -3,6 +3,7 @@ import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import helper from "../databaseHelper/adminHelper.js";
 import userHelper from "../databaseHelper/userHelper.js";
+import productModel from "../models/productModel.js";
 
 export function getHome(req, res) {
   try {
@@ -172,5 +173,14 @@ export function profile(req, res) {
     res.render("user/profile");
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function searchProduct(req,res){
+  try {
+   const data = await userHelper.searchProduct(req.body.searchKey)
+   res.send(data)
+  } catch (error) {
+    console.log(error)
   }
 }

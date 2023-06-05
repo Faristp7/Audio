@@ -66,11 +66,12 @@
                 <div class="navbar align-self-center d-flex">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search">
                             <div class="input-group-text">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
+                        <ul id="searchSuggestions" class="list-group mt-2">f</ul>
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
                         data-bs-target="#templatemo_search">
@@ -80,6 +81,11 @@
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span
                             class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa-solid fa-heart"></i>
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -92,21 +98,33 @@
         </div>
     </nav>
     <!-- Close Header -->
-
     <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
+    <style>
+    .backGround {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    .backGround .form-control {
+        background-color: white;
+    }
+</style>
+
+    </style>
+    <div class="modal fade backGround" id="templatemo_search" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <form id="searchForm" class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
+                    <input type="text" class="form-control" id="inputModalSearch" onkeyup="searchCatcher()" placeholder="Search">
+                    <button type="submit" id="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
                 </div>
+                <ul id="suggestion">
+                    
+                </ul>
             </form>
         </div>
     </div>
@@ -159,10 +177,10 @@
                     </div>
                     <div class="col-md-6 pb-4">
                         <div class="d-flex">
-                            <select class="form-control">
-                                <option>Featured</option>
-                                <option>A to Z</option>
-                                <option>Item</option>
+                            <select  class="form-control">
+                                <option>Price filter</option>
+                                <option>Low to high</option>
+                                <option>High to low</option>
                             </select>
                         </div>
                     </div>
@@ -424,7 +442,7 @@
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name
+                            Copyright &copy; 2023 Audio
                             | Designed by <a rel="sponsored" href="https://templatemo.com"
                                 target="_blank">TemplateMo</a>
                         </p>
@@ -437,11 +455,45 @@
     <!-- End Footer -->
 
     <!-- Start Script -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/jquery-1.11.0.min.js"></script>
     <script src="/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/templatemo.js"></script>
     <script src="/js/custom.js"></script>
     <!-- End Script -->
+
+    <script>
+        document.getElementById("searchForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            let x = document.getElementById('inputModalSearch');
+            searchCatcher();
+        });
+
+        const suggestion = document.getElementById('suggestion')
+
+       function searchCatcher() {
+           let searchData = document.getElementById('inputModalSearch');
+           if(!searchData.value == ''){      
+            axios.post('/searchProduct',{searchKey : searchData.value}).then(({data}) => {
+            suggestion.innerHTML = ''
+            data.forEach(element => {
+                var newText = document.createTextNode(element.productName);
+                var listItem = document.createElement("li");
+                listItem.appendChild(newText);
+                suggestion.appendChild(listItem);
+
+            });
+            
+           }).catch((err) => {
+            
+           });
+           }
+           else{
+            suggestion.innerHTML = ''
+           }
+         
+       }
+    </script>
     </body>
 </html>

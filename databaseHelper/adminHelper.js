@@ -30,9 +30,18 @@ export default {
     return await productModel.find();
   },
   doUnlist: async (id) => {
-    return await productModel.updateOne({ _id: id.id }, {productList: false});
+    return await productModel.updateOne({ _id: id.id }, { productList: false });
   },
   doList: async (id) => {
-    return await productModel.updateOne({ _id: id.id }, {productList: true});
-  }
+    return await productModel.updateOne({ _id: id.id }, { productList: true });
+  },
+  updateProduct: async ({productName,Description,productPrice,quantity,category},id) => {
+    return await productModel.updateOne({_id : id},{
+      productName : productName,
+      Description : Description,
+      productPrice : productPrice,
+      quantity : quantity,
+      category : category
+    });
+  },
 };

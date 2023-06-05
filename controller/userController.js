@@ -11,6 +11,15 @@ export function getHome(req, res) {
     console.log(error);
   }
 }
+
+export function pageNotFound(req,res){
+  try {
+    res.render("include/404error")
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getshop(req, res) {
   try {
     const product = await helper.getProducts()

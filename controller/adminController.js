@@ -16,6 +16,13 @@ export function adminLogin(req, res) {
     console.log(error);
   }
 }
+export function pageNotFound(req,res){
+  try {
+    res.render("include/404error")
+  } catch (error) {
+    console.log(error);
+  }
+}
 export function dashboard(req, res) {
   try {
     if (req.session.admin) {
@@ -148,6 +155,7 @@ export async function postEditProduct(req,res){
   //     if (status) res.send(true);
   //     else res.send(false);
   //     console.log(urls);
-  const EditProduct = req.body
-  console.log(EditProduct);
+  const id= req.body.id
+  const updated = await helper.updateProduct(req.body ,id)
+  return updated ? res.send(true) : res.send(false)
 }

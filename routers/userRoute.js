@@ -4,6 +4,7 @@ import {
   getshop,
   login,
   logout,
+  pageNotFound,
   postUserLogin,
   profile,
   resendOtp,
@@ -12,20 +13,21 @@ import {
   userSignup,
   verifyOtp,
 } from "../controller/userController.js";
-import { userAuth } from "../middleware/userAuth.js"
+import { userAuth } from "../middleware/userAuth.js";
 
 const router = Router();
 router.get("/", getHome);
 router.get("/shop", getshop);
 router.get("/shopSingle/:id", shopSingle);
-router.get("/login",login);
-router.get("/logout",userAuth,logout);
+router.get("/login", login);
+router.get("/logout", userAuth, logout);
 router.get("/signup", signup);
 router.get("/profile", profile);
+router.get("/pageNotFound", pageNotFound);
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);
 router.post("/login", postUserLogin);
-router.post('/resendOtp',resendOtp)
+router.post("/resendOtp", resendOtp);
 
 export default router;

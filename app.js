@@ -21,7 +21,7 @@ app.use(session({
   secret:"secrectkey",
   saveUninitialized:true,
   resave:false,
-  // store:MongoStore.create({mongoUrl : process.env.MONGODB}) 
+  store:MongoStore.create({mongoUrl : process.env.MONGODB}) 
 }))
 
 app.use(express.json({

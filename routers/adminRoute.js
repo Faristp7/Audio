@@ -8,6 +8,7 @@ import {
   editProduct,
   listProduct,
   logout,
+  pageNotFound,
   postAddProduct,
   postEditProduct,
   postadminLogin,
@@ -22,6 +23,7 @@ router.get("/logout", adminAuth, logout);
 router.get("/", adminLogin);
 router.get("/dashboard", adminAuth, dashboard);
 router.get("/user", user);
+router.get("/pageNotFound", pageNotFound);
 router.get("/product", product);
 router.get("/addProduct", adminAuth, addProduct);
 router.get("/editProduct/:id", editProduct);
@@ -32,5 +34,5 @@ router.post("/doUserblock", doUserblock);
 router.post("/doUserUnBlock", doUserUnBlock);
 router.post("/unlistProduct", unListProduct);
 router.post("/listProduct", listProduct);
-router.post("/postEditProduct",postEditProduct);
+router.post("/postEditProduct", postEditProduct);
 export default router;

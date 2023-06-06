@@ -23,12 +23,15 @@ export function pageNotFound(req,res){
 
 export async function getshop(req, res) {
   try {
+    const data = req.query.data
+    console.log(data);
     const product = await helper.getProducts()
     res.render("user/shop" ,{product});
   } catch (error) {
     console.log(error);
   }
 }
+
 export async function shopSingle(req, res) {
   try {
     const singleProduct = await userHelper.getProduct(req.params.id)

@@ -27,4 +27,7 @@ export default {
       })
       .exec();
   },
+  filterTWS : async () => {
+    return await productModel.find({category : "TWS"})
+  }
 };

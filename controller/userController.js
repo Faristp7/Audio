@@ -13,9 +13,9 @@ export function getHome(req, res) {
   }
 }
 
-export function pageNotFound(req,res){
+export function pageNotFound(req, res) {
   try {
-    res.render("include/404error")
+    res.render("include/404error");
   } catch (error) {
     console.log(error);
   }
@@ -23,10 +23,21 @@ export function pageNotFound(req,res){
 
 export async function getshop(req, res) {
   try {
-    const data = req.query.data
-    console.log(data);
-    const product = await helper.getProducts()
-    res.render("user/shop" ,{product});
+    const category = req.query.category;
+    const price = req.query.price;
+    let product;
+    if(req.query.category){
+      product = await helper.getProducts(category);
+      res.render("user/shop", { product });
+    }
+    else if(req.query.price){
+      product = await helper.sortProduct(price)
+      res.render("user/shop", { product });
+    }
+    else{
+      product = await helper.findProduct()
+      res.render("user/shop" , {product})
+    }
   } catch (error) {
     console.log(error);
   }
@@ -34,9 +45,9 @@ export async function getshop(req, res) {
 
 export async function shopSingle(req, res) {
   try {
-    const singleProduct = await userHelper.getProduct(req.params.id)
-    const relatedProduct = await userHelper.relatedProduct(req.params.id)
-    res.render("user/shopSingle",{singleProduct,relatedProduct});
+    const singleProduct = await userHelper.getProduct(req.params.id);
+    const relatedProduct = await userHelper.relatedProduct(req.params.id);
+    res.render("user/shopSingle", { singleProduct, relatedProduct });
   } catch (error) {
     console.log(error);
   }
@@ -151,10 +162,9 @@ export async function postUserLogin(req, res) {
         user.password
       );
       if (isPasswordValid) {
-        if(user.status === "Blocked"){
-          res.send("Blocked")
-        }
-        else if (user.status === "Not Verified") {
+        if (user.status === "Blocked") {
+          res.send("Blocked");
+        } else if (user.status === "Not Verified") {
           res.send({ error: true, message: "Not Verified" });
         } else {
           req.session.user = req.body.email;
@@ -179,11 +189,11 @@ export function profile(req, res) {
   }
 }
 
-export async function searchProduct(req,res){
+export async function searchProduct(req, res) {
   try {
-   const data = await userHelper.searchProduct(req.body.searchKey)
-   res.send(data)
+    const data = await userHelper.searchProduct(req.body.searchKey);
+    res.send(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }

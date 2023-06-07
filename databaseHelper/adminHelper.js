@@ -26,8 +26,17 @@ export default {
     });
     return await productSchema.save();
   },
-  getProducts: async () => {
-    return await productModel.find();
+  getProducts: async (category) => {
+    if (category) return await productModel.find({ category });
+    else return await productModel.find();
+  },
+  sortProduct: async (price) => {
+    if (price == "low") return await productModel.find().sort({ productPrice: 1 });
+    else if (price == "high") return await productModel.find().sort({ productPrice: -1 });
+    else return await productModel.find();
+  },
+  findProduct : async () => {
+    return await productModel.find()
   },
   doUnlist: async (id) => {
     return await productModel.updateOne({ _id: id.id }, { productList: false });
@@ -35,13 +44,19 @@ export default {
   doList: async (id) => {
     return await productModel.updateOne({ _id: id.id }, { productList: true });
   },
-  updateProduct: async ({productName,Description,productPrice,quantity,category},id) => {
-    return await productModel.updateOne({_id : id},{
-      productName : productName,
-      Description : Description,
-      productPrice : productPrice,
-      quantity : quantity,
-      category : category
-    });
+  updateProduct: async (
+    { productName, Description, productPrice, quantity, category },
+    id
+  ) => {
+    return await productModel.updateOne(
+      { _id: id },
+      {
+        productName: productName,
+        Description: Description,
+        productPrice: productPrice,
+        quantity: quantity,
+        category: category,
+      }
+    );
   },
 };

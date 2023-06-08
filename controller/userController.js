@@ -26,17 +26,15 @@ export async function getshop(req, res) {
     const category = req.query.category;
     const price = req.query.price;
     let product;
-    if(req.query.category){
+    if (req.query.category) {
       product = await helper.getProducts(category);
       res.render("user/shop", { product });
-    }
-    else if(req.query.price){
-      product = await helper.sortProduct(price)
+    } else if (req.query.price) {
+      product = await helper.sortProduct(price);
       res.render("user/shop", { product });
-    }
-    else{
-      product = await helper.findProduct()
-      res.render("user/shop" , {product})
+    } else {
+      product = await helper.findProduct();
+      res.render("user/shop", { product });
     }
   } catch (error) {
     console.log(error);
@@ -57,7 +55,7 @@ export function login(req, res) {
     if (!req.session.user) {
       res.render("user/login");
     } else {
-      res.render("user/profile");
+      res.redirect("/profile");
     }
   } catch (error) {
     console.log(error);
@@ -181,9 +179,11 @@ export async function postUserLogin(req, res) {
   }
 }
 
-export function profile(req, res) {
+export async function profile(req, res) {
   try {
-    res.render("user/profile");
+    const userProfile = await userHelper.findProfile(req.session.user);
+    const user = userProfile[0]
+    res.render("user/profile",{user});
   } catch (error) {
     console.log(error);
   }

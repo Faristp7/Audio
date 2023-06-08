@@ -1,17 +1,318 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+    <title>Audio</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="text-center">
-        <h1>Profile</h1>
-        <a href="/logout"><button type="button" class="btn btn-dark mt-5">Logout</button></a>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  </body>
-</html>
 
+    <link rel="apple-touch-icon" href="/img/Audio-logos_transparent.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/Audio-logos_transparent.png">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/templatemo.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.ejs">
+                Audio
+            </a>
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/shop">Shop</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <a href="/logout">
+                        <div class="btn btn-success text-light">Logout</div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3"><%-user.name %></h5>
+                            <p class=" mb-1"><%-user.phone %></p>
+                            <p class=" mb-4"><%-user.email %></p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <button type="button" class="btn btn-outline-primary ms-1" id="editProfile"
+                                    onclick="editProfile()">Edit profile</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 mb-lg-0" id="savebtn" style="display: none;">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" name="name" id="name" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" name="phone" id="phone" placeholder="Enter your phone number">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" onclick="saveButton()">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 editPage">
+                    <div class="card mb-4 mb-lg-4">
+                        <div class="card-body p-0">
+                            <ul class="ps-3 pt-3">Manage address</ul>
+                            <hr>
+                            <li class="ps-3 d-flex align-items-center text-center justify-content-between">
+                                <p class="mb-0 fw-bolder">House 105 kozikode hillsation 673008, opst canara bank</p>
+                                <div class="me-5">
+                                    <i class="ms-2 fa-solid fa-pen-to-square"></i>
+                                    <i class="ms-2 fa-sharp fa-solid fa-trash"></i>
+                                </div>
+                            </li>
+                            <hr>
+                            <div class="mt-2 ms-2 mb-2">
+                                <button type="button" class="btn btn-outline-primary" id="editProfile"
+                                    onclick="editAddress()">Add address</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- form address -->
+                    <div class="card mb-2" style="display: none;" id="saveBtnadd">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name" class="fw-bolder">Full name</label>
+                                <input type="text" name="name" id="fullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="fw-bolder">Phone</label>
+                                <input type="number" name="phone" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="fw-bolder">Pin code</label>
+                                <input type="text" name="phone" id="pincode" placeholder="6 digits [0-9] PIN code" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="fw-bolder">Flat, House no., Building, Company,
+                                    Apartment</label>
+                                <input type="text" name="phone" id="flateHouse" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="fw-bolder">Area, Street, Sector, Village</label>
+                                <input type="text" name="phone" id="areaStreet" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="fw-bolder">Landmark</label>
+                                <input type="text" name="phone" id="landmark" placeholder="E.g. near bank road">
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group me-5">
+                                    <label for="phone" class="fw-bolder">Town/City</label>
+                                    <input type="text" name="town" id="townCity" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state" class="fw-bolder">State</label>
+                                    <select name="state" id="stateAddress" class="statebox">
+                                        <option value="">Select State</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" id="submitAddress" onclick="saveBtnadd()">Save Address</button>
+                        </div>
+                    </div>
+                    <!-- form adress -->
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Audio</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            123 Consectetur at ligula 10660
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Home</a></li>
+                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2021 Company Name
+                            | Designed by <a rel="sponsored" href="https://templatemo.com"
+                                target="_blank">TemplateMo</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    <script>
+        const saveAddress = document.getElementById('saveBtnadd')
+        const fullName = document.getElementById('fullName')
+        const phone = document.getElementById('phone')
+        const pinCode = document.getElementById('pincode')
+        const flatHouse = document.getElementById('flateHouse')
+        const areaStreet = document.getElementById('areaStreet')
+        const landmark = document.getElementById('landmark')
+        const townCity = document.getElementById('townCity')
+        const state = document.getElementById('stateAddress')
+
+        saveAddress.addEventListener("submitAddress",(e) => {
+            e.preventDefault()
+        })
+        function saveButton() {
+            let save = document.getElementById('savebtn')
+            save.style.display = "none"
+        }
+        function editProfile() {
+            let save = document.getElementById('savebtn')
+            save.style.display = "block"
+        }
+        function editAddress() {
+            let saveAddress = document.getElementById('saveBtnadd')
+            saveAddress.style.display = "block"
+        }
+        function saveBtnadd() {
+            let saveAddress = document.getElementById('saveBtnadd')
+            saveAddress.style.display = "none"
+            console.log(fullName)
+        }
+    </script>
+    <!-- Start Script -->
+    <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/templatemo.js"></script>
+    <script src="/js/custom.js"></script>
+    <!-- End Script -->
+</body>
+
+</html>

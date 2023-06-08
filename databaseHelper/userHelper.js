@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import userModel from "../models/userModel.js";
 
 export default {
   getProduct: async (id) => {
@@ -29,5 +30,8 @@ export default {
   },
   filterTWS : async () => {
     return await productModel.find({category : "TWS"})
+  },
+  findProfile: async(userSession) => {
+    return await userModel.find({email: userSession})
   }
 };

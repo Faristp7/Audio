@@ -5,6 +5,7 @@ import {
   login,
   logout,
   pageNotFound,
+  postProfile,
   postUserLogin,
   profile,
   resendOtp,
@@ -31,5 +32,6 @@ router.post("/verifyOtp", verifyOtp);
 router.post("/login", postUserLogin);
 router.post("/resendOtp", resendOtp);
 router.post("/searchProduct", searchProduct);
+router.post("/postProfile",postProfile)
 
 export default router;

@@ -179,6 +179,15 @@ export async function postUserLogin(req, res) {
   }
 }
 
+export async function searchProduct(req, res) {
+  try {
+    const data = await userHelper.searchProduct(req.body.searchKey);
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function profile(req, res) {
   try {
     const userProfile = await userHelper.findProfile(req.session.user);
@@ -189,11 +198,11 @@ export async function profile(req, res) {
   }
 }
 
-export async function searchProduct(req, res) {
+export async function postProfile(req,res){
   try {
-    const data = await userHelper.searchProduct(req.body.searchKey);
-    res.send(data);
+    const{name,phone,pincode,flatHouse,areaStreet,landmark,townCity,state} = req.body
+    // Array
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }

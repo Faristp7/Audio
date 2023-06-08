@@ -59,7 +59,26 @@ div {
     font-size: 22px !important;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+}
+
+
 .form-group input[type="text"] {
+    border: 1px solid #867979;
+}
+
+.form-group input[type="number"] {
     border: 1px solid #867979;
 }
 
@@ -84,6 +103,7 @@ label {
 }
 
 input[type="text"],
+input[type='number'],
 input[type="email"] {
     width: 100%;
     padding: 5px;
@@ -91,7 +111,8 @@ input[type="email"] {
     border-radius: 4px;
     transition: border-color 0.3s ease-in-out;
 }
-.statebox{
+
+.statebox {
     padding: 7px;
     border-radius: 4px;
 }
@@ -106,6 +127,7 @@ input[type="email"]:focus {
 .btn-primary {
     padding: 10px 20px;
 }
+
 .logo {
     font-weight: 500 !important;
 }

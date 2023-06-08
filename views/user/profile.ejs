@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="text" name="phone" id="phone" placeholder="Enter your phone number">
+                                <input type="number" name="phone" id="phone" placeholder="Enter your phone number">
                             </div>
                         </div>
                         <div class="card-footer">
@@ -118,28 +118,28 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="fw-bolder">Phone</label>
-                                <input type="number" name="phone" id="phone">
+                                <input type="number" name="phone" id="phoneNum">
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="fw-bolder">Pin code</label>
-                                <input type="text" name="phone" id="pincode" placeholder="6 digits [0-9] PIN code" required>
+                                <label for="pincode" class="fw-bolder">Pin code</label>
+                                <input type="number" name="phone" id="pincode" placeholder="6 digits [0-9] PIN code" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="fw-bolder">Flat, House no., Building, Company,
+                                <label for="flat" class="fw-bolder">Flat, House no., Building, Company,
                                     Apartment</label>
                                 <input type="text" name="phone" id="flateHouse" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="fw-bolder">Area, Street, Sector, Village</label>
+                                <label for="area" class="fw-bolder">Area, Street, Sector, Village</label>
                                 <input type="text" name="phone" id="areaStreet" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="fw-bolder">Landmark</label>
+                                <label for="landmark" class="fw-bolder">Landmark</label>
                                 <input type="text" name="phone" id="landmark" placeholder="E.g. near bank road">
                             </div>
                             <div class="d-flex">
                                 <div class="form-group me-5">
-                                    <label for="phone" class="fw-bolder">Town/City</label>
+                                    <label for="town" class="fw-bolder">Town/City</label>
                                     <input type="text" name="town" id="townCity" required>
                                 </div>
                                 <div class="form-group">
@@ -273,11 +273,12 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- End Footer -->
     <script>
         const saveAddress = document.getElementById('saveBtnadd')
         const fullName = document.getElementById('fullName')
-        const phone = document.getElementById('phone')
+        const phone = document.getElementById('phoneNum')
         const pinCode = document.getElementById('pincode')
         const flatHouse = document.getElementById('flateHouse')
         const areaStreet = document.getElementById('areaStreet')
@@ -303,7 +304,17 @@
         function saveBtnadd() {
             let saveAddress = document.getElementById('saveBtnadd')
             saveAddress.style.display = "none"
-            console.log(fullName)
+            
+            axios.post('/postProfile',{
+                name : fullName.value,
+                phone : phone.value,
+                pinCode : pinCode.value,
+                flatHouse : flatHouse.value,
+                areaStreet: areaStreet.value,
+                landmark : landmark.value,
+                townCity : townCity.value,
+                state : state.value,
+            })
         }
     </script>
     <!-- Start Script -->

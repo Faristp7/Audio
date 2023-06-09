@@ -28,10 +28,17 @@ export default {
       })
       .exec();
   },
-  filterTWS : async () => {
-    return await productModel.find({category : "TWS"})
+  filterTWS: async () => {
+    return await productModel.find({ category: "TWS" });
   },
-  findProfile: async(userSession) => {
-    return await userModel.find({email: userSession})
-  }
+  findProfile: async (userSession) => {
+    return await userModel.find({ email: userSession });
+  },
+  insertAddress: async (Address, Email) => {
+    const uniqueNumber = Date.now().toString();
+    return await userModel.findOneAndUpdate(
+      { email: Email },
+      { $addToSet: { address: { ...Address, uniqueNumber } } }
+    );
+  },
 };

@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import {
+  editAddress,
   getHome,
   getshop,
   login,
@@ -26,12 +27,13 @@ router.get("/logout", userAuth, logout);
 router.get("/signup", signup);
 router.get("/profile", profile);
 router.get("/pageNotFound", pageNotFound);
+router.get("/editAddress", editAddress);
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);
 router.post("/login", postUserLogin);
 router.post("/resendOtp", resendOtp);
 router.post("/searchProduct", searchProduct);
-router.post("/postProfile",postProfile)
+router.post("/postProfile", postProfile);
 
 export default router;

@@ -59,6 +59,7 @@ div {
     font-size: 22px !important;
 }
 
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -67,12 +68,33 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
+
 input[type=number] {
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
     appearance: textfield;
 }
 
+.form-group {
+    position: relative;
+}
+
+.prefix-group {
+    display: flex;
+    align-items: center;
+}
+
+.prefix {
+    padding: 0.375rem 0.75rem;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.form-control {
+    border-radius: 0 0.25rem 0.25rem 0;
+    border-left: none;
+}
 
 .form-group input[type="text"] {
     border: 1px solid #867979;

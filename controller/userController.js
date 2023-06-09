@@ -200,9 +200,24 @@ export async function profile(req, res) {
 
 export async function postProfile(req,res){
   try {
-    const{name,phone,pincode,flatHouse,areaStreet,landmark,townCity,state} = req.body
-    // Array
+    const mail = req.session.user
+    const {firstName,flatHouse,areaStreet,landmark,townCity,state} = req.body
+    if(firstName == "" || flatHouse == "" || areaStreet == "" || landmark == "" || townCity == "" || state == ""){
+      res.send("Fill all the field")
+    }
+    else{
+      const updated = await userHelper.insertAddress(req.body,mail)
+      if(updated) res.send("successfully added")
+    }
   } catch (error) {
     console.log(error)
+  }
+}
+
+export function editAddress(req, res){
+  try {
+    res.render('user/editAddress')
+  } catch (error) {
+    console.log(error);
   }
 }

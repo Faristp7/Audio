@@ -28,41 +28,41 @@
           <label for="name" class="fw-bold fs-6"
             >Full name (First and Last name)</label
           >
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" value="<%-userAddress.address[0].firstName %>" id="name" />
         </div>
         <div class="form mt-2">
           <label for="number" class="fw-bold fs-6">Mobile number</label>
-          <input type="number" name="number" id="number" />
+          <input type="number" name="number" value="<%-userAddress.address[0].phone %>" id="number" />
         </div>
         <div class="form mt-2">
           <label for="pincode" class="fw-bold fs-6">Pincode</label>
-          <input type="number" name="pincode" id="pincode" />
+          <input type="number" name="pincode" value="<%-userAddress.address[0].pinCode %>" id="pincode" />
         </div>
         <div class="form mt-2">
           <label for="house" class="fw-bold fs-6"
             >Flat, House no., Building, Company, Apartment</label
           >
-          <input type="text" name="house" id="house" />
+          <input type="text" name="house" value="<%-userAddress.address[0].flatHouse %>" id="house" />
         </div>
         <div class="form mt-2">
           <label for="area" class="fw-bold fs-6"
             >Area, Street, Sector, Village</label
           >
-          <input type="text" name="area" id="area" />
+          <input type="text" name="area" value="<%-userAddress.address[0].areaStreet %>" id="area" />
         </div>
         <div class="form mt-2">
           <label for="landmark" class="fw-bold fs-6">Landmark</label>
-          <input type="text" name="landmark" id="landmark" />
+          <input type="text" name="landmark" value="<%-userAddress.address[0].landmark %>" id="landmark" />
         </div>
         <div class="d-flex">
           <div class="form mt-2 flex-grow-1">
             <label for="town" class="fw-bold fs-6">Town/City</label>
-            <input type="text" name="town" id="town" />
+            <input type="text" name="town" value="<%-userAddress.address[0].townCity %>" id="town" />
           </div>
           <div class="form mt-2 flex-grow-1 ms-3">
             <label for="state" class="fw-bold fs-6">State</label>
             <select name="state" id="editState" class="statebox">
-              <option value="">Select State</option>
+              <option value=""><%-userAddress.address[0].state %></option>
               <option value="Andhra Pradesh">Andhra Pradesh</option>
               <option value="Arunachal Pradesh">Arunachal Pradesh</option>
               <option value="Assam">Assam</option>
@@ -104,7 +104,7 @@
           </div>
           <div class="ms-4">
             <div id="delete-button" class="delete-button">
-              <div class="delete-first-step">Remove</div>
+              <div class="delete-first-step" onclick="remove('<%-userAddress.address[0].uniqueNumber %>')">Remove</div>
               <div id="step-two" class="delete-second-step">Deleted</div>
               <div id="empty" class="empty"></div>
             </div>
@@ -117,6 +117,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       const button = document.querySelector(".button");
       const submit = document.querySelector(".submit");
@@ -161,9 +162,6 @@
           }, 2500);
         }
         if (status === true && stepTwo === true) {
-          // YOUR CODE WHEN CLICKED
-          // HERE
-          // YOUR CODE WHEN CLICKED
           removeClassAktive(OBJ);
           removeClassAktive(EMPTY);
           removeClassAktive(STEPTWO);
@@ -173,6 +171,18 @@
           }, 250);
         }
       });
+      function remove(uniqe){
+        axios.post('/editAddressPost' ,{uniqe})
+        .then(({data}) => {
+          if(data == "delted"){
+            setTimeout(() => {
+              window.location.href = "/profile"
+            }, 3500);
+          }
+        }).catch((err) => {
+          console.log(err);
+        });
+      }
     </script>
   </body>
 </html>

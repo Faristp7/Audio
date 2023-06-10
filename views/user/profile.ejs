@@ -98,7 +98,7 @@
                                 <li class="ps-3 d-flex align-items-center text-center justify-content-between">
                                     <p class="mb-0 fw-bolder"><%-i.firstName%>, <%-i.phone%>, <%-i.pinCode%>, <%-i.flatHouse%>, <%-i.areaStreet %>, <%-i.landmark %>, <%-i.townCity %>, <%-i.state %></p>
                                     <div class="me-5">
-                                        <a href="/editAddress"><i class="ms-2 fa-solid fa-pen-to-square"></i></a>
+                                        <a href="/editAddress/<%-i.uniqueNumber %>"><i class="ms-2 fa-solid fa-pen-to-square"></i></a>
                                     </div>
                                 </li>
                             <% }) %>
@@ -283,7 +283,6 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/delete.js"></script>
     <!-- End Footer -->
     <script>
         const saveAddress = document.getElementById('saveBtnadd')

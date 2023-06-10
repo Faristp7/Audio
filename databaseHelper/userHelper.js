@@ -41,4 +41,18 @@ export default {
       { $addToSet: { address: { ...Address, uniqueNumber } } }
     );
   },
+  findUserAddress: async (uniqueNumber, email) => {
+    return await userModel.findOne(
+      { email },
+      { address: { $elemMatch: uniqueNumber } }
+    );
+  },
+  removeAddress: async (unique, email) => {
+    const value = unique.uniqe;
+    return await userModel.findOneAndUpdate(
+      { email },
+      { $pull: { address: { uniqueNumber: `${value}` } } },
+      { new: true }
+    );
+  },
 };

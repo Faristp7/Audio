@@ -214,9 +214,19 @@ export async function postProfile(req,res){
   }
 }
 
-export function editAddress(req, res){
+export async function editAddress(req, res){
   try {
-    res.render('user/editAddress')
+    const userAddress = await userHelper.findUserAddress(req.params ,req.session.user)
+    res.render('user/editAddress',{userAddress})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function editAddressPost(req ,res){
+  try {
+    const status = await userHelper.removeAddress(req.body ,req.session.user)
+    if(status) res.send("delted")
   } catch (error) {
     console.log(error);
   }

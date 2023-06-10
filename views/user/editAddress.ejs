@@ -1,54 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Edit address</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/deleteButton.css">
+    <link rel="stylesheet" href="/css/templatemo.css" />
+    <link rel="stylesheet" href="/css/formAddress.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-    <button id="delete" class="del-btn" type="button" aria-label="Delete">
-        <svg class="del-btn__icon" viewBox="0 0 48 48" width="48px" height="48px" aria-hidden="true">
-            <clipPath id="can-clip">
-                <rect class="del-btn__icon-can-fill" x="5" y="24" width="14" height="11" />
-            </clipPath>
-            <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="translate(12,12)">
-                <g class="del-btn__icon-lid">
-                    <polyline points="9,5 9,1 15,1 15,5" />
-                    <polyline points="4,5 20,5" />
-                </g>
-                <g class="del-btn__icon-can">
-                    <g stroke-width="0">
-                        <polyline id="can-fill" points="6,10 7,23 17,23 18,10" />
-                        <use clip-path="url(#can-clip)" href="#can-fill" fill="#fff" />
-                    </g>
-                    <polyline points="6,10 7,23 17,23 18,10" />
-                </g>
-            </g>
-        </svg>
-        <span class="del-btn__letters" aria-hidden="true" data-anim>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">D</span>
-            </span>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">e</span>
-            </span>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">l</span>
-            </span>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">e</span>
-            </span>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">t</span>
-            </span>
-            <span class="del-btn__letter-box">
-                <span class="del-btn__letter">e</span>
-            </span>
-        </span>
-    </button>
-    <script src="/js/delete.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <div class="container d-flex justify-content-center mt-5">
+      <div class="col-lg-4 col-sm-12">
+        <h2 class="heading">Edit your address</h2>
+        <div class="form mt-4">
+          <label for="name" class="fw-bold fs-6"
+            >Full name (First and Last name)</label
+          >
+          <input type="text" name="name" id="name" />
+        </div>
+        <div class="form mt-2">
+          <label for="number" class="fw-bold fs-6">Mobile number</label>
+          <input type="number" name="number" id="number" />
+        </div>
+        <div class="form mt-2">
+          <label for="pincode" class="fw-bold fs-6">Pincode</label>
+          <input type="number" name="pincode" id="pincode" />
+        </div>
+        <div class="form mt-2">
+          <label for="house" class="fw-bold fs-6"
+            >Flat, House no., Building, Company, Apartment</label
+          >
+          <input type="text" name="house" id="house" />
+        </div>
+        <div class="form mt-2">
+          <label for="area" class="fw-bold fs-6"
+            >Area, Street, Sector, Village</label
+          >
+          <input type="text" name="area" id="area" />
+        </div>
+        <div class="form mt-2">
+          <label for="landmark" class="fw-bold fs-6">Landmark</label>
+          <input type="text" name="landmark" id="landmark" />
+        </div>
+        <div class="d-flex">
+          <div class="form mt-2 flex-grow-1">
+            <label for="town" class="fw-bold fs-6">Town/City</label>
+            <input type="text" name="town" id="town" />
+          </div>
+          <div class="form mt-2 flex-grow-1 ms-3">
+            <label for="state" class="fw-bold fs-6">State</label>
+            <select name="state" id="editState" class="statebox">
+              <option value="">Select State</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Odisha">Odisha</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-4 d-flex">
+          <div>
+            <button class="button">
+              <span class="submit">Save changes</span>
+              <span class="loading"><i class="fa fa-refresh"></i></span>
+              <span class="check"><i class="fa fa-check"></i></span>
+            </button>
+          </div>
+          <div class="ms-4">
+            <div id="delete-button" class="delete-button">
+              <div class="delete-first-step">Remove</div>
+              <div id="step-two" class="delete-second-step">Deleted</div>
+              <div id="empty" class="empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const button = document.querySelector(".button");
+      const submit = document.querySelector(".submit");
+
+      function toggleClass() {
+        this.classList.toggle("active");
+      }
+
+      function addClassFinished() {
+        this.classList.add("finished");
+      }
+
+      button.addEventListener("click", toggleClass);
+      button.addEventListener("transitionend", toggleClass);
+      button.addEventListener("transitionend", addClassFinished);
+
+      const addClassAktive = (obj) => {
+        obj.classList.add("aktive");
+      };
+
+      const removeClassAktive = (obj) => {
+        obj.classList.remove("aktive");
+      };
+
+      let status = false;
+      let stepTwo = false;
+      const BUTTON = document.querySelector("#delete-button");
+
+      BUTTON.addEventListener("click", function () {
+        const OBJ = this;
+        const EMPTY = OBJ.querySelector("#empty");
+        const STEPTWO = OBJ.querySelector("#step-two");
+        if (status === false) {
+          status = true;
+          addClassAktive(OBJ);
+          addClassAktive(EMPTY);
+          setTimeout(function () {
+            addClassAktive(STEPTWO);
+            setTimeout(function () {
+              stepTwo = true;
+            }, 250);
+          }, 2500);
+        }
+        if (status === true && stepTwo === true) {
+          // YOUR CODE WHEN CLICKED
+          // HERE
+          // YOUR CODE WHEN CLICKED
+          removeClassAktive(OBJ);
+          removeClassAktive(EMPTY);
+          removeClassAktive(STEPTWO);
+          setTimeout(function () {
+            stepTwo = false;
+            status = false;
+          }, 250);
+        }
+      });
+    </script>
   </body>
 </html>

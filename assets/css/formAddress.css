@@ -1,0 +1,239 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.heading {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+input[type="text"],
+input[type="number"],
+select[name="state"],
+select[name="state"] {
+    border: 1px solid rgb(102, 98, 98);
+    height: 30px;
+}
+
+select[name="state"] {
+    font-size: 14px;
+}
+
+.saveChange {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.saveChange:hover {
+    opacity: 0.9;
+}
+
+html {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-smooth: auto;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #444;
+}
+
+
+.hide {
+    display: none;
+}
+
+.button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 13rem;
+    margin: 0;
+    padding: 19px;
+    font-size: 14px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    overflow: hidden;
+}
+
+.button:before {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #2ecc71;
+}
+
+.button span {
+    position: absolute;
+    line-height: 0;
+}
+
+.button span:nth-of-type(1) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.button span:nth-of-type(2) {
+    top: 100%;
+    transform: translateY(0%);
+    font-size: 24px;
+}
+
+.button span:nth-of-type(3) {
+    display: none;
+}
+
+.active {
+    background-color: #2ecc71;
+}
+
+.active:before {
+    width: 100%;
+    transition: width 3s linear;
+}
+
+.active span:nth-of-type(1) {
+    top: -100%;
+    transform: translateY(-50%);
+}
+
+.active span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.active span:nth-of-type(2) i {
+    animation: loading 500ms linear infinite;
+}
+
+.finished {
+    background-color: #2ecc71;
+}
+
+.finished .submit {
+    display: none;
+}
+
+.finished .loading {
+    display: none;
+}
+
+.finished .check {
+    display: block !important;
+    font-size: 24px;
+    animation: scale 0.5s linear;
+}
+
+@keyframes loading {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(10);
+    }
+
+    50% {
+        transform: scale(0.2);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    90% {
+        transform: scale(0.7);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* deletebutton */
+:root {
+    --prime: #EC5757;
+    --prime-dark: #AA3333;
+    --second: #1b2431;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+
+  .delete-button {
+    padding: 18px;
+    width: 12rem;
+    height: auto;
+    background-color: var(--prime-dark);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 250ms;
+  }
+  
+  .delete-button .empty {
+    z-index: 2;
+    transform: translateX(-100%);
+    border-radius: 0;
+    background-color: var(--prime);
+    width: 100%;
+    height: 100%;
+    transition: all 3000ms;
+  }
+  
+  .delete-button .delete-first-step {
+    z-index: 4;
+    background-color: var(--prime);
+  }
+  
+  .delete-button .delete-second-step {
+    z-index: 3;
+    opacity: 0;
+  }
+  
+  .delete-button div {
+    transition: all 250ms;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+    font-family: sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .delete-button.aktive > .delete-first-step {
+    opacity: 0;
+  }
+  
+  .empty.aktive {
+    transform: translateX(0);
+  }
+  
+  .delete-second-step.aktive {
+    opacity: 1;
+  }
+  

@@ -20,98 +20,150 @@
       referrerpolicy="no-referrer"
     />
   </head>
+
   <body>
     <div class="container d-flex justify-content-center mt-5">
-      <div class="col-lg-4 col-sm-12">
-        <h2 class="heading">Edit your address</h2>
-        <div class="form mt-4">
-          <label for="name" class="fw-bold fs-6"
-            >Full name (First and Last name)</label
-          >
-          <input type="text" name="name" value="<%-userAddress.address[0].firstName %>" id="name" />
-        </div>
-        <div class="form mt-2">
-          <label for="number" class="fw-bold fs-6">Mobile number</label>
-          <input type="number" name="number" value="<%-userAddress.address[0].phone %>" id="number" />
-        </div>
-        <div class="form mt-2">
-          <label for="pincode" class="fw-bold fs-6">Pincode</label>
-          <input type="number" name="pincode" value="<%-userAddress.address[0].pinCode %>" id="pincode" />
-        </div>
-        <div class="form mt-2">
-          <label for="house" class="fw-bold fs-6"
-            >Flat, House no., Building, Company, Apartment</label
-          >
-          <input type="text" name="house" value="<%-userAddress.address[0].flatHouse %>" id="house" />
-        </div>
-        <div class="form mt-2">
-          <label for="area" class="fw-bold fs-6"
-            >Area, Street, Sector, Village</label
-          >
-          <input type="text" name="area" value="<%-userAddress.address[0].areaStreet %>" id="area" />
-        </div>
-        <div class="form mt-2">
-          <label for="landmark" class="fw-bold fs-6">Landmark</label>
-          <input type="text" name="landmark" value="<%-userAddress.address[0].landmark %>" id="landmark" />
-        </div>
-        <div class="d-flex">
-          <div class="form mt-2 flex-grow-1">
-            <label for="town" class="fw-bold fs-6">Town/City</label>
-            <input type="text" name="town" value="<%-userAddress.address[0].townCity %>" id="town" />
+      <form id="formControl">
+        <div class="col-lg-9 col-sm-12">
+          <h2 class="heading">Edit your address</h2>
+          <div class="form mt-4">
+            <label for="name" class="fw-bold fs-6"
+              >Full name (First and Last name)</label
+            >
+            <input
+              type="text"
+              name="name"
+              value="<%-userAddress.address[0].firstName %>"
+              id="name"
+            />
           </div>
-          <div class="form mt-2 flex-grow-1 ms-3">
-            <label for="state" class="fw-bold fs-6">State</label>
-            <select name="state" id="editState" class="statebox">
-              <option value=""><%-userAddress.address[0].state %></option>
-              <option value="Andhra Pradesh">Andhra Pradesh</option>
-              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-              <option value="Assam">Assam</option>
-              <option value="Bihar">Bihar</option>
-              <option value="Chhattisgarh">Chhattisgarh</option>
-              <option value="Goa">Goa</option>
-              <option value="Gujarat">Gujarat</option>
-              <option value="Haryana">Haryana</option>
-              <option value="Himachal Pradesh">Himachal Pradesh</option>
-              <option value="Jharkhand">Jharkhand</option>
-              <option value="Karnataka">Karnataka</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Madhya Pradesh">Madhya Pradesh</option>
-              <option value="Maharashtra">Maharashtra</option>
-              <option value="Manipur">Manipur</option>
-              <option value="Meghalaya">Meghalaya</option>
-              <option value="Mizoram">Mizoram</option>
-              <option value="Nagaland">Nagaland</option>
-              <option value="Odisha">Odisha</option>
-              <option value="Punjab">Punjab</option>
-              <option value="Rajasthan">Rajasthan</option>
-              <option value="Sikkim">Sikkim</option>
-              <option value="Tamil Nadu">Tamil Nadu</option>
-              <option value="Telangana">Telangana</option>
-              <option value="Tripura">Tripura</option>
-              <option value="Uttar Pradesh">Uttar Pradesh</option>
-              <option value="Uttarakhand">Uttarakhand</option>
-              <option value="West Bengal">West Bengal</option>
-            </select>
+          <div class="form mt-2">
+            <label for="number" class="fw-bold fs-6">Mobile number</label>
+            <input
+              onkeyup="validateNumber()"
+              type="number"
+              name="number"
+              value="<%-userAddress.address[0].phone %>"
+              id="number"
+            />
           </div>
-        </div>
-        <div class="mt-4 d-flex">
-          <div>
-            <button class="button">
-              <span class="submit">Save changes</span>
-              <span class="loading"><i class="fa fa-refresh"></i></span>
-              <span class="check"><i class="fa fa-check"></i></span>
-            </button>
+          <div class="form mt-2">
+            <label for="pincode" class="fw-bold fs-6">Pincode</label>
+            <input
+              type="number"
+              name="pincode"
+              value="<%-userAddress.address[0].pinCode %>"
+              id="pincode"
+            />
           </div>
-          <div class="ms-4">
-            <div id="delete-button" class="delete-button">
-              <div class="delete-first-step" onclick="remove('<%-userAddress.address[0].uniqueNumber %>')">Remove</div>
-              <div id="step-two" class="delete-second-step">Deleted</div>
-              <div id="empty" class="empty"></div>
+          <div class="form mt-2">
+            <label for="house" class="fw-bold fs-6"
+              >Flat, House no., Building, Company, Apartment</label
+            >
+            <input
+              type="text"
+              name="house"
+              value="<%-userAddress.address[0].flatHouse %>"
+              id="house"
+            />
+          </div>
+          <div class="form mt-2">
+            <label for="area" class="fw-bold fs-6"
+              >Area, Street, Sector, Village</label
+            >
+            <input
+              type="text"
+              name="area"
+              value="<%-userAddress.address[0].areaStreet %>"
+              id="area"
+            />
+          </div>
+          <div class="form mt-2">
+            <label for="landmark" class="fw-bold fs-6">Landmark</label>
+            <input
+              type="text"
+              name="landmark"
+              value="<%-userAddress.address[0].landmark %>"
+              id="landmark"
+            />
+          </div>
+          <div class="d-flex">
+            <div class="form mt-2 flex-grow-1">
+              <label for="town" class="fw-bold fs-6">Town/City</label>
+              <input
+                type="text"
+                name="town"
+                value="<%-userAddress.address[0].townCity %>"
+                id="town"
+              />
+            </div>
+            <div class="form mt-2 flex-grow-1 ms-5">
+              <label for="state" class="fw-bold fs-6">State</label>
+              <select name="state" id="editState" class="statebox">
+                <option value="<%-userAddress.address[0].state %>">
+                  <%-userAddress.address[0].state %>
+                </option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
             </div>
           </div>
+          <div class="mt-4 d-flex">
+            <div>
+              <button
+                type="submit"
+                class="button"
+                onclick="submitAddress()"
+              >
+                <span class="submit">Save changes</span>
+                <span class="loading"><i class="fa fa-refresh"></i></span>
+                <span class="check"><i class="fa fa-check"></i></span>
+              </button>
+            </div>
+            <div class="ms-5">
+              <div id="delete-button" class="delete-button">
+                <div
+                  class="delete-first-step"
+                  onclick="remove('<%-userAddress.address[0].uniqueNumber %>')"
+                >
+                  Remove
+                </div>
+                <div id="step-two" class="delete-second-step">Deleted</div>
+                <div id="empty" class="empty"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-2 text-danger" id="showErr"></p>
         </div>
-      </div>
+      </form>
     </div>
+    <p id="unique" style="display: none;"><%-userAddress.address[0].uniqueNumber %></p>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -122,17 +174,19 @@
       const button = document.querySelector(".button");
       const submit = document.querySelector(".submit");
 
-      function toggleClass() {
-        this.classList.toggle("active");
-      }
 
-      function addClassFinished() {
-        this.classList.add("finished");
-      }
+        function toggleClass() {
+          this.classList.toggle("active");
+        }
+  
+        function addClassFinished() {
+          this.classList.add("finished");
+        }
+  
+        button.addEventListener("click", toggleClass);
+        button.addEventListener("transitionend", toggleClass);
+        button.addEventListener("transitionend", addClassFinished);
 
-      button.addEventListener("click", toggleClass);
-      button.addEventListener("transitionend", toggleClass);
-      button.addEventListener("transitionend", addClassFinished);
 
       const addClassAktive = (obj) => {
         obj.classList.add("aktive");
@@ -171,17 +225,70 @@
           }, 250);
         }
       });
-      function remove(uniqe){
-        axios.post('/editAddressPost' ,{uniqe})
-        .then(({data}) => {
-          if(data == "delted"){
-            setTimeout(() => {
-              window.location.href = "/profile"
-            }, 3500);
+      function remove(uniqe) {
+        axios
+          .post("/editAddressPost", { uniqe })
+          .then(({ data }) => {
+            
+            if (data == "delted") {
+              setTimeout(() => {
+                window.location.href = "/profile";
+              }, 3500);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      const submitAddressForm = document.getElementById("formControl");
+      submitAddressForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
+      function submitAddress() {
+        const firstName = document.getElementById("name");
+        const phone = document.getElementById("number");
+        const pinCode = document.getElementById("pincode");
+        const flatHouse = document.getElementById("house");
+        const areaStreet = document.getElementById("area");
+        const landmark = document.getElementById("landmark");
+        const townCity = document.getElementById("town");
+        const state = document.getElementById("editState");
+        const uniqueNumber = document.getElementById('unique').innerText;
+        const showErr = document.getElementById("showErr");
+
+          if (phone.value.length < 10 || phone.value.length > 10) {
+            phone.style.border = "1px solid red"
+          }else if (pinCode.value.length < 6 || pinCode.value.length > 6){
+            pinCode.style.border = "1px solid red"
+          } 
+          else {
+            axios
+              .post("/editAddressForm", {
+                uniqueNumber : uniqueNumber,
+                firstName: firstName.value,
+                phone: phone.value,
+                pinCode: pinCode.value,
+                flatHouse: flatHouse.value,
+                areaStreet: areaStreet.value,
+                landmark: landmark.value,
+                townCity: townCity.value,
+                state: state.value,
+              })
+              .then(({ data }) => {
+                if (data == "Fill all the field") {
+                  showErr.innerHTML = "Fill all the field";
+                  setTimeout(() => {
+                    showErr.innerHTML = "";
+                  }, 3000);
+                }
+                if(data == "done"){
+                  setTimeout(() => {
+                    window.location.href = '/profile'
+                  }, 4000);
+                }
+              });
           }
-        }).catch((err) => {
-          console.log(err);
-        });
       }
     </script>
   </body>

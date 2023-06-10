@@ -191,42 +191,74 @@ export async function searchProduct(req, res) {
 export async function profile(req, res) {
   try {
     const userProfile = await userHelper.findProfile(req.session.user);
-    const user = userProfile[0]
-    res.render("user/profile",{user});
+    const user = userProfile[0];
+    res.render("user/profile", { user });
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function postProfile(req,res){
+export async function postProfile(req, res) {
   try {
-    const mail = req.session.user
-    const {firstName,flatHouse,areaStreet,landmark,townCity,state} = req.body
-    if(firstName == "" || flatHouse == "" || areaStreet == "" || landmark == "" || townCity == "" || state == ""){
-      res.send("Fill all the field")
+    const mail = req.session.user;
+    const { firstName, flatHouse, areaStreet, landmark, townCity, state } =
+      req.body;
+    if (
+      firstName == "" ||
+      flatHouse == "" ||
+      areaStreet == "" ||
+      landmark == "" ||
+      townCity == "" ||
+      state == ""
+    ) {
+      res.send("Fill all the field");
+    } else {
+      const updated = await userHelper.insertAddress(req.body, mail);
+      if (updated) res.send("successfully added");
     }
-    else{
-      const updated = await userHelper.insertAddress(req.body,mail)
-      if(updated) res.send("successfully added")
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function editAddress(req, res){
-  try {
-    const userAddress = await userHelper.findUserAddress(req.params ,req.session.user)
-    res.render('user/editAddress',{userAddress})
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function editAddressPost(req ,res){
+export async function editAddress(req, res) {
   try {
-    const status = await userHelper.removeAddress(req.body ,req.session.user)
-    if(status) res.send("delted")
+    const userAddress = await userHelper.findUserAddress(
+      req.params,
+      req.session.user
+    );
+    res.render("user/editAddress", { userAddress });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteAddress(req, res) {
+  try {
+    const status = await userHelper.removeAddress(req.body, req.session.user);
+    if (status) res.send("delted");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function editAddressPost(req, res) {
+  try {
+    const { firstName, flatHouse, areaStreet, landmark, townCity, state } = req.body;
+    if (
+      firstName == "" ||
+      flatHouse == "" ||
+      areaStreet == "" ||
+      landmark == "" ||
+      townCity == "" ||
+      state == ""
+    ) {
+      res.send("Fill all the field");
+    } else {
+      const unique = req.body.uniqueNumber
+      const status = await userHelper.updateAddress(req.session.user,req.body,unique);
+      if(status) res.send("done")
+    }
   } catch (error) {
     console.log(error);
   }

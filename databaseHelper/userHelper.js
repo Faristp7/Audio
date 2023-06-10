@@ -55,4 +55,12 @@ export default {
       { new: true }
     );
   },
+  updateAddress : async (email,data,uniqe) => {
+    console.log(uniqe);
+    return await userModel.updateOne(
+      {email ,address : {$elemMatch : {uniqueNumber : uniqe}},
+    },
+    {$set : {"address.$" : data}}
+    )
+  }
 };

@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import {
+  deleteAddress,
   editAddress,
   editAddressPost,
   getHome,
@@ -36,6 +37,7 @@ router.post("/login", postUserLogin);
 router.post("/resendOtp", resendOtp);
 router.post("/searchProduct", searchProduct);
 router.post("/postProfile", postProfile);
-router.post("/editAddressPost", editAddressPost);
+router.post("/editAddressPost", deleteAddress);
+router.post("/editAddressForm",editAddressPost)
 
-export default router;
+export default router;  

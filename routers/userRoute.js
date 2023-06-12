@@ -15,6 +15,8 @@ import {
   searchProduct,
   shopSingle,
   signup,
+  updateEmailOtpSend,
+  updateUser,
   userSignup,
   verifyOtp,
 } from "../controller/userController.js";
@@ -39,5 +41,7 @@ router.post("/searchProduct", searchProduct);
 router.post("/postProfile", postProfile);
 router.post("/editAddressPost", deleteAddress);
 router.post("/editAddressForm",editAddressPost)
+router.post("/updateUser",updateUser)
+router.post('/profileOtpSend',updateEmailOtpSend)
 
 export default router;  

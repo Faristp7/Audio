@@ -9,6 +9,7 @@
 
 input[type="text"],
 input[type="number"],
+input[type="email"],
 select[name="state"],
 select[name="state"] {
     border: 1px solid rgb(102, 98, 98);
@@ -235,5 +236,13 @@ html {
   
   .delete-second-step.aktive {
     opacity: 1;
+  }
+
+  .updateUserButton{
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
   }
   

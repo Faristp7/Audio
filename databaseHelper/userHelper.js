@@ -56,11 +56,16 @@ export default {
     );
   },
   updateAddress : async (email,data,uniqe) => {
-    console.log(uniqe);
     return await userModel.updateOne(
       {email ,address : {$elemMatch : {uniqueNumber : uniqe}},
     },
     {$set : {"address.$" : data}}
+    )
+  },
+  updateUserForm : async(data) => {
+    const id = data.id
+    return await userModel.updateOne(
+      {_id : id}, {$set : {name : data.name , phone : data.phone ,email : data.email}}
     )
   }
 };

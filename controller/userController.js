@@ -244,7 +244,8 @@ export async function deleteAddress(req, res) {
 
 export async function editAddressPost(req, res) {
   try {
-    const { firstName, flatHouse, areaStreet, landmark, townCity, state } = req.body;
+    const { firstName, flatHouse, areaStreet, landmark, townCity, state } =
+      req.body;
     if (
       firstName == "" ||
       flatHouse == "" ||
@@ -255,10 +256,49 @@ export async function editAddressPost(req, res) {
     ) {
       res.send("Fill all the field");
     } else {
-      const unique = req.body.uniqueNumber
-      const status = await userHelper.updateAddress(req.session.user,req.body,unique);
-      if(status) res.send("done")
+      const unique = req.body.uniqueNumber;
+      const status = await userHelper.updateAddress(
+        req.session.user,
+        req.body,
+        unique
+      );
+      if (status) res.send("done");
     }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+var Profileotp;
+
+export async function updateUser(req, res) {
+  try {
+    const bodyOtp = req.body.otp;
+    if (bodyOtp) {
+      if (Profileotp == req.body.otp) {
+        req.session.user = req.body.email;
+        const status = await userHelper.updateUserForm(req.body);
+        res.send(status ? true : false);
+      } else {
+        res.send("otp incorrect");
+      }
+    } else {
+      req.session.user = req.body.email;
+      const status = await userHelper.updateUserForm(req.body);
+      res.send(status ? true : false);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updateEmailOtpSend(req, res) {
+  try {
+    Profileotp = Math.floor(1000 + Math.random() * 9000);
+
+    const bodyMail = req.body.email;
+    await sendOTP(bodyMail, Profileotp);
+    console.log(`Profileotp = ${Profileotp}`);
   } catch (error) {
     console.log(error);
   }

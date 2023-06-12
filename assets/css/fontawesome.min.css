@@ -170,50 +170,50 @@ fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 .fa-flip-both,
 fa-rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* Standard property for compatibility */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    /* Standard property for compatibility */
 }
-
 
 :root .fa-flip-both,
 :root .fa-flip-horizontal,

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/templatemo.css">
+    <link rel="stylesheet" href="/css/formAddress.css">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet"
@@ -60,33 +61,38 @@
                         <div class="card-body text-center">
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                                 alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                            <h5 class="my-3"><%-user.name %></h5>
-                            <p class=" mb-1"><%-user.phone %></p>
-                            <p class=" mb-4"><%-user.email %></p>
+                            <h5 class="my-3"><%-user.name%></h5>
+                            <p class=" mb-1"><%-user.phone%></p>
+                            <p class=" mb-4"><%-user.email%></p>
                             <div class="d-flex justify-content-center mb-2">
                                 <button type="button" class="btn btn-outline-primary ms-1" id="editProfile"
                                     onclick="editProfile()">Edit profile</button>
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4 mb-lg-0" id="savebtn" style="display: none;">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" name="name" id="name" placeholder="Enter your full name">
+                    
+                    <div class="card mb-4 mb-lg-0" style="display: none;" id="EditProfileDiv">
+                        <form id="updateUser">
+                         <div class="m-4 mx-5">
+                            <div class="inputBox my-3" >
+                                <input type="text" value="<%-user.name %>" id="userUpdatedName" placeholder="Name">
                             </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" id="email" placeholder="Enter your email">
+                            <div class="inputBox">
+                                <input type="number" value="<%-user.phone %>" id="userUpdatePhone" placeholder="Number">
                             </div>
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="number" name="phone" id="phone" placeholder="Enter your phone number">
+                            <div class="inputBox my-3">
+                                <input type="email" value="<%-user.email %>" onkeyup="emailTriggered()" id="userUpdatedEmail" placeholder="email">
+                            </div>
+                            <div class="inputBox my-3 d-flex justify-content-between" id="otpLabel">
+                                <input style="display: none;" type="number" class="w-50" id="userOtp" placeholder="Enter Otp">
+                                <button style="display: none;" id="resendOtpButton" onclick="sendOtp()" class="updateUserButton">Send otp</button>
+                            </div>
+                            <p id="updateFormErr" class="text-center fw-bold"></p>
+                            <div class="d-flex justify-content-center mt-3">
+                            <button id="submit" class="updateUserButton p-1 px-3" onclick="submitUserUpdate('<%-user._id %>')">Update</button>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-primary" onclick="saveButton()">Save</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-8 editPage">
@@ -297,6 +303,7 @@
         const errPhone = document.getElementById('phoneErr')
         const errPin = document.getElementById('pinErr')
         const errField = document.getElementById('allField')
+        const UserEmail = `<%-user.email%>`
 
         saveAddress.addEventListener("submitAddress", (e) => {
             e.preventDefault()
@@ -306,7 +313,7 @@
             save.style.display = "none"
         }
         function editProfile() {
-            let save = document.getElementById('savebtn')
+            let save = document.getElementById('EditProfileDiv')
             save.style.display = "block"
         }
         function editAddress() {
@@ -368,7 +375,61 @@
                 }, 3000);
             }
         }
-    </script>
+        // updateUser
+        const updateUser = document.getElementById('updateUser')
+
+        updateUser.addEventListener('submit',(e) => {
+            e.preventDefault()
+        })
+        const otpLabel = document.getElementById('otpLabel')
+        const resendOtp = document.getElementById('resendOtpButton')
+        const Otp = document.getElementById('userOtp')
+        const updateEmail = document.getElementById('userUpdatedEmail')
+
+        function emailTriggered(){
+            Otp.style.display = "block"
+            resendOtp.style.display = "block"
+            }
+         function sendOtp(){
+            axios.post('/profileOtpSend',{
+                email : updateEmail.value
+            })
+         }
+        function submitUserUpdate(id){
+            const updateName = document.getElementById('userUpdatedName')
+            const updatePhone = document.getElementById('userUpdatePhone')
+            const err = document.getElementById('updateFormErr')
+            
+            if(updatePhone.value.length < 10 || updatePhone.value.length > 10){
+                err.innerHTML = "Number must be 10 digits"
+                err.style.color = "red"
+                setTimeout(() => {
+                    err.innerHTML = ""
+                }, 3000);
+            }
+            else{
+                    axios.post('/updateUser',{
+                        id,
+                        name : updateName.value,
+                        email : updateEmail.value,
+                        phone : updatePhone.value,
+                        otp : Otp.value,
+                    })
+                    .then(({data}) => {
+                        if(data == "otp incorrect"){
+                            err.innerHTML = "otp Incorrect"
+                            err.style.color = "red"
+                            setTimeout(() => {
+                            err.innerHTML = ""
+                            }, 3000);
+                        }
+                        else if(data == true){
+                            window.location.href = "/profile"
+                        }
+                    })
+            }
+        }
+    </script>  
 </body>
 
 </html>

@@ -55,17 +55,26 @@ export default {
       { new: true }
     );
   },
-  updateAddress : async (email,data,uniqe) => {
+  updateAddress: async (email, data, uniqe) => {
     return await userModel.updateOne(
-      {email ,address : {$elemMatch : {uniqueNumber : uniqe}},
-    },
-    {$set : {"address.$" : data}}
+      { email, address: { $elemMatch: { uniqueNumber: uniqe } } },
+      { $set: { "address.$": data } }
+    );
+  },
+  updateUserForm: async (data) => {
+    const id = data.id;
+    return await userModel.updateOne(
+      { _id: id },
+      { $set: { name: data.name, phone: data.phone, email: data.email } }
+    );
+  },
+  addToCart : async (data ,email) => {
+    return await userModel.updateOne(
+      {email : email},
+      {$addToSet : {cart : data}}
     )
   },
-  updateUserForm : async(data) => {
-    const id = data.id
-    return await userModel.updateOne(
-      {_id : id}, {$set : {name : data.name , phone : data.phone ,email : data.email}}
-    )
+  findUser : async (email) => {
+    return await userModel.find({email} , {cart : 1})
   }
 };

@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema({
   },
   address:{
     type:Array,
+  },
+  cart : {
+    type:Array
   }
 },{timestamps:true});
 const userModel = mongoose.model("users", userSchema);

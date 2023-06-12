@@ -21,6 +21,7 @@ import {
   verifyOtp,
 } from "../controller/userController.js";
 import { userAuth } from "../middleware/userAuth.js";
+import { addToCart, addToCartPost } from "../controller/productController.js";
 
 const router = Router();
 router.get("/", getHome);
@@ -32,6 +33,7 @@ router.get("/signup", signup);
 router.get("/profile", profile);
 router.get("/pageNotFound", pageNotFound);
 router.get("/editAddress/:uniqueNumber", editAddress);
+router.get("/addToCart",userAuth, addToCart);
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);
@@ -40,8 +42,9 @@ router.post("/resendOtp", resendOtp);
 router.post("/searchProduct", searchProduct);
 router.post("/postProfile", postProfile);
 router.post("/editAddressPost", deleteAddress);
-router.post("/editAddressForm",editAddressPost)
-router.post("/updateUser",updateUser)
-router.post('/profileOtpSend',updateEmailOtpSend)
+router.post("/editAddressForm", editAddressPost);
+router.post("/updateUser", updateUser);
+router.post("/profileOtpSend", updateEmailOtpSend);
+router.post("/addToCartPost", userAuth, addToCartPost);
 
-export default router;  
+export default router;

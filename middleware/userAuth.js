@@ -2,7 +2,7 @@ export function userAuth(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-      res.redirect("/");
+      res.redirect("/login");
     }
   }
   

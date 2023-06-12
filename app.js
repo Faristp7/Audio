@@ -25,7 +25,7 @@ app.use(
     secret: "secrectkey",
     saveUninitialized: true,
     resave: false,
-    // store: MongoStore.create({ mongoUrl: process.env.MONGODB }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB }),
   })
 );
 

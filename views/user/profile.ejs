@@ -423,6 +423,13 @@
                             err.innerHTML = ""
                             }, 3000);
                         }
+                        else if(data == "enter otp"){
+                            err.innerHTML = "Enter Otp"
+                            err.style.color = "red"
+                            setTimeout(() => {
+                                err.innerHTML = ""
+                            }, 3000);
+                        }
                         else if(data == true){
                             window.location.href = "/profile"
                         }

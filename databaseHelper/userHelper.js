@@ -68,13 +68,22 @@ export default {
       { $set: { name: data.name, phone: data.phone, email: data.email } }
     );
   },
-  addToCart : async (data ,email) => {
+  addToCart: async (data, email) => {
     return await userModel.updateOne(
-      {email : email},
-      {$addToSet : {cart : data}}
-    )
+      { email: email },
+      { $addToSet: { cart: data } }
+    );
   },
-  findUser : async (email) => {
-    return await userModel.find({email} , {cart : 1})
-  }
+  findUser: async (email) => {
+    return await userModel.find({ email }, { cart: 1 });
+  },
+  findProductById: async (id) => {
+    return await productModel.find({ _id: id });
+  },
+  removeProduct: async (email, obj) => {
+    return await userModel.updateOne(
+      { email },
+      { $pull: { cart: { productId: obj.id } } }
+    );
+  },
 };

@@ -6,7 +6,8 @@ export async function addToCart(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const product = await userHelper.findProductById(productId);
     const count = product.length;
-    res.render("user/cartPage", { product, count });
+    const total = product.reduce((sum, product) => sum + product.productPrice, 0);
+    res.render("user/cartPage", { product, count ,total});
   } catch (error) {
     console.log(error);
   }

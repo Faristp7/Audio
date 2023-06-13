@@ -54,7 +54,7 @@
                           </button>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h6 class="mb-0" id="productPrice">₹ <%-element.productPrice %></h6>
+                          <h6 class="mb-0 productPrice" id="productPrice-<%=index %>">₹ <%-element.productPrice %></h6>
                         </div>
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                           <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')" class="text-muted"><i
@@ -75,8 +75,8 @@
                     <hr class="my-4">
 
                     <div class="d-flex justify-content-between mb-4">
-                      <h5 class="text-uppercase">items 1</h5>
-                      <h5>₹ 132.00</h5>
+                      <h5 class="text-uppercase">Items</h5>
+                      <h5><%-count %></h5>
                     </div>
 
                     <h5 class="text-uppercase mb-3">Shipping</h5>
@@ -97,10 +97,8 @@
 
                     <div class="d-flex justify-content-between mb-5">
                       <h5 class="text-uppercase">Total price</h5>
-                      <h5 id="totalPrice">₹ 137.00</h5>
+                      <h5 id="totalPrice">₹ <%-total %></h5>
                     </div>
-                    <!-- <button type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Proceed to
-                      buy</button> -->
                     <a href="/checkout">
                       <button class="button_slide slide_right">Checkout</button>
                     </a>
@@ -119,6 +117,7 @@
     crossorigin="anonymous"></script>
   <script>
     const productPrice = document.getElementById('productPrice')
+    const productPriceElement = document.getElementsByClassName('productPrice')
     const totalPrice = document.getElementById('totalPrice')
     const productRemovedPopup = document.getElementById('productRemovedPopup')
     function removeProduct(id, index) {
@@ -128,11 +127,21 @@
             const productElement = document.getElementById(`product-${index}`)
             if (productElement) {
               productElement.remove()
+              updateTotalPrice()
             }
           }
         }).catch((err) => {
           console.log(err);
         });
+    }
+
+    function updateTotalPrice(){
+      let total = 0
+      for(let i=0 ; i<productPriceElement.length;i++){
+        const productPrice = parseFloat(productPriceElement[i].textContent.replace('₹',""))
+        total += productPrice
+      }
+      totalPrice.textContent = `₹ ${total}`
     }
   </script>
 </body>

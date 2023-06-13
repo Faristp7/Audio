@@ -74,3 +74,13 @@ a {
   width: 100%;
 }
 
+.COUPON{
+  border: none;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+}
+.COUPON:active{
+  background-color: rgb(255, 255, 255);
+  color: black;
+}

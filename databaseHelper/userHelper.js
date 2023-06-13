@@ -86,4 +86,7 @@ export default {
       { $pull: { cart: { productId: obj.id } } }
     );
   },
+  findAddress: async (email) => {
+    return await userModel.find({ email }, { address: 1 });
+  },
 };

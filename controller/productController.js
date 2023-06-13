@@ -29,3 +29,12 @@ export async function removeProduct(req, res) {
     console.log(error);
   }
 }
+
+export async function checkout(req,res) {
+  try {
+    const [{address}] = await userHelper.findAddress(req.session.user)
+    res.render("user/checkout" ,{address}) 
+  } catch (error) {
+    console.log(error);
+  }
+}

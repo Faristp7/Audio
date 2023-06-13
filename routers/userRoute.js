@@ -24,6 +24,7 @@ import { userAuth } from "../middleware/userAuth.js";
 import {
   addToCart,
   addToCartPost,
+  checkout,
   removeProduct,
 } from "../controller/productController.js";
 
@@ -38,6 +39,7 @@ router.get("/profile", profile);
 router.get("/pageNotFound", pageNotFound);
 router.get("/editAddress/:uniqueNumber", editAddress);
 router.get("/addToCart", userAuth, addToCart);
+router.get("/checkout",checkout)
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);

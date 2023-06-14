@@ -14,7 +14,7 @@ export async function addToCart(req, res) {
 }
 
 export async function addToCartPost(req, res) {
-  try {
+  try { 
     const status = await userHelper.addToCart(req.body, req.session.user);
     status ? res.send("Added to Cart") : res.send("failed");
   } catch (error) {
@@ -35,6 +35,14 @@ export async function checkout(req,res) {
   try {
     const [{address}] = await userHelper.findAddress(req.session.user)
     res.render("user/checkout" ,{address}) 
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function quantityController(req,res){
+  try {
+    await userHelper.quantityController(req.session.user,req.body)
   } catch (error) {
     console.log(error);
   }

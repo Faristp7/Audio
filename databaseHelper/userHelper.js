@@ -69,9 +69,10 @@ export default {
     );
   },
   addToCart: async (data, email) => {
+    let quantity = { ...data, quantity: 1 };
     return await userModel.updateOne(
       { email: email },
-      { $addToSet: { cart: data } }
+      { $addToSet: { cart: quantity } }
     );
   },
   findUser: async (email) => {
@@ -88,5 +89,12 @@ export default {
   },
   findAddress: async (email) => {
     return await userModel.find({ email }, { address: 1 });
+  },
+  quantityController: async (email, obj) => {
+    const quantityModifier = obj.deside ? 1 : -1;
+    return await userModel.updateOne(
+      { email, "cart.productId": obj.id },
+      { $inc: { "cart.$.quantity": quantityModifier } }
+    );
   },
 };

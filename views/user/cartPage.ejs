@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cart</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="/css/login.css" />
 </head>
 
-<body style="background-color: #c7c7c7;">
+<body style="background-color: #c7c7c7">
   <section class="h-100 h-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px">
             <div class="card-body p-0">
               <div class="row g-0">
                 <div class="col-lg-8">
@@ -29,32 +29,36 @@
                         <%=count %> Items
                       </h6>
                     </div>
-                    <hr class="my-4">
+                    <hr class="my-4" />
                     <% product.forEach((element ,index)=> { %>
                       <div id="product-<%=index %>" class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 col-lg-2 col-xl-2">
-                          <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone">
+                          <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone" />
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
                           <h6 class="text-muted"><%-element.category %></h6>
-                          <h6 class="text-black mb-0"><%-element.productName %></h6>
+                          <h6 class="text-black mb-0">
+                            <%-element.productName %>
+                          </h6>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                           <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            onclick="qunantityDown('<%-element._id %>','<%=index %>')">
                             <i class="fas fa-minus"></i>
                           </button>
 
-                          <input id="form1" min="1" max="<%-element.quantity %>" name="quantity" value="1" type="number"
+                          <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity" value="1" type="number"
                             class="form-control form-control-sm" disabled />
 
                           <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                            onclick="qunantityUp('<%-element._id %>','<%=index %>')">
                             <i class="fas fa-plus"></i>
                           </button>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h6 class="mb-0 productPrice" id="productPrice-<%=index %>">₹ <%-element.productPrice %></h6>
+                          <h6 class="mb-0 productPrice" id="productPrice-<%=index %>">
+                            ₹ <%-element.productPrice %>.00
+                          </h6>
                         </div>
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                           <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')" class="text-muted"><i
@@ -62,17 +66,19 @@
                         </div>
                       </div>
                       <% }) %>
-                        <hr class="my-4">
+                        <hr class="my-4" />
                         <div class="pt-5">
-                          <h6 class="mb-0"><a href="/shop/" class="text-body"><i
-                                class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                          <h6 class="mb-0">
+                            <a href="/shop/" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                              to shop</a>
+                          </h6>
                         </div>
                   </div>
                 </div>
                 <div class="col-lg-4 bg-grey">
                   <div class="p-5">
                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                    <hr class="my-4">
+                    <hr class="my-4" />
 
                     <div class="d-flex justify-content-between mb-4">
                       <h5 class="text-uppercase">Items</h5>
@@ -88,19 +94,21 @@
                         <option value="3">5 pm to 8 pm</option>
                       </select>
                     </div>
-                    <hr class="my-4">
+                    <hr class="my-4" />
                     <div class="mb-4 pb-2 d-flex">
-                      <input type="text" name="" id="Apply coupon" class="ps-3 py-1" placeholder="COUPON">
+                      <input type="text" name="" id="Apply coupon" class="ps-3 py-1" placeholder="COUPON" />
                       <button class="ms-2 px-4 COUPON">Apply</button>
                     </div>
-                    <hr class="my-4">
+                    <hr class="my-4" />
 
                     <div class="d-flex justify-content-between mb-5">
                       <h5 class="text-uppercase">Total price</h5>
                       <h5 id="totalPrice">₹ <%-total %></h5>
                     </div>
                     <a href="/checkout">
-                      <button class="button_slide slide_right">Checkout</button>
+                      <button class="button_slide slide_right">
+                        Checkout
+                      </button>
                     </a>
                   </div>
                 </div>
@@ -116,33 +124,40 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
   <script>
-    const productPrice = document.getElementById('productPrice')
-    const productPriceElement = document.getElementsByClassName('productPrice')
-    const totalPrice = document.getElementById('totalPrice')
-    const productRemovedPopup = document.getElementById('productRemovedPopup')
     function removeProduct(id, index) {
-      axios.post('/removeProduct', { id })
+      axios
+        .post("/removeProduct", { id })
         .then(({ data }) => {
           if (data == true) {
-            const productElement = document.getElementById(`product-${index}`)
+            const productElement = document.getElementById(
+              `product-${index}`
+            );
             if (productElement) {
-              productElement.remove()
-              updateTotalPrice()
+              productElement.remove();
+              updateTotalPrice();
             }
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log(err);
         });
+    }  
+
+    function qunantityUp(id ,index){
+    const updateQunatiy = document.getElementById(`form1-${index}`)
+      updateQunatiy.value = Number(updateQunatiy.value) + 1
+      axios.post('/quantity',{id ,deside:true})
+    }
+    function qunantityDown(id ,index){
+      const updateQunatiy = document.getElementById(`form1-${index}`)
+      const currentValue = Number(updateQunatiy.value) - 1
+      const minValue = 1
+      if(currentValue > minValue){
+        updateQunatiy.value = currentValue -1
+        axios.post('/quantity',{id ,deside:false})
+      }
     }
 
-    function updateTotalPrice(){
-      let total = 0
-      for(let i=0 ; i<productPriceElement.length;i++){
-        const productPrice = parseFloat(productPriceElement[i].textContent.replace('₹',""))
-        total += productPrice
-      }
-      totalPrice.textContent = `₹ ${total}`
-    }
   </script>
 </body>
 

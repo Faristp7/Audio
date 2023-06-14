@@ -25,6 +25,7 @@ import {
   addToCart,
   addToCartPost,
   checkout,
+  quantityController,
   removeProduct,
 } from "../controller/productController.js";
 
@@ -53,5 +54,6 @@ router.post("/updateUser", updateUser);
 router.post("/profileOtpSend", updateEmailOtpSend);
 router.post("/addToCartPost", userAuth, addToCartPost);
 router.post("/removeProduct", removeProduct);
+router.post('/quantity',quantityController)
 
 export default router;

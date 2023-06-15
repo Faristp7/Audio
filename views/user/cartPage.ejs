@@ -42,16 +42,15 @@
                           </h6>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button class="btn btn-link px-2"
-                            onclick="qunantityDown('<%-element._id %>','<%=index %>')">
+                          <button class="btn btn-link px-2" onclick="qunantityDown('<%-element._id %>','<%=index %>')">
                             <i class="fas fa-minus"></i>
                           </button>
 
-                          <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity" value="1" type="number"
-                            class="form-control form-control-sm" disabled />
+                          <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
+                            value="<%= quantity[index] %>" type="number" class="form-control form-control-sm"
+                            disabled />
 
-                          <button class="btn btn-link px-2"
-                            onclick="qunantityUp('<%-element._id %>','<%=index %>')">
+                          <button class="btn btn-link px-2" onclick="qunantityUp('<%-element._id %>','<%= index %>')">
                             <i class="fas fa-plus"></i>
                           </button>
                         </div>
@@ -141,23 +140,31 @@
         .catch((err) => {
           console.log(err);
         });
-    }  
-
-    function qunantityUp(id ,index){
-    const updateQunatiy = document.getElementById(`form1-${index}`)
-      updateQunatiy.value = Number(updateQunatiy.value) + 1
-      axios.post('/quantity',{id ,deside:true})
     }
-    function qunantityDown(id ,index){
-      const updateQunatiy = document.getElementById(`form1-${index}`)
-      const currentValue = Number(updateQunatiy.value) - 1
-      const minValue = 1
-      if(currentValue > minValue){
-        updateQunatiy.value = currentValue -1
-        axios.post('/quantity',{id ,deside:false})
+
+    function qunantityUp(id, index) {
+      const currentElement = document.getElementById(`form1-${index}`);
+      if(currentElement.value < currentElement.max){
+        axios.post("/quantity", { id, deside: true }).then(({ data }) => {
+          if (data == true) {
+            currentElement.value = Number(currentElement.value) + 1;
+          }
+        }).catch((err) => {
+          console.log(err);
+        });
       }
     }
-
+    function qunantityDown(id, index) {
+      const minValue = 1;
+      const currentElement = document.getElementById(`form1-${index}`);
+      if (currentElement.value > minValue) {
+        axios.post("/quantity", { id, deside: false }).then(({ data }) => {
+          if (data == true) {
+            currentElement.value = Number(currentElement.value) - 1;
+          }
+        });
+      }
+    }
   </script>
 </body>
 

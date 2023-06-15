@@ -97,4 +97,7 @@ export default {
       { $inc: { "cart.$.quantity": quantityModifier } }
     );
   },
+  quantityFinder : async (email) => {
+    return await userModel.find({email})
+  }
 };

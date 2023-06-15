@@ -6,13 +6,11 @@ export async function addToCart(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = user[0]?.cart.map((item) => item.quantity);
     const product = await userHelper.findProductById(productId);
+    const productPrice = product.map((product) => product.productPrice);
     
     const count = product.length;
-    const total = product.reduce(
-      (sum, product) => sum + product.productPrice,
-      0
-    );
-    res.render("user/cartPage", { product, count, total ,quantity});
+    const total = product.reduce((sum , {productPrice} , index) => sum + productPrice * quantity[index],0)
+    res.render("user/cartPage", { product, count, total, quantity });
   } catch (error) {
     console.log(error);
   }
@@ -47,8 +45,11 @@ export async function checkout(req, res) {
 
 export async function quantityController(req, res) {
   try {
-    const status =  await userHelper.quantityController(req.session.user, req.body);
-    status ? res.send(true) : res.send(false)
+    const status = await userHelper.quantityController(
+      req.session.user,
+      req.body
+    );
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }

@@ -143,7 +143,8 @@
     }
 
     function qunantityUp(id, index) {
-      const currentElement = document.getElementById(`form1-${index}`);
+      const currentElement = document.getElementById(`form1-${index}`)
+      const totalPriceElement = document.getElementById('totalPrice')
       if(currentElement.value < currentElement.max){
         axios.post("/quantity", { id, deside: true }).then(({ data }) => {
           if (data == true) {
@@ -155,9 +156,8 @@
       }
     }
     function qunantityDown(id, index) {
-      const minValue = 1;
       const currentElement = document.getElementById(`form1-${index}`);
-      if (currentElement.value > minValue) {
+      if (currentElement.value > 1) {
         axios.post("/quantity", { id, deside: false }).then(({ data }) => {
           if (data == true) {
             currentElement.value = Number(currentElement.value) - 1;

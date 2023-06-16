@@ -102,7 +102,7 @@
 
                     <div class="d-flex justify-content-between mb-5">
                       <h5 class="text-uppercase">Total price</h5>
-                      <h5 id="totalPrice"><%-total %> </h5>
+                      <h5 id="totalPrice"><%-total %></h5>
                     </div>
                     <a href="/checkout">
                       <button class="button_slide slide_right">
@@ -123,7 +123,6 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
   <script>
-
     function removeProduct(id, index) {
       axios
         .post("/removeProduct", { id })
@@ -134,7 +133,7 @@
             );
             if (productElement) {
               productElement.remove();
-              updateTotalPrice();
+              window.location.href = "addToCart";
             }
           }
         })
@@ -144,52 +143,32 @@
     }
 
     function qunantityUp(id, index) {
-      const currentElement = document.getElementById(`form1-${index}`)
-      const indexValue = parseInt(currentElement.value) + 1
+      const currentElement = document.getElementById(`form1-${index}`);
+      const indexValue = parseInt(currentElement.value) + 1;
 
       if (currentElement.value < currentElement.max) {
-        axios.post("/quantity", { id, deside: true }).then(({ data }) => {
-          if (data == true) {
-            priceController(true , indexValue)
-            currentElement.value = Number(currentElement.value) + 1;
-          }
-        }).catch((err) => {
-          console.log(err);
-        });
+        axios
+          .post("/quantity", { id, deside: true })
+          .then(({ data }) => {
+            if (data == true) {
+              currentElement.value = Number(currentElement.value) + 1;
+              window.location.href = "addToCart";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
     function qunantityDown(id, index) {
-
       const currentElement = document.getElementById(`form1-${index}`);
       if (currentElement.value > 1) {
         axios.post("/quantity", { id, deside: false }).then(({ data }) => {
           if (data == true) {
-            priceController(false)
             currentElement.value = Number(currentElement.value) - 1;
+            window.location.href = "addToCart";
           }
         });
-      }
-    }
-
-    let totalPriceElement = document.getElementById('totalPrice')
-    let totalPriceText = totalPriceElement.innerText
-    let totalPrice = parseInt(totalPriceText.replace(/\D/g, ""))  // total sum price
-
-    var productPrice  = []
-    var productPriceElements = document.getElementsByClassName("productPrice")
-    for(var i=0 ;i < productPriceElements.length ;i++){
-      var productPriceElement = productPriceElements[i]
-      var productPriceText = productPriceElement.innerText
-      productPriceNumber = parseInt(productPriceText.replace(/\D/g, ""))
-      productPrice.push(productPriceNumber)
-    }
-
-    function priceController(val , quantityvalue) {
-      if (val) {
-        console.log(quantityvalue);
-      }
-      else {
-        console.log("no");
       }
     }
   </script>

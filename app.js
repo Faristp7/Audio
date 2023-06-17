@@ -16,7 +16,13 @@ app.use(logger("dev"));
 app.set("view engine", "ejs");
 const __dirname = path.resolve();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
+
+app.use(bodyParser.urlencoded({limit:"50mb" , extended: true }));
 app.use(bodyParser.json());
 
 // session
@@ -29,11 +35,6 @@ app.use(
   })
 );
 
-app.use(
-  express.json({
-    limit: "50mb",
-  })
-);
 app.use((req, res, next) => {
   res.header("Cache-Control", "no-cache, private, no-store, must-revalidate");
   next();

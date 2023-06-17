@@ -283,7 +283,7 @@ export async function updateUser(req, res) {
         res.send("otp incorrect");
       }
     } else {
-      if ((req.session.user == req.body.email)) {
+      if (req.session.user == req.body.email) {
         req.session.user = req.body.email;
         const status = await userHelper.updateUserForm(req.body);
         res.send(status ? true : false);

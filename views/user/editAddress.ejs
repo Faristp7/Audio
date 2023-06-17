@@ -231,8 +231,9 @@
           .then(({ data }) => {
             
             if (data == "delted") {
+              const previousUrl = document.referrer;
               setTimeout(() => {
-                window.location.href = "/profile";
+                window.location.href = previousUrl;
               }, 3500);
             }
           })
@@ -283,8 +284,9 @@
                   }, 3000);
                 }
                 if(data == "done"){
+                  const previousUrl = document.referrer;
                   setTimeout(() => {
-                    window.location.href = '/profile'
+                    window.location.href = previousUrl
                   }, 4000);
                 }
               });

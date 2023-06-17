@@ -11,6 +11,7 @@ export async function addToCart(req, res) {
     const count = product.length;
     const total = product.reduce((sum , {productPrice} , index) => sum + productPrice * quantity[index],0)
     res.render("user/cartPage", { product, count, total, quantity });
+    return {count , total}
   } catch (error) {
     console.log(error);
   }

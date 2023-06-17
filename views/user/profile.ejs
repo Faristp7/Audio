@@ -104,6 +104,7 @@
                                 <li class="ps-3 d-flex align-items-center text-center justify-content-between">
                                     <p class="mb-0 fw-bolder"><%-i.firstName%>, <%-i.phone%>, <%-i.pinCode%>, <%-i.flatHouse%>, <%-i.areaStreet %>, <%-i.landmark %>, <%-i.townCity %>, <%-i.state %></p>
                                     <div class="me-5">
+                                        
                                         <a href="/editAddress/<%-i.uniqueNumber %>"><i class="ms-2 fa-solid fa-pen-to-square"></i></a>
                                     </div>
                                 </li>
@@ -333,8 +334,9 @@
                 state: state.value,
             })
             .then(({data}) => {
+                const previousUrl = document.referrer;
                 if(data == "successfully added"){
-                   window.location.href = '/profile'
+                   window.location.href = previousUrl
                 }
                 else if(data == "Fill all the field"){
                     errField.innerHTML = "Fill all the field"

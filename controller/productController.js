@@ -1,5 +1,7 @@
 import userHelper from "../databaseHelper/userHelper.js";
 
+var totalVal = 0;
+var productCount = 0;
 export async function addToCart(req, res) {
   try {
     const user = await userHelper.findUser(req.session.user);
@@ -7,11 +9,15 @@ export async function addToCart(req, res) {
     const quantity = user[0]?.cart.map((item) => item.quantity);
     const product = await userHelper.findProductById(productId);
     const productPrice = product.map((product) => product.productPrice);
-    
+
     const count = product.length;
-    const total = product.reduce((sum , {productPrice} , index) => sum + productPrice * quantity[index],0)
+    const total = product.reduce(
+      (sum, { productPrice }, index) => sum + productPrice * quantity[index],
+      0
+    );
+    totalVal = total;
+    productCount = count;
     res.render("user/cartPage", { product, count, total, quantity });
-    return {count , total}
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +44,7 @@ export async function removeProduct(req, res) {
 export async function checkout(req, res) {
   try {
     const [{ address }] = await userHelper.findAddress(req.session.user);
-    res.render("user/checkout", { address });
+    res.render("user/checkout", { address, totalVal, productCount });
   } catch (error) {
     console.log(error);
   }

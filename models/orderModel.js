@@ -13,10 +13,6 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    createdAt: {
-      type: Date,
-      default: new Date(),
-    },
     userId: {
       type: String,
       required: true,
@@ -28,6 +24,10 @@ const orderSchema = new mongoose.Schema(
     total : {
         type : Number,
         default : 0
+    },
+    products : {
+      type : Array,
+      required : true
     }
   },
   { timestamps: true }

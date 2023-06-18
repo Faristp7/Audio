@@ -31,34 +31,38 @@
                     </div>
                     <h5>Select your address</h5>
                     <hr class="my-4" />
-                    <div class="align-items-center">
-                      <% address.forEach( (i ,index)=> { %>
-                        <div class="col-md-12 col-lg-12 col-xl-12 mb-4">
-                          <div class="d-flex align-items-center">
-                            <input type="radio" id="address <%-index + 1  %>" name="address" value="<%-i.uniqueNumber %>"/>
-                            <label for="address <%-index + 1 %>" class="ms-3 text-black mb-0 fw-bolder">
-                              <%-i.firstName %> , <%-i.phone %> , <%-i.pinCode %>, <%-i.flatHouse %> , <%-i.areaStreet %>,
-                                        <%-i.landmark %> , <%-i.townCity %>, <%-i.state %>
-                            </label>
-                            <a href="/editAddress/<%-i.uniqueNumber %>"><i
-                                class="fa-solid fa-pen-to-square ms-2"></i></a>
+                    <form id="addressForm">
+                      <div class="align-items-center">
+                        <% address.forEach( (i ,index)=> { %>
+                          <div class="col-md-12 col-lg-12 col-xl-12 mb-4">
+                            <div class="d-flex align-items-center">
+                              <input onclick="selectedAddress(`<%-i.uniqueNumber %>`)" type="radio"
+                                id="addressId <%-i.uniqueNumber %>" name="address" value="<%-i.uniqueNumber %>" />
+                              <label for="address <%-index + 1 %>" class="ms-3 text-black mb-0 fw-bolder">
+                                <%-i.firstName %> , <%-i.phone %> , <%-i.pinCode %>, <%-i.flatHouse %> , <%-i.areaStreet
+                                          %>,
+                                          <%-i.landmark %> , <%-i.townCity %>, <%-i.state %>
+                              </label>
+                              <a href="/editAddress/<%-i.uniqueNumber %>"><i
+                                  class="fa-solid fa-pen-to-square ms-2"></i></a>
+                            </div>
                           </div>
-                        </div>
-                        <% }) %>
-                    </div>
+                          <% }) %>
+                      </div>
+                    </form>
                     <div>
                       <a href="/profile"><i class="fa-solid fa-plus"></i> Add new Address</a>
                     </div>
                     <hr class="my-3" />
                   </div>
-                  <div class="mx-5 mb-5" id="paymentDiv" style="display: none;">
+                  <div class="mx-5 mb-5" id="paymentDiv" style="display: none">
                     <div>
                       <h3 class="mb-4">Select a payment method</h3>
                     </div>
-                    <input type="radio" id="Cod" value="COD" name="paymentMethod">
+                    <input type="radio" id="Cod" value="COD" name="paymentMethod" />
                     <label for="Cod" class="fw-bolder text-secondary">Cash on Delivery/Pay on Delivery</label>
-                    <br>
-                    <input type="radio" id="online" name="paymentMethod" value="Online">
+                    <br />
+                    <input type="radio" id="online" name="paymentMethod" value="Online" />
                     <label for="online" class="fw-bolder text-secondary mt-2">Online payment</label>
                   </div>
                 </div>
@@ -77,13 +81,14 @@
                       <h5 class="text-uppercase">Order Total</h5>
                       <h5 id="totalPrice">₹ <%-totalVal %></h5>
                     </div>
-                    <p class="text-secondary" style="line-height: 20px;">
-                      Choose a payment method to continue checking out. You will still have a chance to review and edit
-                      your order before it is final.
+                    <p class="text-secondary" style="line-height: 20px">
+                      Choose a payment method to continue checking out. You
+                      will still have a chance to review and edit your order
+                      before it is final.
                     </p>
                     <a href="#">
-                      <button class="button_slide slide_right " onclick="orderButton()">
-                        Use this address
+                      <button class="button_slide slide_right" id="selectButton" onclick="orderButton()">
+                        Use this Address
                       </button>
                     </a>
                   </div>
@@ -101,11 +106,33 @@
     crossorigin="anonymous"></script>
 
   <script>
-    const productPrice = parseInt(document.getElementById('totalPrice').innerHTML.replace(/[^\d.-]/g, ''));
-  
+    const productPrice = parseInt(
+      document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")
+    );
+    const address = document.getElementById("addressId");
+    const selectButton = document.getElementById("selectButton");
+    const paymentMethodRadio = document.getElementsByName('paymentMethod')
+    let productIdForm;
+
+    function selectedAddress(id) {
+      // for getting id from form
+      productIdForm = id;
+    }
+
     function orderButton() {
-      const paymentDiv = document.getElementById('paymentDiv')
-      paymentDiv.style.display = 'block'
+      const paymentDiv = (document.getElementById(
+        "paymentDiv"
+      ).style.display = "block");
+      selectButton.innerHTML = "Procced to payment";
+      const productId = productIdForm;
+      let selectedPaymentMethod
+      for (const radio of paymentMethodRadio) {
+        if (radio.checked) {
+          selectedPaymentMethod = radio.value
+          break
+        }
+      }
+      axios.post("/checkoutPost", { productId, selectedPaymentMethod });
     }
   </script>
 </body>

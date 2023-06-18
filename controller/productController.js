@@ -61,3 +61,11 @@ export async function quantityController(req, res) {
     console.log(error);
   }
 }
+
+export async function checkoutPost(req,res){
+  try {
+    console.log(req.body);
+  } catch (error) {
+    console.log(error);
+  }
+}

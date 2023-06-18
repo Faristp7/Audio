@@ -25,6 +25,7 @@ import {
   addToCart,
   addToCartPost,
   checkout,
+  checkoutPost,
   quantityController,
   removeProduct,
 } from "../controller/productController.js";
@@ -40,7 +41,7 @@ router.get("/profile", profile);
 router.get("/pageNotFound", pageNotFound);
 router.get("/editAddress/:uniqueNumber", editAddress);
 router.get("/addToCart", userAuth, addToCart);
-router.get("/checkout",checkout)
+router.get("/checkout", checkout);
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);
@@ -54,6 +55,7 @@ router.post("/updateUser", updateUser);
 router.post("/profileOtpSend", updateEmailOtpSend);
 router.post("/addToCartPost", userAuth, addToCartPost);
 router.post("/removeProduct", removeProduct);
-router.post('/quantity',quantityController)
+router.post("/quantity", quantityController);
+router.post("/checkoutPost", checkoutPost);
 
 export default router;

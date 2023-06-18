@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="col-lg-4 bg-grey">
-                  <div class="p-5">
+                  <div class="p-5 pb-3">
                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                     <hr class="my-4" />
 
@@ -87,10 +87,17 @@
                       before it is final.
                     </p>
                     <a href="#">
-                      <button class="button_slide slide_right" id="selectButton" onclick="orderButton()">
+                      <button class="button_slide slide_right" id="selectButton" onclick="selectAddressbtn()">
                         Use this Address
                       </button>
                     </a>
+                    <a href="#">
+                      <button class="button_slide slide_right" id="paymentBtn" onclick="selectPaymentBtn()"
+                        style="display: none;">
+                        Procced to Payment
+                      </button>
+                    </a>
+                    <p class="text-danger mt-3" id="errText"></p>
                   </div>
                 </div>
               </div>
@@ -111,20 +118,33 @@
     );
     const address = document.getElementById("addressId");
     const selectButton = document.getElementById("selectButton");
+    const paymentBtn = document.getElementById("paymentBtn");
     const paymentMethodRadio = document.getElementsByName('paymentMethod')
+    const errText = document.getElementById('errText')
     let productIdForm;
 
     function selectedAddress(id) {
-      // for getting id from form
-      productIdForm = id;
+      productIdForm = id;          // for getting id from form
     }
 
-    function orderButton() {
-      const paymentDiv = (document.getElementById(
-        "paymentDiv"
-      ).style.display = "block");
-      selectButton.innerHTML = "Procced to payment";
+    function selectAddressbtn() {
       const productId = productIdForm;
+      if (!productId) {
+        errText.innerText = "Make sure that you selected the address"
+        setTimeout(() => {
+          errText.innerText = ""
+        }, 3000);
+      }
+      else {
+        const paymentDiv = (document.getElementById(
+          "paymentDiv"
+        ).style.display = "block");
+        selectButton.style.display = "none"
+        paymentBtn.style.display = "block"
+      }
+    }
+
+    function selectPaymentBtn() {
       let selectedPaymentMethod
       for (const radio of paymentMethodRadio) {
         if (radio.checked) {
@@ -132,7 +152,11 @@
           break
         }
       }
-      axios.post("/checkoutPost", { productId, selectedPaymentMethod });
+      axios.post("/checkoutPost", { productId, selectedPaymentMethod })
+        .then(({ data }) => {
+        }).catch((err) => {
+          console.log(err);
+        });
     }
   </script>
 </body>

@@ -62,7 +62,7 @@ export async function quantityController(req, res) {
   }
 }
 
-export async function checkoutPost(req,res){
+export async function checkoutPost(req, res) {
   try {
     console.log(req.body);
   } catch (error) {

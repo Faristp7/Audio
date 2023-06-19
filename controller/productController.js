@@ -88,6 +88,10 @@ export async function checkoutPost(req, res) {
       totalVal,
       quantity
     );
+    
+    const cartStatus = status ? await userHelper.destroyCart(req.session.user) : undefined
+    const completeStatus = cartStatus ? await userHelper.quantityMinus(productId) : undefined
+    completeStatus ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

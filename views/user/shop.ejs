@@ -180,7 +180,7 @@ ul{
                 </div>
                     <div class="row">
                         <% product.forEach(element => { %>
-                            <% if (element.productList) { %>                           
+                            <% if (element.productList && element.quantity !== 0) { %>                           
                         <div class="col-md-4 mb-5">
                             <div class="card mb-4 product-wap rounded-0">
                                 <a href="/shopSingle/<%-element._id %>"><div class="card rounded-0">

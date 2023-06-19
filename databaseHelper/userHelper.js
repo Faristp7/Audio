@@ -101,7 +101,7 @@ export default {
   quantityFinder: async (email) => {
     return await userModel.find({ email });
   },
-  checkoutSave: async (address, paymentType, userId, total,products) => {
+  checkoutSave: async (address, paymentType, userId, total, products) => {
     const orderSchema = new orderModel({
       address,
       userId,
@@ -111,4 +111,10 @@ export default {
     });
     return await orderSchema.save();
   },
+  destroyCart: async (email) => {
+    return await userModel.updateOne({ email }, { $unset: { cart: "" } });
+  },
+  quantityMinus : async (id) => {
+    return await productModel.updateOne({_id : id} , {$inc : {quantity : -1}})
+  } 
 };

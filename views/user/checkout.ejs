@@ -121,15 +121,15 @@
     const paymentBtn = document.getElementById("paymentBtn");
     const paymentMethodRadio = document.getElementsByName('paymentMethod')
     const errText = document.getElementById('errText')
-    let productIdForm;
+    let addressIdForm;
 
     function selectedAddress(id) {
-      productIdForm = id;          // for getting id from form
+      addressIdForm = id;          // for getting id from form
     }
 
     function selectAddressbtn() {
-      const productId = productIdForm;
-      if (!productId) {
+      const addressId = addressIdForm;
+      if (!addressId) {
         errText.innerText = "Make sure that you selected the address"
         setTimeout(() => {
           errText.innerText = ""
@@ -145,18 +145,27 @@
     }
 
     function selectPaymentBtn() {
-      let selectedPaymentMethod
+      let paymentType
+      const address = addressIdForm;
       for (const radio of paymentMethodRadio) {
         if (radio.checked) {
-          selectedPaymentMethod = radio.value
+          paymentType = radio.value
           break
         }
       }
-      axios.post("/checkoutPost", { productId, selectedPaymentMethod })
-        .then(({ data }) => {
-        }).catch((err) => {
-          console.log(err);
-        });
+      if (!paymentType){
+        errText.innerText = 'Select a payment method'
+        setTimeout(() => {
+          errText.innerText = ""
+        }, 3000);
+      }
+      else{
+        axios.post("/checkoutPost", { address, paymentType })
+          .then(({ data }) => {
+          }).catch((err) => { 
+            console.log(err);
+          });
+      }
     }
   </script>
 </body>

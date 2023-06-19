@@ -17,7 +17,7 @@ export default {
     const productSchema = new productModel({
       productName,
       Description,
-      productPrice,
+      productPrice, 
       quantity,
       category,
       coverImage: urls[0],

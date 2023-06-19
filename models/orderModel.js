@@ -8,8 +8,9 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
+      default : "pending"
     },
-    paid: {
+    paid: { 
       type: Boolean,
       default: false,
     },
@@ -17,16 +18,22 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    qunatity: {
-      type: Number,
-      required: true,
-    },
     total : {
         type : Number,
         default : 0
     },
-    products : {
-      type : Array,
+    products: [
+      {
+        productId:{
+          type:mongoose.Schema.Types.ObjectId,
+        },
+        quantity:{
+          type:Number,
+        }
+      }
+    ],
+    paymentType : {
+      type : String,
       required : true
     }
   },

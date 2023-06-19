@@ -1,3 +1,4 @@
+import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 
@@ -99,5 +100,15 @@ export default {
   },
   quantityFinder: async (email) => {
     return await userModel.find({ email });
+  },
+  checkoutSave: async (address, paymentType, userId, total,products) => {
+    const orderSchema = new orderModel({
+      address,
+      userId,
+      total,
+      products,
+      paymentType,
+    });
+    return await orderSchema.save();
   },
 };

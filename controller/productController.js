@@ -23,6 +23,18 @@ export async function addToCart(req, res) {
   }
 }
 
+async function findProductFromMongodb(req) {
+  try {
+    const user = await userHelper.findUser(req.session.user);
+    const productId = user[0]?.cart.map((item) => item.productId);
+    const quantity = user[0]?.cart.map((item) => item.quantity);
+    const product = await userHelper.findProductById(productId);
+    return product;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function addToCartPost(req, res) {
   try {
     const status = await userHelper.addToCart(req.body, req.session.user);
@@ -64,7 +76,18 @@ export async function quantityController(req, res) {
 
 export async function checkoutPost(req, res) {
   try {
-    console.log(req.body);
+    const user = await userHelper.findUser(req.session.user);
+    const productId = user[0]?.cart.map((item) => item.productId);
+    const quantity = Object.values(user[0]?.cart);
+    const product = await userHelper.findProductById(productId);
+    const { address, paymentType } = req.body;
+    const status = await userHelper.checkoutSave(
+      address,
+      paymentType,
+      req.session.user,
+      totalVal,
+      quantity
+    );
   } catch (error) {
     console.log(error);
   }

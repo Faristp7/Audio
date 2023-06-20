@@ -165,20 +165,20 @@
         axios.post("/checkoutPost", { address, paymentType })
           .then(({ data }) => {
             const order = {
-              order : data.id,
-              amount : data.amount
+              order: data.id,
+              amount: data.amount
             }
-            // const order = data.id
-            razorPay(order)
-            // if(data == true) {
-            //   Swal.fire(
-            //     'Order Placed',
-            //     'back to shop',
-            //     'success'
-            //   ).then(() => {
-            //     window.location.href = "/shop/"
-            //   })
-            // }
+            if(paymentType == "Online"){
+              razorPay(order)
+            }else if (data == true){
+              Swal.fire(
+              'Order Placed',
+              'back to shop',
+              'success'
+            ).then(() => {
+              window.location.href = "/shop/"
+            })
+            }
           }).catch((err) => {
             console.log(err);
           });
@@ -193,23 +193,30 @@
         description: "Test Transaction",
         order_id: order.id, //This is a sample Order ID. Pass the id obtained in the response of Step 1
         handler: function (response) {
-          console.log(response);
-          verifyPayment(response, order);
+          if (response) {
+            Swal.fire(
+              'Order Placed',
+              'back to shop',
+              'success'
+            ).then(() => {
+              window.location.href = "/shop/"
+            })
+          }
         },
         prefill: {
           name: " Faris",
-          email: "fariswork@gmail.com",
-          contact: "8089000000",
+          email: "faristpwork@gmail.com",
+          contact: "9562146113",
         },
         notes: {
           address: "Razorpay Corporate Office",
         },
         theme: {
-          color: "#F05196",
+          color: "#7bbd8d",
         },
       };
       var rzp1 = new Razorpay(options);
-      console.log('options are  jksdfskjdsdfjsl', options);
+      console.log('options are', options);
       rzp1.on("payment.failed", function (response) {
       });
       rzp1.open();

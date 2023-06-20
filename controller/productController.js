@@ -82,39 +82,44 @@ export async function checkoutPost(req, res) {
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
     const { address, paymentType } = req.body;
-    if(paymentType == "Online"){
-       const amount =   totalVal * 100
+
+    if (paymentType == "Online") {
+      const amount = totalVal * 100;
       const Option = {
-        amount ,
-        currency : 'INR',
-      }
-      instance.orders.create(Option ,(err ,orders) => {
-        if(err){
+        amount,
+        currency: "INR",
+      };
+      instance.orders.create(Option, (err, orders) => {
+        if (err) {
           console.log(err);
+        } else {
+          saveOrderDatabase(req, res);
+          res.send(orders);
         }
-        else{
-          res.send(orders)
-        }
-      })
+      });
+    } else if (paymentType == "COD") {
+      const status = saveOrderDatabase(req, res);
+      status ? res.send(true) : res.send(false);
     }
-    // else if (paymentType == "COD"){
-    //   console.log("COD");
-    //   const status = await userHelper.checkoutSave(
-    //     address,
-    //     paymentType,
-    //     req.session.user,
-    //     totalVal,
-    //     quantity
-    //   );
-  
-    //   const cartStatus = status
-    //     ? await userHelper.destroyCart(req.session.user)
-    //     : undefined;
-    //   const completeStatus = cartStatus
-    //     ? await userHelper.quantityMinus(quantity)
-    //     : undefined;
-    //   completeStatus ? res.send(true) : res.send(false);
-    // }
+
+    async function saveOrderDatabase(req, res) {
+      const status = await userHelper.checkoutSave(
+        address,
+        paymentType,
+        req.session.user,
+        totalVal,
+        quantity
+      );
+
+      const cartStatus = status
+        ? await userHelper.destroyCart(req.session.user)
+        : undefined;
+      const completeStatus = cartStatus
+        ? await userHelper.quantityMinus(quantity)
+        : undefined;
+      return completeStatus;
+      // completeStatus ? res.send(true) : res.send(false);`
+    }
   } catch (error) {
     console.log(error);
   }

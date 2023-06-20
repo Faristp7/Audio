@@ -102,12 +102,17 @@ export default {
     return await userModel.find({ email });
   },
   checkoutSave: async (address, paymentType, userId, total, products) => {
+    let paid = false
+    if(paymentType === 'Online'){
+      paid = true
+    }
     const orderSchema = new orderModel({
       address,
       userId,
       total,
       products,
       paymentType,
+      paid,
     });
     return await orderSchema.save();
   },

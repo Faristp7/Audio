@@ -30,48 +30,54 @@
                       </h6>
                     </div>
                     <hr class="my-4" />
-                    <% product.forEach((element ,index)=> { %>
-                      <div id="product-<%=index %>" class="row mb-4 d-flex justify-content-between align-items-center">
-                        <div class="col-md-2 col-lg-2 col-xl-2">
-                          <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone" />
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xl-3">
-                          <h6 class="text-muted"><%-element.category %></h6>
-                          <h6 class="text-black mb-0">
-                            <%-element.productName %>
-                          </h6>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button class="btn btn-link px-2" onclick="qunantityDown('<%-element._id %>','<%=index %>')">
-                            <i class="fas fa-minus"></i>
-                          </button>
+                    <% if (product.length==0) { %>
+                      <h1 class="text-center">No Items</h1>
+                      <% } %>
+                        <% product.forEach((element ,index)=> { %>
+                          <div id="product-<%=index %>"
+                            class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                              <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone" />
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                              <h6 class="text-muted"><%-element.category %></h6>
+                              <h6 class="text-black mb-0">
+                                <%-element.productName %>
+                              </h6>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                              <button class="btn btn-link px-2"
+                                onclick="qunantityDown('<%-element._id %>','<%=index %>')">
+                                <i class="fas fa-minus"></i>
+                              </button>
 
-                          <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
-                            value="<%= quantity[index] %>" type="number" class="form-control form-control-sm"
-                            disabled />
+                              <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
+                                value="<%= quantity[index] %>" type="number" class="form-control form-control-sm"
+                                disabled />
 
-                          <button class="btn btn-link px-2" onclick="qunantityUp('<%-element._id %>','<%= index %>')">
-                            <i class="fas fa-plus"></i>
-                          </button>
-                        </div>
-                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h6 class="mb-0 productPrice" id="productPrice">
-                            ₹ <%-element.productPrice %>
-                          </h6>
-                        </div>
-                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')" class="text-muted"><i
-                              class="fa-solid fa-trash"></i></a>
-                        </div>
-                      </div>
-                      <% }) %>
-                        <hr class="my-4" />
-                        <div class="pt-5">
-                          <h6 class="mb-0">
-                            <a href="/shop/" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
-                              to shop</a>
-                          </h6>
-                        </div>
+                              <button class="btn btn-link px-2"
+                                onclick="qunantityUp('<%-element._id %>','<%= index %>')">
+                                <i class="fas fa-plus"></i>
+                              </button>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                              <h6 class="mb-0 productPrice" id="productPrice">
+                                ₹ <%-element.productPrice %>
+                              </h6>
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                              <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')"
+                                class="text-muted"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                          </div>
+                          <% }) %>
+                            <hr class="my-4" />
+                            <div class="pt-5">
+                              <h6 class="mb-0">
+                                <a href="/shop/" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                                  to shop</a>
+                              </h6>
+                            </div>
                   </div>
                 </div>
                 <div class="col-lg-4 bg-grey">
@@ -105,8 +111,9 @@
                       <h5 id="totalPrice"><%-total %></h5>
                     </div>
                     <a href="/checkout">
-                      <button class="button_slide slide_right" id="hideButton">
-                        Checkout
+                      <button class="button_slide slide_right" id="hideButton" <% if (product.length===0)
+                        {%>style="display : none;"<%} %>>
+                          Checkout
                       </button>
                     </a>
                   </div>
@@ -123,6 +130,7 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
   <script>
+
     function removeProduct(id, index) {
       axios
         .post("/removeProduct", { id })

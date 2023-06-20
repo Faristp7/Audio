@@ -114,7 +114,19 @@ export default {
   destroyCart: async (email) => {
     return await userModel.updateOne({ email }, { $unset: { cart: "" } });
   },
-  quantityMinus : async (id) => {
-    return await productModel.updateOne({_id : id} , {$inc : {quantity : -1}})
-  } 
+  quantityMinus: async (values) => {
+    try {
+      for (const item of values) {
+        const { productId, quantity } = item;
+        await productModel.updateOne(
+          { _id: productId },
+          { $inc: { quantity: -quantity } }
+        );
+      }
+      return true
+    } catch (error) {
+      console.log(error);
+      return false
+    }
+  },
 };

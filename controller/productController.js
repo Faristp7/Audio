@@ -1,4 +1,5 @@
 import userHelper from "../databaseHelper/userHelper.js";
+import instance from "../helper/razorpay.js";
 
 var totalVal = 0;
 var productCount = 0;
@@ -81,21 +82,39 @@ export async function checkoutPost(req, res) {
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
     const { address, paymentType } = req.body;
-    const status = await userHelper.checkoutSave(
-      address,
-      paymentType,
-      req.session.user,
-      totalVal,
-      quantity
-    );
-
-    const cartStatus = status
-      ? await userHelper.destroyCart(req.session.user)
-      : undefined;
-    const completeStatus = cartStatus
-      ? await userHelper.quantityMinus(quantity)
-      : undefined;
-    completeStatus ? res.send(true) : res.send(false);
+    if(paymentType == "Online"){
+       const amount =   totalVal * 100
+      const Option = {
+        amount ,
+        currency : 'INR',
+      }
+      instance.orders.create(Option ,(err ,orders) => {
+        if(err){
+          console.log(err);
+        }
+        else{
+          res.send(orders)
+        }
+      })
+    }
+    // else if (paymentType == "COD"){
+    //   console.log("COD");
+    //   const status = await userHelper.checkoutSave(
+    //     address,
+    //     paymentType,
+    //     req.session.user,
+    //     totalVal,
+    //     quantity
+    //   );
+  
+    //   const cartStatus = status
+    //     ? await userHelper.destroyCart(req.session.user)
+    //     : undefined;
+    //   const completeStatus = cartStatus
+    //     ? await userHelper.quantityMinus(quantity)
+    //     : undefined;
+    //   completeStatus ? res.send(true) : res.send(false);
+    // }
   } catch (error) {
     console.log(error);
   }

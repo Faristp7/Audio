@@ -308,9 +308,15 @@ export async function updateEmailOtpSend(req, res) {
   }
 }
 
-export async function orderButton(req,res){
+export async function orderButton(req, res) {
   try {
-    res.render('user/orders')
+    const orders = await userHelper.getOrders(req.session.user);
+    let Product = []
+    for (const product of orders[0].products){
+      Product = await userHelper.getProduct(product.productId)
+    }
+    // console.log(Product);  
+    res.render("user/orders", orders);
   } catch (error) {
     console.log(error);
   }

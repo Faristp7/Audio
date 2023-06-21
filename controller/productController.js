@@ -118,7 +118,6 @@ export async function checkoutPost(req, res) {
         ? await userHelper.quantityMinus(quantity)
         : undefined;
       return completeStatus;
-      // completeStatus ? res.send(true) : res.send(false);`
     }
   } catch (error) {
     console.log(error);

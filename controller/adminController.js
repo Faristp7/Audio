@@ -159,3 +159,12 @@ export async function postEditProduct(req,res){
   const updated = await helper.updateProduct(req.body ,id)
   return updated ? res.send(true) : res.send(false)
 }
+
+export async function getOrders(req,res) {
+  try {
+    const orders = await helper.getOrdersAdmin()
+    res.render("admin/orders" , {orders})
+  } catch (error) {
+    console.log(error);
+  }
+}

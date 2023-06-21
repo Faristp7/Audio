@@ -11,8 +11,8 @@ const orderSchema = new mongoose.Schema(
       default : "pending"
     },
     paid: { 
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "pending",
     },
     userId: {
       type: String,

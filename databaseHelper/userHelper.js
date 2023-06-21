@@ -102,9 +102,9 @@ export default {
     return await userModel.find({ email });
   },
   checkoutSave: async (address, paymentType, userId, total, products) => {
-    let paid = false
+    let paid = "pending"
     if(paymentType === 'Online'){
-      paid = true
+      paid = "paid"
     }
     const orderSchema = new orderModel({
       address,
@@ -134,4 +134,7 @@ export default {
       return false
     }
   },
+  getOrders : async (userId) => {
+    return await orderModel.find({userId})
+  }
 };

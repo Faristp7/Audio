@@ -6,6 +6,7 @@ import {
   doUserUnBlock,
   doUserblock,
   editProduct,
+  getOrders,
   listProduct,
   logout,
   pageNotFound,
@@ -27,6 +28,7 @@ router.get("/pageNotFound", pageNotFound);
 router.get("/product", product);
 router.get("/addProduct", adminAuth, addProduct);
 router.get("/editProduct/:id", editProduct);
+router.get("/orders", getOrders);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);

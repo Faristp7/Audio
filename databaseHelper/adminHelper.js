@@ -1,3 +1,4 @@
+import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 export default {
@@ -17,7 +18,7 @@ export default {
     const productSchema = new productModel({
       productName,
       Description,
-      productPrice, 
+      productPrice,
       quantity,
       category,
       coverImage: urls[0],
@@ -31,12 +32,14 @@ export default {
     else return await productModel.find();
   },
   sortProduct: async (price) => {
-    if (price == "low") return await productModel.find().sort({ productPrice: 1 });
-    else if (price == "high") return await productModel.find().sort({ productPrice: -1 });
+    if (price == "low")
+      return await productModel.find().sort({ productPrice: 1 });
+    else if (price == "high")
+      return await productModel.find().sort({ productPrice: -1 });
     else return await productModel.find();
   },
-  findProduct : async () => {
-    return await productModel.find()
+  findProduct: async () => {
+    return await productModel.find();
   },
   doUnlist: async (id) => {
     return await productModel.updateOne({ _id: id.id }, { productList: false });
@@ -59,4 +62,7 @@ export default {
       }
     );
   },
+  getOrdersAdmin : async () => {
+    return await orderModel.find( )
+  }
 };

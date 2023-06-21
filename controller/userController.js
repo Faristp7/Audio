@@ -307,3 +307,11 @@ export async function updateEmailOtpSend(req, res) {
     console.log(error);
   }
 }
+
+export async function orderButton(req,res){
+  try {
+    res.render('user/orders')
+  } catch (error) {
+    console.log(error);
+  }
+}

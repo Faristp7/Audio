@@ -67,33 +67,39 @@
                             <div class="d-flex justify-content-center mb-2">
                                 <button type="button" class="btn btn-outline-primary ms-1" id="editProfile"
                                     onclick="editProfile()">Edit profile</button>
-                                <button type="button" class="btn ms-1 " id="editProfile" style="background-color: #0d6efd; color: white;"
-                                   >Orders</button>
+                                <a href="/orders"> <button type="button" class="btn ms-1 " id="editProfile"
+                                        style="background-color: #0d6efd; color: white;">Orders</button>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card mb-4 mb-lg-0" style="display: none;" id="EditProfileDiv">
                         <form id="updateUser">
-                         <div class="m-4 mx-5">
-                            <div class="inputBox my-3" >
-                                <input type="text" value="<%-user.name %>" id="userUpdatedName" placeholder="Name">
+                            <div class="m-4 mx-5">
+                                <div class="inputBox my-3">
+                                    <input type="text" value="<%-user.name %>" id="userUpdatedName" placeholder="Name">
+                                </div>
+                                <div class="inputBox">
+                                    <input type="number" value="<%-user.phone %>" id="userUpdatePhone"
+                                        placeholder="Number">
+                                </div>
+                                <div class="inputBox my-3">
+                                    <input type="email" value="<%-user.email %>" onkeyup="emailTriggered()"
+                                        id="userUpdatedEmail" placeholder="email">
+                                </div>
+                                <div class="inputBox my-3 d-flex justify-content-between" id="otpLabel">
+                                    <input style="display: none;" type="number" class="w-50" id="userOtp"
+                                        placeholder="Enter Otp">
+                                    <button style="display: none;" id="resendOtpButton" onclick="sendOtp()"
+                                        class="updateUserButton">Send otp</button>
+                                </div>
+                                <p id="updateFormErr" class="text-center fw-bold"></p>
+                                <div class="d-flex justify-content-center mt-3">
+                                    <button id="submit" class="updateUserButton p-1 px-3"
+                                        onclick="submitUserUpdate('<%-user._id %>')">Update</button>
+                                </div>
                             </div>
-                            <div class="inputBox">
-                                <input type="number" value="<%-user.phone %>" id="userUpdatePhone" placeholder="Number">
-                            </div>
-                            <div class="inputBox my-3">
-                                <input type="email" value="<%-user.email %>" onkeyup="emailTriggered()" id="userUpdatedEmail" placeholder="email">
-                            </div>
-                            <div class="inputBox my-3 d-flex justify-content-between" id="otpLabel">
-                                <input style="display: none;" type="number" class="w-50" id="userOtp" placeholder="Enter Otp">
-                                <button style="display: none;" id="resendOtpButton" onclick="sendOtp()" class="updateUserButton">Send otp</button>
-                            </div>
-                            <p id="updateFormErr" class="text-center fw-bold"></p>
-                            <div class="d-flex justify-content-center mt-3">
-                            <button id="submit" class="updateUserButton p-1 px-3" onclick="submitUserUpdate('<%-user._id %>')">Update</button>
-                            </div>
-                        </div>
                         </form>
                     </div>
                 </div>
@@ -101,21 +107,24 @@
                     <div class="card mb-4 mb-lg-4">
                         <div class="card-body p-0">
                             <ul class="ps-3 pt-3">Manage address</ul>
-                            <% user.address.forEach((i) => { %>
+                            <% user.address.forEach((i)=> { %>
                                 <hr>
                                 <li class="ps-3 d-flex align-items-center text-center justify-content-between">
-                                    <p class="mb-0 fw-bolder"><%-i.firstName%>, <%-i.phone%>, <%-i.pinCode%>, <%-i.flatHouse%>, <%-i.areaStreet %>, <%-i.landmark %>, <%-i.townCity %>, <%-i.state %></p>
+                                    <p class="mb-0 fw-bolder"><%-i.firstName%>, <%-i.phone%>, <%-i.pinCode%>,
+                                                    <%-i.flatHouse%>, <%-i.areaStreet %>, <%-i.landmark %>,
+                                                                <%-i.townCity %>, <%-i.state %></p>
                                     <div class="me-5">
-                                        
-                                        <a href="/editAddress/<%-i.uniqueNumber %>"><i class="ms-2 fa-solid fa-pen-to-square"></i></a>
+
+                                        <a href="/editAddress/<%-i.uniqueNumber %>"><i
+                                                class="ms-2 fa-solid fa-pen-to-square"></i></a>
                                     </div>
                                 </li>
-                            <% }) %>
-                            <hr>
-                            <div class="mt-2 ms-2 mb-2">
-                                <button type="button" class="btn btn-outline-primary" id="editProfile"
-                                    onclick="editAddress()">Add address</button>
-                            </div>  
+                                <% }) %>
+                                    <hr>
+                                    <div class="mt-2 ms-2 mb-2">
+                                        <button type="button" class="btn btn-outline-primary" id="editProfile"
+                                            onclick="editAddress()">Add address</button>
+                                    </div>
                         </div>
                     </div>
 
@@ -130,15 +139,16 @@
                                 <label for="phone" class="fw-bolder">Phone</label>
                                 <div class="prefix-group">
                                     <span class="prefix">+91</span>
-                                    <input type="number" name="phone" id="phoneNum" onkeyup="validateNumber()" class="form-control">
+                                    <input type="number" name="phone" id="phoneNum" onkeyup="validateNumber()"
+                                        class="form-control">
                                 </div>
                                 <p id="phoneErr" class="mt-2 fw-bold"></p>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="pincode" class="fw-bolder">Pin code</label>
-                                <input type="number" name="phone" onkeyup="validateOtp()" id="pincode" placeholder="6 digits [0-9] PIN code"
-                                    required>
+                                <input type="number" name="phone" onkeyup="validateOtp()" id="pincode"
+                                    placeholder="6 digits [0-9] PIN code" required>
                                 <p id="pinErr" class="mt-2 fw-bold"></p>
                             </div>
                             <div class="form-group">
@@ -196,7 +206,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex">
-                            <div type="button" id="submitAddress" onclick="saveBtnadd()" class="btn btn-primary">Save Address</div>  
+                            <div type="button" id="submitAddress" onclick="saveBtnadd()" class="btn btn-primary">Save
+                                Address</div>
                             <p class="ps-3 fw-bold mt-2" id="allField"></p>
                         </div>
                     </div>
@@ -325,7 +336,7 @@
         }
         function saveBtnadd() {
             let saveAddress = document.getElementById('saveBtnadd');
-            axios.post('/postProfile',  { 
+            axios.post('/postProfile', {
                 firstName: fullName.value,
                 phone: phone.value,
                 pinCode: pinCode.value,
@@ -335,30 +346,30 @@
                 townCity: townCity.value,
                 state: state.value,
             })
-            .then(({data}) => {
-                const previousUrl = document.referrer;
-                if(data == "successfully added"){
-                   window.location.href = previousUrl
-                }
-                else if(data == "Fill all the field"){
-                    errField.innerHTML = "Fill all the field"
-                    errField.style.color = "red"
-                    setTimeout(() => {
-                        errField.innerHTML = ""
-                    }, 3000);
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
+                .then(({ data }) => {
+                    const previousUrl = document.referrer;
+                    if (data == "successfully added") {
+                        window.location.href = previousUrl
+                    }
+                    else if (data == "Fill all the field") {
+                        errField.innerHTML = "Fill all the field"
+                        errField.style.color = "red"
+                        setTimeout(() => {
+                            errField.innerHTML = ""
+                        }, 3000);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
         }
 
-        function validateNumber(){
+        function validateNumber() {
             errPhone.innerHTML = "phone"
-            if(phone.value.length < 10 ||phone.value.length > 10){
+            if (phone.value.length < 10 || phone.value.length > 10) {
                 errPhone.innerHTML = "Number must be 10 digits"
                 errPhone.style.color = "red"
             }
-            else{
+            else {
                 errPhone.innerHTML = "Verified"
                 errPhone.style.color = "green"
                 setTimeout(() => {
@@ -366,12 +377,12 @@
                 }, 3000);
             }
         }
-        function validateOtp(){
-            if(pinCode.value.length < 6 || pinCode.value.length > 6){
+        function validateOtp() {
+            if (pinCode.value.length < 6 || pinCode.value.length > 6) {
                 errPin.innerHTML = "Number must be 6 digits"
                 errPin.style.color = "red"
             }
-            else{
+            else {
                 errPin.innerHTML = "Verified"
                 errPin.style.color = "green"
                 setTimeout(() => {
@@ -382,7 +393,7 @@
         // updateUser
         const updateUser = document.getElementById('updateUser')
 
-        updateUser.addEventListener('submit',(e) => {
+        updateUser.addEventListener('submit', (e) => {
             e.preventDefault()
         })
         const otpLabel = document.getElementById('otpLabel')
@@ -390,57 +401,57 @@
         const Otp = document.getElementById('userOtp')
         const updateEmail = document.getElementById('userUpdatedEmail')
 
-        function emailTriggered(){
+        function emailTriggered() {
             Otp.style.display = "block"
             resendOtp.style.display = "block"
-            }
-         function sendOtp(){
-            axios.post('/profileOtpSend',{
-                email : updateEmail.value
+        }
+        function sendOtp() {
+            axios.post('/profileOtpSend', {
+                email: updateEmail.value
             })
-         }
-        function submitUserUpdate(id){
+        }
+        function submitUserUpdate(id) {
             const updateName = document.getElementById('userUpdatedName')
             const updatePhone = document.getElementById('userUpdatePhone')
             const err = document.getElementById('updateFormErr')
-            
-            if(updatePhone.value.length < 10 || updatePhone.value.length > 10){
+
+            if (updatePhone.value.length < 10 || updatePhone.value.length > 10) {
                 err.innerHTML = "Number must be 10 digits"
                 err.style.color = "red"
                 setTimeout(() => {
                     err.innerHTML = ""
                 }, 3000);
             }
-            else{
-                    axios.post('/updateUser',{
-                        id,
-                        name : updateName.value,
-                        email : updateEmail.value,
-                        phone : updatePhone.value,
-                        otp : Otp.value,
-                    })
-                    .then(({data}) => {
-                        if(data == "otp incorrect"){
+            else {
+                axios.post('/updateUser', {
+                    id,
+                    name: updateName.value,
+                    email: updateEmail.value,
+                    phone: updatePhone.value,
+                    otp: Otp.value,
+                })
+                    .then(({ data }) => {
+                        if (data == "otp incorrect") {
                             err.innerHTML = "otp Incorrect"
                             err.style.color = "red"
                             setTimeout(() => {
-                            err.innerHTML = ""
+                                err.innerHTML = ""
                             }, 3000);
                         }
-                        else if(data == "enter otp"){
+                        else if (data == "enter otp") {
                             err.innerHTML = "Enter Otp"
                             err.style.color = "red"
                             setTimeout(() => {
                                 err.innerHTML = ""
                             }, 3000);
                         }
-                        else if(data == true){
+                        else if (data == true) {
                             window.location.href = "/profile"
                         }
                     })
             }
         }
-    </script>  
+    </script>
 </body>
 
 </html>

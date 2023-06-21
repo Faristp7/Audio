@@ -7,6 +7,7 @@ import {
   getshop,
   login,
   logout,
+  orderButton,
   pageNotFound,
   postProfile,
   postUserLogin,
@@ -42,6 +43,7 @@ router.get("/pageNotFound", pageNotFound);
 router.get("/editAddress/:uniqueNumber", editAddress);
 router.get("/addToCart", userAuth, addToCart);
 router.get("/checkout", checkout);
+router.get("/orders", orderButton);
 
 router.post("/signup", userSignup);
 router.post("/verifyOtp", verifyOtp);

@@ -84,3 +84,14 @@ a {
   background-color: rgb(255, 255, 255);
   color: black;
 }
+
+.actionCancel{
+  background-color: rgb(230, 37, 37);
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.actionCancel:active{
+  background-color: rgb(10, 10, 10);
+}

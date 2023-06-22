@@ -310,16 +310,14 @@ export async function updateEmailOtpSend(req, res) {
 
 export async function orderButton(req, res) {
   try {
-    const orders = await userHelper.getOrders(req.session.user);
-    // const productIds = orders[0].products.map((product) => product.productId);
-    const productIds = orders.flatMap((order) =>
-      order.products.map((product) => product.productId)
-    );
-    const products = await userHelper.getProductArray(productIds);
-    console.log(products);
+    // const orders = await userHelper.getOrders(req.session.user);
+    // const productIds = orders.flatMap((order) =>
+    //   order.products.map((product) => product.productId)
+    // );
+    // console.log(productIds);
+    // const products = await userHelper.getProductArray(productIds);
 
     res.render("user/orders", { products, orders });
-    // console.log(orders);
   } catch (error) {
     console.log(error);
   }

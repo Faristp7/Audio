@@ -8,9 +8,9 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      default : "pending"
+      default: "pending",
     },
-    paid: { 
+    paid: {
       type: String,
       default: "pending",
     },
@@ -18,24 +18,17 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    total : {
-        type : Number,
-        default : 0
+    total: {
+      type: Number,
+      default: 0,
     },
-    products: [
-      {
-        productId:{
-          type:mongoose.Schema.Types.ObjectId,
-        },
-        quantity:{
-          type:Number,
-        }
-      }
-    ],
-    paymentType : {
-      type : String,
-      required : true
-    }
+    products: {
+      type: Array,
+    },
+    paymentType: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

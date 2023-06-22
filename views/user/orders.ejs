@@ -41,6 +41,7 @@
                                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                                     <h6 class="text-muted"></h6>
                                                     <h6 class="text-black mb-0">
+                                                        <p class="text-secondary mb-2"><%-element.category %></p>
                                                         <%-element.productName %>
                                                     </h6>
                                                 </div>
@@ -50,17 +51,23 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-xl-1">
-                                                    <h6 class="text-muted"></h6>
                                                     <h6 class="text-black mb-0">
-                                                        <i class="fa-solid fa-circle fa-2xs"
-                                                            style="color: #25a923;"></i>
-                                                        pending
+                                                        <% orders.forEach(element=> { %>
+                                                            <% if (element.orderStatus=="Delivered" ) { %>
+                                                                <i class="fa-solid fa-circle fa-2xs"
+                                                                    style="color: #25a923;"></i>
+                                                                <p>Delivered</p>
+                                                                <% } else if (element.orderStatus=="Pending" ){%>
+                                                                    <p>Pending</p>
+                                                                    <%} %>
+                                                                        <% }) %>
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-1 col-lg-2 col-xl-2">
                                                     <h6 class="text-muted"></h6>
                                                     <h6 class="text-black mb-0 d-flex align-items-center">
-                                                        <button class="actionCancel p-2">Cancel Order</button>
+                                                        <button class="actionCancel p-2" onclick="cancelOrder()">Cancel
+                                                            Order</button>
                                                         <button type="button" class="btn btn-primary ms-2"
                                                             data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                             more

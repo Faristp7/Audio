@@ -106,15 +106,18 @@ export default {
     if (paymentType === "Online") {
       paid = "paid";
     }
-    const orderSchema = new orderModel({
-      address,
-      userId,
-      total,
-      products,
-      paymentType,
-      paid,
-    });
-    return await orderSchema.save();
+    products;
+    for (let i = 0; i < products.length; i++) {
+      const orderSchema = new orderModel({
+        address,
+        userId,
+        total : total[i],
+        products : products[i],
+        paymentType,
+        paid,
+      });
+      await orderSchema.save();
+    }
   },
   destroyCart: async (email) => {
     return await userModel.updateOne({ email }, { $unset: { cart: "" } });
@@ -138,7 +141,6 @@ export default {
     return await orderModel.find({ userId });
   },
   getProductArray: async (ids) => {
-    const product = await productModel.find({ _id: { $in: ids } });
-    return product;
+    return await productModel.find({ _id: { $in: ids } });
   },
 };

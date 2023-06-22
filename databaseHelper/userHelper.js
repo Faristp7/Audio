@@ -102,9 +102,9 @@ export default {
     return await userModel.find({ email });
   },
   checkoutSave: async (address, paymentType, userId, total, products) => {
-    let paid = "pending"
-    if(paymentType === 'Online'){
-      paid = "paid"
+    let paid = "pending";
+    if (paymentType === "Online") {
+      paid = "paid";
     }
     const orderSchema = new orderModel({
       address,
@@ -128,13 +128,17 @@ export default {
           { $inc: { quantity: -quantity } }
         );
       }
-      return true
+      return true;
     } catch (error) {
       console.log(error);
-      return false
+      return false;
     }
   },
-  getOrders : async (userId) => {
-    return await orderModel.find({userId})
-  }
+  getOrders: async (userId) => {
+    return await orderModel.find({ userId });
+  },
+  getProductArray: async (ids) => {
+    const product = await productModel.find({ _id: { $in: ids } });
+    return product;
+  },
 };

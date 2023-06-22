@@ -311,12 +311,9 @@ export async function updateEmailOtpSend(req, res) {
 export async function orderButton(req, res) {
   try {
     const orders = await userHelper.getOrders(req.session.user);
-    let Product = []
-    for (const product of orders[0].products){
-      Product = await userHelper.getProduct(product.productId)
-    }
-    // console.log(Product);  
-    res.render("user/orders", orders);
+    const productIds = orders[0].products.map((product) => product.productId);
+    const products = await userHelper.getProductArray(productIds);
+    res.render("user/orders", {products});
   } catch (error) {
     console.log(error);
   }

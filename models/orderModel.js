@@ -22,8 +22,12 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    products: {
-      type: Array,
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"product"
+    },
+    quantity : {
+      type : Number
     },
     paymentType: {
       type: String,

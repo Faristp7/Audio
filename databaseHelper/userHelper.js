@@ -112,12 +112,14 @@ export default {
         address,
         userId,
         total : total[i],
-        products : products[i],
+        product : products[i].productId,
+        quantity:products[i].quantity,
         paymentType,
         paid,
       });
       await orderSchema.save();
     }
+    return true
   },
   destroyCart: async (email) => {
     return await userModel.updateOne({ email }, { $unset: { cart: "" } });
@@ -138,9 +140,12 @@ export default {
     }
   },
   getOrders: async (userId) => {
-    return await orderModel.find({ userId });
+    return await orderModel.find({ userId }).populate("product")
   },
   getProductArray: async (ids) => {
-    return await productModel.find({ _id: { $in: ids } });
+    console.log(ids);
+    const product = await productModel.find({ _id: { $in: ids } });
+    return product
   },
 };
+    

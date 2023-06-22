@@ -103,9 +103,9 @@ export async function checkoutPost(req, res) {
     }
 
     async function saveOrderDatabase(req, res) {
-      const productIds = quantity.map(item => item.productId)
-      const products = await userHelper.getProductArray(productIds)
-      const total = products.map(product => product.productPrice)
+      const productIds = quantity.map((item) => item.productId);
+      const products = await userHelper.getProductArray(productIds);
+      const total = products.map((product) => product.productPrice);
       const status = await userHelper.checkoutSave(
         address,
         paymentType,

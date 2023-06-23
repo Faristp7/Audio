@@ -111,15 +111,15 @@ export default {
       const orderSchema = new orderModel({
         address,
         userId,
-        total : total[i],
-        product : products[i].productId,
-        quantity:products[i].quantity,
+        total: total[i],
+        product: products[i].productId,
+        quantity: products[i].quantity,
         paymentType,
         paid,
       });
       await orderSchema.save();
     }
-    return true
+    return true;
   },
   destroyCart: async (email) => {
     return await userModel.updateOne({ email }, { $unset: { cart: "" } });
@@ -139,13 +139,21 @@ export default {
       return false;
     }
   },
-  getOrders: async (userId) => {
-    return await orderModel.find({ userId }).populate("product")
+  getOrders: async (email) => {
+    
+    return await orderModel
+      .find({ userId: email })
+      .populate("product")
+
   },
+
   getProductArray: async (ids) => {
-    console.log(ids);
     const product = await productModel.find({ _id: { $in: ids } });
     return product
   },
+  getUserAddres : async (address) => {
+     return await userModel.findOne({
+      "address.uniqueNumber" : address
+     }, {address : {$elemMatch : {uniqueNumber : address}}})
+  }
 };
-    

@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    address: {
-      type: String,
+    address: [{
+      type : String,
       required: true,
-    },
+    }],
     orderStatus: {
       type: String,
       default: "pending",
@@ -24,10 +24,10 @@ const orderSchema = new mongoose.Schema(
     },
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"product"
+      ref: "product",
     },
-    quantity : {
-      type : Number
+    quantity: {
+      type: Number,
     },
     paymentType: {
       type: String,

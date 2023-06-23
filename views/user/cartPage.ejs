@@ -160,8 +160,8 @@
           .post("/quantity", { id, deside: true })
           .then(({ data }) => {
             if (data == true) {
-              currentElement.value = Number(currentElement.value) + 1;
-              window.location.href = "addToCart";
+              g.value = Number(currentElement.value) + 1;
+              // window.location.href = "addToCart";
             }
           })
           .catch((err) => {
@@ -175,7 +175,7 @@
         axios.post("/quantity", { id, deside: false }).then(({ data }) => {
           if (data == true) {
             currentElement.value = Number(currentElement.value) - 1;
-            window.location.href = "addToCart";
+            // window.location.href = "addToCart";
           }
         });
       }

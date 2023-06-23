@@ -82,8 +82,11 @@ export async function checkoutPost(req, res) {
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
     const { address, paymentType } = req.body;
-    const orderAddress = await userHelper.getUserAddres(address)
-    // console.log(typeof(orderAddress));
+    const orderAddress = await userHelper.getUserAddres(
+      req.session.user,
+      address
+    );
+
     if (paymentType == "Online") {
       const amount = totalVal * 100;
       const Option = {

@@ -102,6 +102,7 @@ export default {
     return await userModel.find({ email });
   },
   checkoutSave: async (address, paymentType, userId, total, products) => {
+    const afs = address
     let paid = "pending";
     if (paymentType === "Online") {
       paid = "paid";
@@ -109,7 +110,7 @@ export default {
     products;
     for (let i = 0; i < products.length; i++) {
       const orderSchema = new orderModel({
-        address,
+        address : afs,
         userId,
         total: total[i],
         product: products[i].productId,
@@ -140,20 +141,17 @@ export default {
     }
   },
   getOrders: async (email) => {
-    
-    return await orderModel
-      .find({ userId: email })
-      .populate("product")
-
+    return await orderModel.find({ userId: email }).populate("product");
   },
 
   getProductArray: async (ids) => {
     const product = await productModel.find({ _id: { $in: ids } });
-    return product
+    return product;
   },
-  getUserAddres : async (address) => {
-     return await userModel.findOne({
-      "address.uniqueNumber" : address
-     }, {address : {$elemMatch : {uniqueNumber : address}}})
-  }
+  getUserAddres: async (email, addresses) => {
+    return await userModel.findOne(
+      { email },
+      { address: { $elemMatch: { uniqueNumber: addresses } } }
+    );
+  },
 };

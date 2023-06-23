@@ -311,7 +311,7 @@ export async function updateEmailOtpSend(req, res) {
 export async function orderButton(req, res) {
   try {
     const orders = await userHelper.getOrders(req.session.user);
-    // console.log(orders);
+    // console.log(orders[0].address.address[0]);
     res.render("user/orders", { orders });
   } catch (error) {
     console.log(error);

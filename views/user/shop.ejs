@@ -18,20 +18,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <body>
     <style>
         .card {
-    height: 100%;
-}
+            height: 100%;
+        }
 
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-ul{
-    list-style-type: none;
-}
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        ul {
+            list-style-type: none;
+        }
     </style>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
@@ -102,13 +104,14 @@ ul{
     <!-- Close Header -->
     <!-- Modal -->
     <style>
-    .backGround {
-        background-color: rgb(178 178 178 / 80%);
-    }
-    .backGround .form-control {
-        background-color: white;
-    }
-</style>
+        .backGround {
+            background-color: rgb(178 178 178 / 80%);
+        }
+
+        .backGround .form-control {
+            background-color: white;
+        }
+    </style>
 
     </style>
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
@@ -119,13 +122,14 @@ ul{
             </div>
             <form id="searchForm" class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" onkeyup="searchCatcher()" placeholder="Search">
+                    <input type="text" class="form-control" id="inputModalSearch" onkeyup="searchCatcher()"
+                        placeholder="Search">
                     <button type="submit" id="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
                 </div>
                 <ul id="suggestion">
-                    <span id="findedProduct"span>
+                    <span id="findedProduct" span>
                 </ul>
             </form>
         </div>
@@ -173,58 +177,66 @@ ul{
                                 <a class="h3 text-dark text-decoration-none mr-3" href="/shop?category=TWS">TWS</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none" href="/shop?category=Headphone">Headphone</a>
+                                <a class="h3 text-dark text-decoration-none"
+                                    href="/shop?category=Headphone">Headphone</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                    <div class="row">
-                        <% product.forEach(element => { %>
-                            <% if (element.productList && element.quantity !== 0) { %>                           
-                        <div class="col-md-4 mb-5">
-                            <div class="card mb-4 product-wap rounded-0">
-                                <a href="/shopSingle/<%-element._id %>"><div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid"
-                                        src="<%-element.coverImage %>">
-                                    <div
-                                        class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i
-                                                        class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="/shopSingle/<%-element._id %>"
-                                                    target="_blank"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
-                                                        class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div></a>
-                                <div class="card-body">
-                                    <a href="/shopSingle/<%-element._id %>" class="h3 fw-bolder text-decoration-none"><%-element.productName %></a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li class="pt-2">
-                                            <span
-                                                class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span
-                                                class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span
-                                                class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span
-                                                class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span
-                                                class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
+                <div class="row">
+                    <% product.forEach(element=> { %>
+                        <% if (element.productList && element.quantity !==0) { %>
+                            <div class="col-md-4 mb-5">
+                                <div class="card mb-4 product-wap rounded-0">
+                                    <a href="/shopSingle/<%-element._id %>">
+                                        <div class="card rounded-0">
+                                            <img class="card-img rounded-0 img-fluid" src="<%-element.coverImage %>">
+                                            <div
+                                                class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                                <ul class="list-unstyled">
+                                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i
+                                                                class="far fa-heart"></i></a></li>
+                                                    <li><a class="btn btn-success text-white mt-2"
+                                                            href="/shopSingle/<%-element._id %>" target="_blank"><i
+                                                                class="far fa-eye"></i></a></li>
+                                                    <li><a class="btn btn-success text-white mt-2"
+                                                            onclick="addToCart('<%-element._id %>')"><i
+                                                            class="fas fa-cart-plus"></i></a>
+                                                    </li>
+                                                </ul>
+                                           
+                                    </a></li>
                                     </ul>
-                                    
-                                    <p class="text-center fw-bold mb-0">₹ <%-element.productPrice%></p>
                                 </div>
+                            </div></a>
+                            <div class="card-body">
+                                <a href="/shopSingle/<%-element._id %>"
+                                    class="h3 fw-bolder text-decoration-none"><%-element.productName %></a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li class="pt-2">
+                                        <span
+                                            class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                        <span
+                                            class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                        <span
+                                            class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                        <span
+                                            class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                        <span
+                                            class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                    </li>
+                                </ul>
+
+                                <p class="text-center fw-bold mb-0">₹ <%-element.productPrice%></p>
                             </div>
-                        </div>
-                    </a>  
-                        <% } %>
-                        <% }) %>
-                    </div>
+                </div>
             </div>
+            </a>
+            <% } %>
+                <% }) %>
         </div>
+    </div>
+    </div>
     </div>
     <!-- End Content -->
 
@@ -327,6 +339,7 @@ ul{
 
     <!-- Start Script -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/jquery-1.11.0.min.js"></script>
     <script src="/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -344,31 +357,45 @@ ul{
         const findedProduct = document.getElementById('findedProduct')
 
         // searchbar
-       function searchCatcher() {
-           let searchData = document.getElementById('inputModalSearch');
-           if(!searchData.value == ''){      
-            axios.post('/searchProduct',{searchKey : searchData.value}).then(({data}) => {
-            suggestion.innerHTML = ''
-            data.forEach(element => {
-                var newText = document.createTextNode(element.productName);
-                var listItem = document.createElement("li");
-                var link = document.createElement("a")
-                link.style.textDecoration = "none"
-                link.style.color = "black"
-                link.href = (`/shopSingle/${element._id}`)
-                link.target = "_blank"
-                link.appendChild(newText)
-                listItem.appendChild(link);
-                suggestion.appendChild(listItem);
-            });    
-           }).catch((err) => {
-            console.log(err);
-           });
-           }
-           else{
-            suggestion.innerHTML = ''
-           }
-       }
+        function searchCatcher() {
+            let searchData = document.getElementById('inputModalSearch');
+            if (!searchData.value == '') {
+                axios.post('/searchProduct', { searchKey: searchData.value }).then(({ data }) => {
+                    suggestion.innerHTML = ''
+                    data.forEach(element => {
+                        var newText = document.createTextNode(element.productName);
+                        var listItem = document.createElement("li");
+                        var link = document.createElement("a")
+                        link.style.textDecoration = "none"
+                        link.style.color = "black"
+                        link.href = (`/shopSingle/${element._id}`)
+                        link.target = "_blank"
+                        link.appendChild(newText)
+                        listItem.appendChild(link);
+                        suggestion.appendChild(listItem);
+                    });
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
+            else {
+                suggestion.innerHTML = ''
+            }
+        }
+
+        function addToCart(productId) {
+            axios.post('/addToCartPost', { productId })
+                .then(({ data }) => {
+                    if (data == "Added to Cart") {
+                        Swal.fire(
+                            'Added to cart',
+                            'continue Shopping',
+                            'success'
+                        )
+                    }
+                })
+        }
     </script>
-    </body>
+</body>
+
 </html>

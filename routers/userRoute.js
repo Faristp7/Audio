@@ -36,7 +36,7 @@ router.get("/", getHome);
 router.get("/shop/", getshop);
 router.get("/shopSingle/:id", shopSingle);
 router.get("/login", login);
-router.get("/logout",  logout);
+router.get("/logout", logout);
 router.get("/signup", signup);
 router.get("/profile", userAuth, profile);
 router.get("/pageNotFound", pageNotFound);

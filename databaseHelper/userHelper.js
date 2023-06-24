@@ -165,4 +165,11 @@ export default {
       { address: { $elemMatch: { uniqueNumber: addresses } } }
     );
   },
+  cancelOrder : async (objectId) => {
+    const {id} = objectId
+    const updated = await orderModel.updateOne({_id : id},{$set : {orderStatus : 'cancelled'}})
+    if(updated == true){
+      // return await productModel.updateOne
+    }
+  }
 };

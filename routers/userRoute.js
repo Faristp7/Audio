@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import {
+  cancelOrder,
   deleteAddress,
   editAddress,
   editAddressPost,
@@ -59,5 +60,6 @@ router.post("/addToCartPost", userAuth, addToCartPost);
 router.post("/removeProduct", removeProduct);
 router.post("/quantity", quantityController);
 router.post("/checkoutPost", checkoutPost);
+router.post("/cancelOrder", cancelOrder);
 
 export default router;

@@ -55,19 +55,24 @@
                                                     <h6 class="text-black mb-0 d-flex align-items-center">
                                                         <% if (element.orderStatus=="pending" ) { %>
                                                             <i class="fa-solid fa-circle fa-2xs"
-                                                                style="color: #25afcb;"></i>
-                                                            <span class="ms-2">pending</span>
-                                                            <% } else { %>
+                                                                style="color: #04b0ff;"></i>
+                                                            <p class="m-2 mt-0">pending</p>
+                                                            <% } else if (element.orderStatus=='delivered' ) { %>
                                                                 <i class="fa-solid fa-circle fa-2xs"
-                                                                    style="color: #37ac20;"></i>
-                                                                <span class="ms-2">delivered</span>
-                                                                <% } %>
+                                                                    style="color: #26c51b;"></i>
+                                                                <p class="m-2 mt-0">delivered</p>
+                                                                <% } else { %>
+                                                                    <i class="fa-solid fa-circle fa-2xs"
+                                                                        style="color: #ff0000;"></i>
+                                                                    <p class="m-2 mt-0">cancelled</p>
+                                                                    <% } %>
+
                                                     </h6>
                                                 </div>
+
                                                 <div class="col-md-1 col-lg-2 col-xl-2">
                                                     <h6 class="text-muted"></h6>
                                                     <h6 class="text-black mb-0 d-flex align-items-center">
-
                                                         <button type="button" class="btn btn-primary ms-2"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal-<%=element._id %>">
@@ -119,13 +124,18 @@
                                                                     <p><%-i.createdAt %></p>
                                                                 </div>
                                                                 <div class="modal-body d-flex">
-                                                                    <h6 class="fw-bold">Quantity : </h6>
-                                                                    <h6 class="fw-bold ps-2"><%-i.quantity %></h6>
+                                                                    <h6 class="fw-bolder">Quantity : </h6>
+                                                                    <h6 class="fw-bolder ps-2"><%-i.quantity %></h6>
+                                                                    <h6 class="ms-5">Payment Type : </h6>
+                                                                    <h6 class="ms-3"><%-i.paymentType %></h6>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <button class="actionCancel p-1"
-                                                                        onclick="cancelOrder('<%-i._id %>')">Cancel
-                                                                        Order</button>
+                                                                    <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered')) { %>
+                                                                        <button class="actionCancel p-1"
+                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>')">
+                                                                            Cancel Order
+                                                                        </button>
+                                                                    <% } %>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -148,10 +158,32 @@
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function cancelOrder(id) {
-            console.log(id);
+        function cancelOrder(id, productId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "The order will be remove!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Remove it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('/cancelOrder', { id, productId })
+                        .then(({ data }) => {
+                            console.log(data);
+                        })
+                    Swal.fire(
+                        'Removed!',
+                        'your order has been canceled.',
+                        'success'
+                    )
+                }
+                window.location.href = '/orders'
+            })
         }
     </script>
 </body>

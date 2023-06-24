@@ -163,6 +163,7 @@ export async function postEditProduct(req,res){
 export async function getOrders(req,res) {
   try {
     const orders = await helper.getOrdersAdmin()
+    console.log(orders[0].product.productName);
     res.render("admin/orders" , {orders})
   } catch (error) {
     console.log(error);

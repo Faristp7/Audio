@@ -5,9 +5,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Breeze Admin</title>
+    <title>Orders</title>
     <link rel="stylesheet" href="/css/admin/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/css/admin/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -92,21 +94,73 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% orders.forEach((element ,index) => { %>
+                                <% orders.forEach((element ,index)=> { %>
                                     <tr>
-                                        <td><%=index + 1 %></td>
-                                        <td>1</td>
-                                        <td><%=element.qunatity %></td>
+                                        <td>
+                                            <%=index + 1 %>
+                                        </td>
+                                        <td><%-element.product.productName %></td>
+                                        <td><%-element.quantity %></td>
                                         <td><%-element.paymentType %></td>
                                         <td><%-element.paid %></td>
-                                        <td>1</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary px-2 py-0"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal-<%=element._id %>">
+                                                more
+                                            </button>
+                                        </td>
                                     </tr>
-                                <% }) %>
+                                    <% }) %>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <% orders.forEach(i=> { %>
+            <div class="modal fade" id="exampleModal-<%=i._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                About order
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h6 class="fw-bold">Ordered Address</h6>
+                            <%-i.address.address[0].firstName %>,
+                                <%-i.address.address[0].phone %>,
+                                    <%-i.address.address[0].pinCode %>,
+                                        <%-i.address.address[0].flatHouse %>,
+                                            <%-i.address.address[0].areaStreet %>,
+                                                <%-i.address.address[0].landmark%>,
+                                                    <%-i.address.address[0].townCity%>,
+                                                        <%-i.address.address[0].state%>,
+                        </div>
+                        <div class="modal-body">
+                            <h6 class="fw-bold">Ordered Date</h6>
+                            <p><%-i.createdAt %></p>
+                        </div>
+                        <div class="modal-body d-flex">
+                            <h6 class="fw-bold">Price : </h6>
+                            <h6 class="fw-bold ps-2"><%-i.product.productPrice %></h6>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+                <!-- Modal -->
     </div>
     </div>
     </div>
@@ -114,10 +168,16 @@
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossorigin="anonymous"></script>
     <script>
-        $(document).ready( function () {
-        $('#myTable').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
     </script>
 </body>
 

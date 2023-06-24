@@ -32,7 +32,7 @@
         <li class="nav-item nav-profile">
           <a href="#" class="nav-link">
             <div class="nav-profile-image">
-              <span class="login-status online"></span>
+              <h3 class="login-status online" id="clock"></h3>
               <!--change to offline or busy as needed-->
             </div>
           </a>
@@ -258,6 +258,24 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  <script>
+    function updateTime(){
+      let currentTime = new Date()
+      let hours = currentTime.getHours();
+      let minutes = currentTime.getMinutes();
+      let seconds = currentTime.getSeconds();
+  
+      hours = (hours < 10 ? "0" : "") + hours;
+      minutes = (minutes < 10 ? "0" : "") + minutes;
+      seconds = (seconds < 10 ? "0" : "") + seconds;
+  
+      let timeString = hours + ":" + minutes + ":" + seconds;
+  
+      document.getElementById("clock").innerHTML = timeString;
+    }
+    updateTime()
+    setInterval(updateTime ,1000)
+  </script>
 </body>
 
 </html>

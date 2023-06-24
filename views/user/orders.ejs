@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout</title>
+    <title>Orders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -31,9 +31,9 @@
                                             <h1 class="fw-bold mb-0 text-black">Your orders</h1>
                                         </div>
                                         <hr class="my-4" />
-                                        <% orders.forEach(element=> { %>
+                                        <% orders.forEach((element,index)=> { %>
                                             <div id="product"
-                                                class="row mb-4 d-flex justify-content-between align-items-center">
+                                                class="row mb-4 d-flex justify-content-between align-items-center order">
                                                 <div class="col-md-2 col-lg-2 col-xl-1">
                                                     <img class="cartProductImg" src="<%-element.product.coverImage %>"
                                                         alt="TWS Headphone" />
@@ -67,7 +67,7 @@
                                                 <div class="col-md-1 col-lg-2 col-xl-2">
                                                     <h6 class="text-muted"></h6>
                                                     <h6 class="text-black mb-0 d-flex align-items-center">
-                                                        
+
                                                         <button type="button" class="btn btn-primary ms-2"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal-<%=element._id %>">
@@ -78,6 +78,16 @@
                                             </div>
                                             <% }) %>
                                                 <hr class="my-3" />
+                                                <div class="d-flex justify-content-end me-5">
+                                                    <div class="d-flex me-5">
+                                                        <% for( let i=1; i <=totalPages; i++ ) { %>
+                                                            <a href="/orders?page=<%=i %>"
+                                                                class="btn btn-light ms-1 <%=i === currentPage ? 'active' : ''%>">
+                                                                <%=i %>
+                                                            </a>
+                                                            <% } %>
+                                                    </div>
+                                                </div>
                                                 <!-- Modal -->
                                                 <% orders.forEach(i=> { %>
                                                     <div class="modal fade" id="exampleModal-<%=i._id %>" tabindex="-1"
@@ -98,7 +108,8 @@
                                                                         <%-i.address.address[0].phone %>,
                                                                             <%-i.address.address[0].pinCode %>,
                                                                                 <%-i.address.address[0].flatHouse %>,
-                                                                                    <%-i.address.address[0].areaStreet %>,
+                                                                                    <%-i.address.address[0].areaStreet
+                                                                                        %>,
                                                                                         <%-i.address.address[0].landmark%>,
                                                                                             <%-i.address.address[0].townCity%>,
                                                                                                 <%-i.address.address[0].state%>,
@@ -112,7 +123,8 @@
                                                                     <h6 class="fw-bold ps-2"><%-i.quantity %></h6>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <button class="actionCancel p-1" onclick="cancelOrder()">Cancel
+                                                                    <button class="actionCancel p-1"
+                                                                        onclick="cancelOrder('<%-i._id %>')">Cancel
                                                                         Order</button>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -135,8 +147,12 @@
             </div>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function cancelOrder(id) {
+            console.log(id);
+        }
     </script>
 </body>
 

@@ -310,9 +310,12 @@ export async function updateEmailOtpSend(req, res) {
 
 export async function orderButton(req, res) {
   try {
-    const orders = await userHelper.getOrders(req.session.user);
-    res.render("user/orders", { orders });
+    const page = parseInt(req.query.page) || 1
+    const orderData = await userHelper.getOrders(req.session.user ,page);
+    const {orders , totalPages} = orderData
+    const currentPage = page > totalPages ? totalPages : page
+    res.render("user/orders", { orders ,totalPages ,currentPage});
   } catch (error) {
-    console.log(error);
+    console.log(error);                                                                             
   }
 }

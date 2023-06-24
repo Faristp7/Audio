@@ -140,12 +140,23 @@ export default {
       return false;
     }
   },
-  getOrders: async (email) => { 
-    return await orderModel.find({ userId: email }).populate("product");
+  getOrders: async (email ,page) => { 
+    const limit = 5
+    const skip = (page - 1) * limit
+
+    const totalOrders = await orderModel.countDocuments({userId : email})
+    const totalPages = Math.ceil(totalOrders / limit)
+    const orders  = await orderModel
+    .find({ userId: email })
+    .populate("product")
+    .sort({createdAt : -1})
+    .skip(skip)
+    .limit(limit)
+    return {orders, totalPages}
   },
 
   getProductArray: async (ids) => {
-    const product = await productModel.find({ _id: { $in: ids } });
+    const product = await productModel.find({ _id: { $in: ids } });             
     return product;
   },
   getUserAddres: async (email, addresses) => {

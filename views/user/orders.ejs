@@ -130,12 +130,13 @@
                                                                     <h6 class="ms-3"><%-i.paymentType %></h6>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered')) { %>
+                                                                    <% if (!(i.orderStatus=='cancelled' ||
+                                                                        i.orderStatus=='delivered' )) { %>
                                                                         <button class="actionCancel p-1"
-                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>')">
+                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>')">
                                                                             Cancel Order
                                                                         </button>
-                                                                    <% } %>
+                                                                        <% } %>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -161,7 +162,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function cancelOrder(id, productId) {
+        function cancelOrder(id, productId, quantity) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "The order will be remove!",
@@ -172,7 +173,7 @@
                 confirmButtonText: 'Yes, Remove it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/cancelOrder', { id, productId })
+                    axios.post('/cancelOrder', { id, productId, quantity })
                         .then(({ data }) => {
                             console.log(data);
                         })
@@ -180,9 +181,10 @@
                         'Removed!',
                         'your order has been canceled.',
                         'success'
-                    )
+                    ).then(() => {
+                        window.location.href = '/orders'
+                    })
                 }
-                window.location.href = '/orders'
             })
         }
     </script>

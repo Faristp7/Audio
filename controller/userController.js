@@ -322,10 +322,8 @@ export async function orderButton(req, res) {
 
 export async function cancelOrder(req,res) {
   try {
-
     const status = await userHelper.cancelOrder(req.body)
-    console.log(status);
   } catch (error) {
     console.log(error);
-  }
+  } 
 }

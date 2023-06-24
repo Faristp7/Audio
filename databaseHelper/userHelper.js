@@ -140,23 +140,23 @@ export default {
       return false;
     }
   },
-  getOrders: async (email ,page) => { 
-    const limit = 5
-    const skip = (page - 1) * limit
+  getOrders: async (email, page) => {
+    const limit = 5;
+    const skip = (page - 1) * limit;
 
-    const totalOrders = await orderModel.countDocuments({userId : email})
-    const totalPages = Math.ceil(totalOrders / limit)
-    const orders  = await orderModel
-    .find({ userId: email })
-    .populate("product")
-    .sort({createdAt : -1})
-    .skip(skip)
-    .limit(limit)
-    return {orders, totalPages}
+    const totalOrders = await orderModel.countDocuments({ userId: email });
+    const totalPages = Math.ceil(totalOrders / limit);
+    const orders = await orderModel
+      .find({ userId: email })
+      .populate("product")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+    return { orders, totalPages };
   },
 
   getProductArray: async (ids) => {
-    const product = await productModel.find({ _id: { $in: ids } });             
+    const product = await productModel.find({ _id: { $in: ids } });
     return product;
   },
   getUserAddres: async (email, addresses) => {
@@ -165,11 +165,17 @@ export default {
       { address: { $elemMatch: { uniqueNumber: addresses } } }
     );
   },
-  cancelOrder : async (objectId) => {
-    const {id} = objectId
-    const updated = await orderModel.updateOne({_id : id},{$set : {orderStatus : 'cancelled'}})
-    if(updated == true){
-      // return await productModel.updateOne
+  cancelOrder: async (objectId) => {
+    const { id, productId, quantity } = objectId;
+    const updated = await orderModel.updateOne(
+      { _id: id },
+      { $set: { orderStatus: "cancelled" } }
+    );
+    if (updated) {
+      return await productModel.updateOne(
+        { _id: productId },
+        { $inc: { quantity: quantity } }
+      );
     }
-  }
+  },
 };

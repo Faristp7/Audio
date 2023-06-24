@@ -63,6 +63,6 @@ export default {
     );
   },
   getOrdersAdmin : async () => {
-    return await orderModel.find().popu
+    return await orderModel.find().populate('product')
   }
 };

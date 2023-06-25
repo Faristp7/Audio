@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" type="image/x-icon" href="/img/cartFavicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/cartFavicon.png">
   <link rel="stylesheet" href="/css/login.css" />
 </head>
 
@@ -85,14 +85,12 @@
                   <div class="p-5">
                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                     <hr class="my-4" />
-
                     <div class="d-flex justify-content-between mb-4">
                       <h5 class="text-uppercase">Items</h5>
                       <h5><%-count %></h5>
                     </div>
-
+                    <hr class="my-4" />
                     <h5 class="text-uppercase mb-3">Shipping</h5>
-
                     <div class="mb-4 pb-2">
                       <select class="select">
                         <option value="1">Delivery type</option>
@@ -101,12 +99,6 @@
                       </select>
                     </div>
                     <hr class="my-4" />
-                    <div class="mb-4 pb-2 d-flex">
-                      <input type="text" name="" id="Apply coupon" class="ps-3 py-1" placeholder="COUPON" />
-                      <button class="ms-2 px-4 COUPON">Apply</button>
-                    </div>
-                    <hr class="my-4" />
-
                     <div class="d-flex justify-content-between mb-5">
                       <h5 class="text-uppercase">Total price</h5>
                       <h5 id="totalPrice"><%-total %></h5>
@@ -160,8 +152,8 @@
           .post("/quantity", { id, deside: true })
           .then(({ data }) => {
             if (data == true) {
-              g.value = Number(currentElement.value) + 1;
-              // window.location.href = "addToCart";
+              currentElement.value = Number(currentElement.value) + 1;
+              window.location.href = "addToCart";
             }
           })
           .catch((err) => {
@@ -175,7 +167,7 @@
         axios.post("/quantity", { id, deside: false }).then(({ data }) => {
           if (data == true) {
             currentElement.value = Number(currentElement.value) - 1;
-            // window.location.href = "addToCart";
+            window.location.href = "addToCart";
           }
         });
       }

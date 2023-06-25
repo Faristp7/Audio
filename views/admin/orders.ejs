@@ -87,7 +87,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Product Name</th>
-                                    <th>quantity</th>
+                                    <th>Price</th>
                                     <th>payment Type</th>
                                     <th>payment Status</th>
                                     <th>Action</th>
@@ -100,7 +100,7 @@
                                             <%=index + 1 %>
                                         </td>
                                         <td><%-element.product.productName %></td>
-                                        <td><%-element.quantity %></td>
+                                        <td><%-element.total %></td>
                                         <td><%-element.paymentType %></td>
                                         <td><%-element.paid %></td>
                                         <td>
@@ -145,8 +145,8 @@
                             <p><%-i.createdAt %></p>
                         </div>
                         <div class="modal-body d-flex">
-                            <h6 class="fw-bold">Price : </h6>
-                            <h6 class="fw-bold ps-2"><%-i.product.productPrice %></h6>
+                            <h6 class="fw-bold">quantity : </h6>
+                            <h6 class="fw-bold ps-2"><%-i.quantity %></h6>
                         </div>
                         <div class="modal-body">
 

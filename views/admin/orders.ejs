@@ -127,7 +127,7 @@
                                         <td><%-element.total %></td>
                                         <td><%-element.paymentType %></td>
                                         <td><%-element.paid %></td>
-                                        <td><%-element.orderStatus %></td>
+                                        <td id="orderStatus-<%=element.id %>"><%-element.orderStatus %></td>
                                         <td>
                                             <button type="button" class="btn btn-primary px-2 py-0"
                                                 data-bs-toggle="modal" data-bs-target="#exampleModal-<%=element._id %>">
@@ -208,6 +208,7 @@
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
@@ -227,7 +228,17 @@
 
             axios.post('/admin/orderControl',{orderStatus ,id})
             .then(({data}) => {
-                console.log("changed");
+                if(data == true){
+                    const orderStatusElement = document.getElementById(`orderStatus-${id}`)
+                    if(orderStatusElement){
+                        orderStatusElement.textContent = orderStatus
+                        Swal.fire(`order status changed as ${orderStatus}`)
+                        const closeButton = document.querySelector(`#exampleModal-${id} .btn-secondary`)
+                        if(closeButton) {
+                            closeButton.click()
+                        }
+                    }
+                }
             }).catch((err) => {
                 console.log(err);
             });

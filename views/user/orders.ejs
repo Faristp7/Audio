@@ -61,11 +61,14 @@
                                                                 <i class="fa-solid fa-circle fa-2xs"
                                                                     style="color: #26c51b;"></i>
                                                                 <p class="m-2 mt-0">delivered</p>
-                                                                <% } else { %>
+                                                                <% } else if (element.orderStatus=='cancelled' ){ %>
                                                                     <i class="fa-solid fa-circle fa-2xs"
                                                                         style="color: #ff0000;"></i>
                                                                     <p class="m-2 mt-0">cancelled</p>
-                                                                    <% } %>
+                                                                    <% } else { %>
+                                                                        <p class="m-2 mt-0"><%-element.orderStatus %>
+                                                                        </p>
+                                                                        <%} %>
 
                                                     </h6>
                                                 </div>
@@ -85,7 +88,8 @@
                                                 <hr class="my-3" />
                                                 <div class="d-flex justify-content-between me-5">
                                                     <div class="d-flex">
-                                                        <a href="/shop/" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                                                        <a href="/shop/" class="text-body"><i
+                                                                class="fas fa-long-arrow-alt-left me-2"></i>Back
                                                             to shop</a>
                                                     </div>
                                                     <div class="d-flex me-5">

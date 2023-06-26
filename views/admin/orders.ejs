@@ -69,6 +69,23 @@
                     font-size: 100px;
                     font-weight: bold;
                 }
+
+                .custom-select {
+                    appearance: none;
+                    background-color: #f8f9fa;
+                    border: 1px solid #ced4da;
+                    padding: 8px;
+                    border-radius: 4px;
+                    width: 100%;
+                    font-size: 14px;
+                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                }
+
+                .custom-select:focus {
+                    border-color: #80bdff;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                }
             </style>
             <div class="text-center">
                 <h1 class="audio">A</h1>
@@ -90,6 +107,7 @@
                                     <th>Price</th>
                                     <th>payment Type</th>
                                     <th>payment Status</th>
+                                    <th>Order Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -103,6 +121,7 @@
                                         <td><%-element.total %></td>
                                         <td><%-element.paymentType %></td>
                                         <td><%-element.paid %></td>
+                                        <td><%-element.orderStatus %></td>
                                         <td>
                                             <button type="button" class="btn btn-primary px-2 py-0"
                                                 data-bs-toggle="modal" data-bs-target="#exampleModal-<%=element._id %>">
@@ -149,7 +168,17 @@
                             <h6 class="fw-bold ps-2"><%-i.quantity %></h6>
                         </div>
                         <div class="modal-body">
-
+                            <h5 class="mb-3">Order Status</h5>
+                            <form class="d-flex">
+                                <div class="form-group">
+                                    <select name="orderStatus" id="order" class="custom-select">
+                                        <option value="pending">pending</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="confirmed">out of Delivery</option>
+                                        <option value="confirmed">Delivered</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

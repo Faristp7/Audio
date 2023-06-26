@@ -163,8 +163,17 @@ export async function postEditProduct(req,res){
 export async function getOrders(req,res) {
   try {
     const orders = await helper.getOrdersAdmin()
-    console.log(orders[0].product.productName);
     res.render("admin/orders" , {orders})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function orderControl(req,res) {
+  try {
+    const {id ,orderStatus} = req.body
+    const status = await helper.orderControl(id , orderStatus)
+    status ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

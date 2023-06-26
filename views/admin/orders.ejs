@@ -86,6 +86,12 @@
                     outline: 0;
                     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
                 }
+
+                .submit-btn {
+                    border: none;
+                    border-radius: 6px;
+                    color: white;
+                }
             </style>
             <div class="text-center">
                 <h1 class="audio">A</h1>
@@ -169,14 +175,19 @@
                         </div>
                         <div class="modal-body">
                             <h5 class="mb-3">Order Status</h5>
-                            <form class="d-flex">
+                            <form class="d-flex" id="orderForm">
                                 <div class="form-group">
                                     <select name="orderStatus" id="order" class="custom-select">
                                         <option value="pending">pending</option>
                                         <option value="confirmed">Confirmed</option>
-                                        <option value="confirmed">out of Delivery</option>
-                                        <option value="confirmed">Delivered</option>
+                                        <option value="out of Delivery">out of Delivery</option>
+                                        <option value="delivered">Delivered</option>
                                     </select>
+                                </div>
+                                <div>
+                                    <button class="ms-3 submit-btn bg-secondary p-1 px-3" onclick="statuSubmit('<%-i._id %>' ,event)">
+                                        submit
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -207,6 +218,20 @@
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+    </script>
+    <script>
+        function statuSubmit(id ,e){
+            e.preventDefault()
+            const form = document.getElementById('orderForm')
+            const orderStatus = form.order.value
+
+            axios.post('/admin/orderControl',{orderStatus ,id})
+            .then(({data}) => {
+                console.log("changed");
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     </script>
 </body>
 

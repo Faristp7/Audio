@@ -62,7 +62,14 @@ export default {
       }
     );
   },
-  getOrdersAdmin : async () => {
-    return await orderModel.find().populate('product')
-  }
+  getOrdersAdmin: async () => {
+    return await orderModel.find().populate("product");
+  },
+  orderControl: async (id, orderstatus) => {
+    console.log(orderstatus);
+    return await orderModel.updateOne(
+      { _id: id },
+      { $set: { orderStatus: orderstatus } }
+    );
+  },
 };

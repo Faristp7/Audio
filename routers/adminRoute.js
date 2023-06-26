@@ -9,6 +9,7 @@ import {
   getOrders,
   listProduct,
   logout,
+  orderControl,
   pageNotFound,
   postAddProduct,
   postEditProduct,
@@ -37,4 +38,5 @@ router.post("/doUserUnBlock", doUserUnBlock);
 router.post("/unlistProduct", unListProduct);
 router.post("/listProduct", listProduct);
 router.post("/postEditProduct", postEditProduct);
+router.post('/orderControl',orderControl)
 export default router;

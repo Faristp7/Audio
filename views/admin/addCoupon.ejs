@@ -4,41 +4,117 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Add coupon</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<body>
-    <div class="container">
-        <h1>Enter Coupon Details</h1>
-        <form>
-            <div class="form-group">
-                <label for="couponName">Coupon Name</label>
+<style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<body style="background-color: rgb(245, 243, 243);">
+    <div class="container col-lg-3 mt-5">
+        <h1 class="text-center">Enter Coupon Details</h1>
+        <form id="couponForm">
+            <div class="form-group mt-3">
+                <label class="mb-1 fw-bolder" for="couponName">Coupon Name</label>
                 <input type="text" class="form-control" id="couponName" placeholder="Enter coupon name" required>
             </div>
-            <div class="form-group">
-                <label for="couponCode">Coupon Code</label>
-                <input type="text" class="form-control" id="couponCode" placeholder="Enter coupon code" required>
+            <div class="form-group mt-3 d-flex">
+                <div class="flex-grow-1 me-3">
+                    <label class="mb-1 fw-bolder d-block" for="couponCode">Coupon Code</label>
+                    <input type="text" class="form-control" id="couponCode" placeholder="Enter coupon code" required>
+                </div>
+                <div class="align-self-center">
+                    <button type="button" class="btn btn-dark btn-sm mt-4" onclick="genrateCode()">Genrate Code</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="validity">Validity</label>
+            <div class="form-group mt-3">
+                <label class="mb-1 fw-bolder" for="validity">Validity (Up to)</label>
                 <input type="date" class="form-control" id="validity" required>
             </div>
-            <div class="form-group">
-                <label for="amount">Amount</label>
+            <div class="form-group mt-3">
+                <label class="mb-1 fw-bolder" for="amount">Amount <span
+                        class="text-secondary font-weight-light">(disount allocated)</span></label>
                 <input type="number" class="form-control" id="amount" placeholder="Enter amount" required>
             </div>
-            <div class="form-group">
-                <label for="minPurchase">Minimum Purchase</label>
+            <div class="form-group mt-3">
+                <label class="mb-1 fw-bolder" for="minPurchase">Minimum Purchase</label>
                 <input type="number" class="form-control" id="minPurchase" placeholder="Enter minimum purchase amount"
                     required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="d-flex">
+                <button type="submit" class="btn btn-primary mt-3" onclick="">Submit</button>
+                <p class="mt-4 ms-5 text-danger fw-bolder" id="errText"></p>
+            </div>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        function genrateCode() {
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let coupon = '';
+            let length = 15
+
+            for (var i = 0; i < length; i++) {
+                var randomIndex = Math.floor(Math.random() * characters.length);
+                coupon += characters.charAt(randomIndex);
+            }
+
+            const couponCode = document.getElementById('couponCode')
+            couponCode.value = coupon
+        }
+
+        const couponForm = document.getElementById('couponForm')
+        couponForm.addEventListener("submit", async (e) => {
+            e.preventDefault()
+            const couponName = document.getElementById('couponName').value
+            const couponCode = document.getElementById('couponCode').value
+            const validity = document.getElementById('validity').value
+            const amount = document.getElementById('amount').value
+            const minPurchase = document.getElementById('minPurchase').value
+            const errText = document.getElementById('errText')
+
+            axios
+                .post('/admin/postAddCoupon', {
+                    couponName: couponName,
+                    couponCode: couponCode,
+                    validity: validity,
+                    amount: amount,
+                    minimumPurchase: minPurchase
+                })
+                .then(({ data }) => {
+                    if (data == true) {
+                        Swal.fire(
+                            'Coupon Added',
+                            'Back to home page',
+                            'success'
+                        )
+                        .then(() => {
+                            window.location.href = "/admin/coupon"
+                        })
+                    }
+                    else{
+                        errText.innerText = "Already Exist"
+                        setTimeout(() => {
+                            errText.innerText = ""
+                        }, 3000);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+        })
+
+    </script>
 </body>
 
 </html>

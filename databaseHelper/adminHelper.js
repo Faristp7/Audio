@@ -1,6 +1,8 @@
 import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
+import couponModel from "../models/couponModel.js";
+
 export default {
   getUsers: async () => {
     return await userModel.find();
@@ -63,12 +65,38 @@ export default {
     );
   },
   getOrdersAdmin: async () => {
-    return await orderModel.find().sort({createdAt : -1}).populate("product");
+    return await orderModel.find().sort({ createdAt: -1 }).populate("product");
   },
   orderControl: async (id, orderstatus) => {
     return await orderModel.updateOne(
       { _id: id },
       { $set: { orderStatus: orderstatus } }
     );
+  },
+  addCoupon: async (objects) => {
+    const { couponName, couponCode, validity, amount, minimumPurchase } =
+      objects;
+
+      const existingCoupon = await couponModel.findOne({
+        $or : [
+          {couponCode : couponCode},
+          {couponName : couponName}
+        ]
+      })
+
+      if(existingCoupon){
+        return false 
+      }
+      else{
+        const orderSchema = new couponModel({
+          couponName,
+          couponCode,
+          validity,
+          amount,
+          minimumPurchase,
+        });
+        await orderSchema.save()
+        return true
+      }
   },
 };

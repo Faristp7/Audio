@@ -187,9 +187,18 @@ export async function couponController(req,res) {
   }
 }
 
-export async function addCoupon(req ,res){
+export function addCoupon(req ,res){
   try {
     res.render('admin/addCoupon')
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addCouponPost(req,res){
+  try {
+    const status = await helper.addCoupon(req.body)
+    status ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

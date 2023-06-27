@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import {
   addCoupon,
+  addCouponPost,
   addProduct,
   adminLogin,
   couponController,
@@ -43,4 +44,6 @@ router.post("/unlistProduct", unListProduct);
 router.post("/listProduct", listProduct);
 router.post("/postEditProduct", postEditProduct);
 router.post("/orderControl", orderControl);
+router.post("/postAddCoupon", addCouponPost);
+
 export default router;

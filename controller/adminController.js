@@ -186,3 +186,11 @@ export async function couponController(req,res) {
     console.log(error);
   }
 }
+
+export async function addCoupon(req ,res){
+  try {
+    res.render('admin/addCoupon')
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -2,6 +2,7 @@ import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 
+let createdOrderId
 export default {
   getProduct: async (id) => {
     return await productModel.findById(id);
@@ -101,28 +102,30 @@ export default {
   quantityFinder: async (email) => {
     return await userModel.find({ email });
   },
-  checkoutSave: async (address, paymentType, userId, total, products ,paymentId) => {
+  checkoutSave: async (address, paymentType, userId, total, products, paymentId) => {
     const afs = address;
     let paid = "pending";
     if (paymentType === "Online") {
       paid = "paid";
     }
+    
     products;
     for (let i = 0; i < products.length; i++) {
       const orderSchema = new orderModel({
         address: afs,
-        userId,                   
+        userId,
         total: total[i],
         product: products[i].productId,
         quantity: products[i].quantity,
         paymentType,
         paid,
-        paymentId,
+        paymentId : null,
       });
-      await orderSchema.save();
+      const savedOrder = await orderSchema.save();
+      createdOrderId = savedOrder._id
     }
-    if(paymentId){
-      await orderModel.updateOne({userId} ,{$set : {paymentId : paymentId }})
+    if (paymentId !== null) {
+      await orderModel.updateOne({ _id : createdOrderId }, { $set: { paymentId: paymentId } })
     }
     return true;
   },
@@ -170,7 +173,7 @@ export default {
     );
   },
   cancelOrder: async (objectId) => {
-    const { id, productId, quantity} = objectId;
+    const { id, productId, quantity } = objectId;
     const updated = await orderModel.updateOne(
       { _id: id },
       { $set: { orderStatus: "cancelled" } }
@@ -182,7 +185,8 @@ export default {
       );
     }
   },
-  findOrderId : async (email) => {
-    return await orderModel.find({userId : email} , {paymentId : 1,total : 1})
+  findOrderId: async (objectId) => {
+    const { id } = objectId
+    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 })
   }
 };

@@ -35,7 +35,6 @@ const orderSchema = new mongoose.Schema(
     },
     paymentId : {
       type : String,
-      default : null
     }
   },
   { timestamps: true }

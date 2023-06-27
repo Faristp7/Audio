@@ -177,17 +177,23 @@
                             <h5 class="mb-3">Order Status</h5>
                             <form class="d-flex" id="orderForm">
                                 <div class="form-group">
-                                    <select name="orderStatus" id="order" class="custom-select">
-                                        <option value="pending">pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="out of Delivery">out of Delivery</option>
-                                        <option value="delivered">Delivered</option>
-                                    </select>
+                                    <% if (i.orderStatus=='delivered' ) { %>
+                                        <p class="text-success fw-bold">Item is Delivered <i
+                                                class="fa-solid fa-check"></i></p>
+                                        <% } else { %>
+                                            <select name="orderStatus" id="order" class="custom-select">
+                                                <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
+                                                <option value="confirmed">Confirmed</option>
+                                                <option value="out of Delivery">out of Delivery</option>
+                                                <option value="delivered">Delivered</option>
+                                            </select>
                                 </div>
                                 <div>
-                                    <button class="ms-3 submit-btn bg-secondary p-1 px-3" onclick="statuSubmit('<%-i._id %>' ,event)">
+                                    <button class="ms-3 submit-btn bg-secondary p-1 px-3"
+                                        onclick="statuSubmit('<%-i._id %>' ,event)">
                                         submit
                                     </button>
+                                    <% } %>
                                 </div>
                             </form>
                         </div>
@@ -221,27 +227,27 @@
         });
     </script>
     <script>
-        function statuSubmit(id ,e){
+        function statuSubmit(id, e) {
             e.preventDefault()
             const form = document.getElementById('orderForm')
             const orderStatus = form.order.value
 
-            axios.post('/admin/orderControl',{orderStatus ,id})
-            .then(({data}) => {
-                if(data == true){
-                    const orderStatusElement = document.getElementById(`orderStatus-${id}`)
-                    if(orderStatusElement){
-                        orderStatusElement.textContent = orderStatus
-                        Swal.fire(`order status changed as ${orderStatus}`)
-                        const closeButton = document.querySelector(`#exampleModal-${id} .btn-secondary`)
-                        if(closeButton) {
-                            closeButton.click()
+            axios.post('/admin/orderControl', { orderStatus, id })
+                .then(({ data }) => {
+                    if (data == true) {
+                        const orderStatusElement = document.getElementById(`orderStatus-${id}`)
+                        if (orderStatusElement) {
+                            orderStatusElement.textContent = orderStatus
+                            Swal.fire(`order status changed as ${orderStatus}`)
+                            const closeButton = document.querySelector(`#exampleModal-${id} .btn-secondary`)
+                            if (closeButton) {
+                                closeButton.click()
+                            }
                         }
                     }
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
+                }).catch((err) => {
+                    console.log(err);
+                });
         }
     </script>
 </body>

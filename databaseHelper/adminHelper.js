@@ -63,7 +63,7 @@ export default {
     );
   },
   getOrdersAdmin: async () => {
-    return await orderModel.find().populate("product");
+    return await orderModel.find().sort({createdAt : -1}).populate("product");
   },
   orderControl: async (id, orderstatus) => {
     return await orderModel.updateOne(

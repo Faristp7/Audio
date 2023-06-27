@@ -325,11 +325,11 @@ export async function orderButton(req, res) {
 
 export async function cancelOrder(req, res) {
   try {
-    const datas = await userHelper.findOrderId(req.session.user);
+    const datas = await userHelper.findOrderId(req.body);
     const paymentId = datas[0].paymentId;
     const amount = Number(datas[0].total) * 100;
     const receiptNumber = Math.random().toString(36).substring(7);
-
+console.log(datas);
     try {
       if (req.body.paymentType == "Online") {
         //capture payment
@@ -341,22 +341,20 @@ export async function cancelOrder(req, res) {
 
         //refund
         if (response.status == "captured") {
-          const refund = await client.payments.refund( paymentId ,{
+          const refund = await client.payments.refund(paymentId, {
             amount: amount,
             speed: "optimum",
             notes: {
               reason: "customer requested a refund",
             },
-            receipt : receiptNumber,
+            receipt: receiptNumber,
           });
           console.log("refund initiated", refund);
           const status = await userHelper.cancelOrder(req.body);
-        }
-        else{
+        } else {
           console.log(response.error);
         }
-      }
-      else{
+      } else {
         const status = await userHelper.cancelOrder(req.body);
       }
     } catch (error) {

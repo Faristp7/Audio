@@ -77,26 +77,28 @@ export default {
     const { couponName, couponCode, validity, amount, minimumPurchase } =
       objects;
 
-      const existingCoupon = await couponModel.findOne({
-        $or : [
-          {couponCode : couponCode},
-          {couponName : couponName}
-        ]
-      })
+    const existingCoupon = await couponModel.findOne({
+      $or: [{ couponCode: couponCode }, { couponName: couponName }],
+    });
 
-      if(existingCoupon){
-        return false 
-      }
-      else{
-        const orderSchema = new couponModel({
-          couponName,
-          couponCode,
-          validity,
-          amount,
-          minimumPurchase,
-        });
-        await orderSchema.save()
-        return true
-      }
+    if (existingCoupon) {
+      return false;
+    } else {
+      const orderSchema = new couponModel({
+        couponName,
+        couponCode,
+        validity,
+        amount,
+        minimumPurchase,
+      });
+      await orderSchema.save();
+      return true;
+    }
   },
+  getCoupon: async () => {
+    return await couponModel.find();
+  },
+  removerCoupon : async (id) => {
+    return await couponModel.deleteOne()
+  }
 };

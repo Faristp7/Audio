@@ -16,9 +16,9 @@ export function adminLogin(req, res) {
     console.log(error);
   }
 }
-export function pageNotFound(req,res){
+export function pageNotFound(req, res) {
   try {
-    res.render("include/404error")
+    res.render("include/404error");
   } catch (error) {
     console.log(error);
   }
@@ -115,90 +115,99 @@ export async function postadminLogin(req, res) {
 export async function postAddProduct(req, res) {
   try {
     cloudinaryUploadImage(req.body.images)
-    .then(async (urls) => {
-      const status = await helper.addproduct(req.body,urls);
-      if (status) res.send(true);
-      else res.send(false);
-      console.log("image url", urls);
-    })
-    .catch((err) => res.status(500).send(err))
+      .then(async (urls) => {
+        const status = await helper.addproduct(req.body, urls);
+        if (status) res.send(true);
+        else res.send(false);
+        console.log("image url", urls);
+      })
+      .catch((err) => res.status(500).send(err));
   } catch (error) {
     console.log(error);
   }
 }
 
-export function unListProduct(req,res){
-  const id = req.body
+export function unListProduct(req, res) {
+  const id = req.body;
   console.log(id);
-   const productList = helper.doUnlist(id)
-   productList ? res.send(true) : res.send(false);
+  const productList = helper.doUnlist(id);
+  productList ? res.send(true) : res.send(false);
 }
-export function listProduct(req,res){
-  const id = req.body
+export function listProduct(req, res) {
+  const id = req.body;
   console.log(id);
-   const productList = helper.doList(id)
-   productList ? res.send(true) : res.send(false);
+  const productList = helper.doList(id);
+  productList ? res.send(true) : res.send(false);
 }
 
-export async function editProduct(req,res){
+export async function editProduct(req, res) {
   try {
-    const productInfo = await userHelper.getProduct(req.params.id)
-    res.render('admin/editProduct',{productInfo})
+    const productInfo = await userHelper.getProduct(req.params.id);
+    res.render("admin/editProduct", { productInfo });
   } catch (error) {
-    console.log(error)  
+    console.log(error);
   }
 }
 
-export async function postEditProduct(req,res){
+export async function postEditProduct(req, res) {
   // cloudinaryUploadImage(req.body.images)
   // const status = await helper.addproduct(req.body,urls);
   //     if (status) res.send(true);
   //     else res.send(false);
   //     console.log(urls);
-  const id= req.body.id
-  const updated = await helper.updateProduct(req.body ,id)
-  return updated ? res.send(true) : res.send(false)
+  const id = req.body.id;
+  const updated = await helper.updateProduct(req.body, id);
+  return updated ? res.send(true) : res.send(false);
 }
 
-export async function getOrders(req,res) {
+export async function getOrders(req, res) {
   try {
-    const orders = await helper.getOrdersAdmin()
-    res.render("admin/orders" , {orders})
+    const orders = await helper.getOrdersAdmin();
+    res.render("admin/orders", { orders });
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function orderControl(req,res) {
+export async function orderControl(req, res) {
   try {
-    const {id ,orderStatus} = req.body
-    const status = await helper.orderControl(id , orderStatus)
-    status ? res.send(true) : res.send(false)
+    const { id, orderStatus } = req.body;
+    const status = await helper.orderControl(id, orderStatus);
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function couponController(req,res) {
+export async function couponController(req, res) {
   try {
-    res.render('admin/coupon')
+    const coupons = await helper.getCoupon()
+    res.render("admin/coupon" , {coupons});
   } catch (error) {
     console.log(error);
   }
 }
 
-export function addCoupon(req ,res){
+export async function addCoupon(req, res) {
   try {
-    res.render('admin/addCoupon')
+    res.render("admin/addCoupon");
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function addCouponPost(req,res){
+export async function addCouponPost(req, res) {
   try {
-    const status = await helper.addCoupon(req.body)
-    status ? res.send(true) : res.send(false)
+    const status = await helper.addCoupon(req.body);
+    status ? res.send(true) : res.send(false);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function removeCoupon(req,res){
+  try {
+    const status = await helper.removerCoupon(req.body)
   } catch (error) {
     console.log(error);
   }

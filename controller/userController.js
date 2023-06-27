@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 import helper from "../databaseHelper/adminHelper.js";
 import userHelper from "../databaseHelper/userHelper.js";
 import productModel from "../models/productModel.js";
+import instance from "../helper/razorpay.js";
+import { response } from "express";
+import Razorpay from "razorpay";
 
 export function getHome(req, res) {
   try {
@@ -310,20 +313,56 @@ export async function updateEmailOtpSend(req, res) {
 
 export async function orderButton(req, res) {
   try {
-    const page = parseInt(req.query.page) || 1
-    const orderData = await userHelper.getOrders(req.session.user ,page);
-    const {orders , totalPages} = orderData
-    const currentPage = page > totalPages ? totalPages : page
-    res.render("user/orders", { orders ,totalPages ,currentPage});
+    const page = parseInt(req.query.page) || 1;
+    const orderData = await userHelper.getOrders(req.session.user, page);
+    const { orders, totalPages } = orderData;
+    const currentPage = page > totalPages ? totalPages : page;
+    res.render("user/orders", { orders, totalPages, currentPage });
   } catch (error) {
-    console.log(error);                                                                             
+    console.log(error);
   }
 }
 
-export async function cancelOrder(req,res) {
+export async function cancelOrder(req, res) {
   try {
-    const status = await userHelper.cancelOrder(req.body)
+    const datas = await userHelper.findOrderId(req.session.user);
+    const paymentId = datas[0].paymentId;
+    const amount = Number(datas[0].total) * 100;
+    const receiptNumber = Math.random().toString(36).substring(7);
+
+    try {
+      if (req.body.paymentType == "Online") {
+        //capture payment
+        const client = new Razorpay({
+          key_id: process.env.razor_pay_key_id,
+          key_secret: process.env.razor_pay_secrect_key,
+        });
+        const response = await client.payments.capture(paymentId, amount);
+
+        //refund
+        if (response.status == "captured") {
+          const refund = await client.payments.refund( paymentId ,{
+            amount: amount,
+            speed: "optimum",
+            notes: {
+              reason: "customer requested a refund",
+            },
+            receipt : receiptNumber,
+          });
+          console.log("refund initiated", refund);
+          const status = await userHelper.cancelOrder(req.body);
+        }
+        else{
+          console.log(response.error);
+        }
+      }
+      else{
+        const status = await userHelper.cancelOrder(req.body);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   } catch (error) {
     console.log(error);
-  } 
+  }
 }

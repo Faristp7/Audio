@@ -200,6 +200,8 @@
         order_id: order.id, //This is a sample Order ID. Pass the id obtained in the response of Step 1
         handler: function (response) {
           if (response) {
+            const paymentId = response.razorpay_payment_id
+            axios.post('/checkoutPost',{paymentId})
             Swal.fire(
               'Order Placed',
               'back to shop',

@@ -81,11 +81,15 @@ export async function checkoutPost(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
-    const { address, paymentType } = req.body;
+    const { address, paymentType ,paymentId } = req.body;
     const orderAddress = await userHelper.getUserAddres(
       req.session.user,
       address
     );
+
+    if(paymentId){
+      saveOrderDatabase(req,res)
+    }
 
     if (paymentType == "Online") {
       const amount = totalVal * 100;
@@ -115,7 +119,8 @@ export async function checkoutPost(req, res) {
         paymentType,
         req.session.user,
         total,
-        quantity
+        quantity,
+        paymentId
       );
 
       const cartStatus = status

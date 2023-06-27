@@ -141,7 +141,7 @@
                                                                     <% if (!(i.orderStatus=='cancelled' ||
                                                                         i.orderStatus=='delivered' )) { %>
                                                                         <button class="actionCancel p-1"
-                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>')">
+                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>','<%-i.paymentType %>')">
                                                                             Cancel Order
                                                                         </button>
                                                                         <% } %>
@@ -170,7 +170,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function cancelOrder(id, productId, quantity) {
+        function cancelOrder(id, productId, quantity, paymentType) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "The order will be remove!",
@@ -181,7 +181,7 @@
                 confirmButtonText: 'Yes, Remove it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/cancelOrder', { id, productId, quantity })
+                    axios.post('/cancelOrder', { id, productId, quantity ,paymentType})
                         .then(({ data }) => {
                             console.log(data);
                         })

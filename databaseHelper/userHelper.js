@@ -101,7 +101,7 @@ export default {
   quantityFinder: async (email) => {
     return await userModel.find({ email });
   },
-  checkoutSave: async (address, paymentType, userId, total, products) => {
+  checkoutSave: async (address, paymentType, userId, total, products ,paymentId) => {
     const afs = address;
     let paid = "pending";
     if (paymentType === "Online") {
@@ -111,14 +111,18 @@ export default {
     for (let i = 0; i < products.length; i++) {
       const orderSchema = new orderModel({
         address: afs,
-        userId,
+        userId,                   
         total: total[i],
         product: products[i].productId,
         quantity: products[i].quantity,
         paymentType,
         paid,
+        paymentId,
       });
       await orderSchema.save();
+    }
+    if(paymentId){
+      await orderModel.updateOne({userId} ,{$set : {paymentId : paymentId }})
     }
     return true;
   },
@@ -166,7 +170,7 @@ export default {
     );
   },
   cancelOrder: async (objectId) => {
-    const { id, productId, quantity } = objectId;
+    const { id, productId, quantity} = objectId;
     const updated = await orderModel.updateOne(
       { _id: id },
       { $set: { orderStatus: "cancelled" } }
@@ -178,4 +182,7 @@ export default {
       );
     }
   },
+  findOrderId : async (email) => {
+    return await orderModel.find({userId : email} , {paymentId : 1,total : 1})
+  }
 };

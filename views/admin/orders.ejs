@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/table">
+                    <a class="nav-link" href="/admin/coupon">
                         <i class="fa-solid fa-gift"></i>
                         <span class="menu-title pl-2">Coupons</span>
                     </a>
@@ -180,13 +180,16 @@
                                     <% if (i.orderStatus=='delivered' ) { %>
                                         <p class="text-success fw-bold">Item is Delivered <i
                                                 class="fa-solid fa-check"></i></p>
-                                        <% } else { %>
-                                            <select name="orderStatus" id="order" class="custom-select">
-                                                <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
-                                                <option value="confirmed">Confirmed</option>
-                                                <option value="out of Delivery">out of Delivery</option>
-                                                <option value="delivered">Delivered</option>
-                                            </select>
+                                        <% } else if (i.orderStatus=='cancelled' ) { %>
+                                            <p class="text-danger fw-bold">order has been cancelled by user <i class="fa-solid fa-xmark"
+                                                    style="color: #cb1515;"></i></p>
+                                            <% } else { %>
+                                                <select name="orderStatus" id="order" class="custom-select">
+                                                    <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
+                                                    <option value="confirmed">Confirmed</option>
+                                                    <option value="out of Delivery">out of Delivery</option>
+                                                    <option value="delivered">Delivered</option>
+                                                </select>
                                 </div>
                                 <div>
                                     <button class="ms-3 submit-btn bg-secondary p-1 px-3"

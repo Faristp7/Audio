@@ -178,3 +178,11 @@ export async function orderControl(req,res) {
     console.log(error);
   }
 }
+
+export async function couponController(req,res) {
+  try {
+    res.render('admin/coupon')
+  } catch (error) {
+    console.log(error);
+  }
+}

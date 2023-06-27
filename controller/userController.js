@@ -329,7 +329,7 @@ export async function cancelOrder(req, res) {
     const paymentId = datas[0].paymentId;
     const amount = Number(datas[0].total) * 100;
     const receiptNumber = Math.random().toString(36).substring(7);
-console.log(datas);
+
     try {
       if (req.body.paymentType == "Online") {
         //capture payment
@@ -349,7 +349,7 @@ console.log(datas);
             },
             receipt: receiptNumber,
           });
-          console.log("refund initiated", refund);
+          
           const status = await userHelper.cancelOrder(req.body);
         } else {
           console.log(response.error);

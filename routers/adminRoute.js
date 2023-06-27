@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import {
   addProduct,
   adminLogin,
+  couponController,
   dashboard,
   doUserUnBlock,
   doUserblock,
@@ -30,6 +31,7 @@ router.get("/product", product);
 router.get("/addProduct", adminAuth, addProduct);
 router.get("/editProduct/:id", editProduct);
 router.get("/orders", getOrders);
+router.get("/coupon", couponController);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);
@@ -38,5 +40,5 @@ router.post("/doUserUnBlock", doUserUnBlock);
 router.post("/unlistProduct", unListProduct);
 router.post("/listProduct", listProduct);
 router.post("/postEditProduct", postEditProduct);
-router.post('/orderControl',orderControl)
+router.post("/orderControl", orderControl);
 export default router;

@@ -208,6 +208,7 @@ export async function addCouponPost(req, res) {
 export async function removeCoupon(req,res){
   try {
     const status = await helper.removerCoupon(req.body)
+    status ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

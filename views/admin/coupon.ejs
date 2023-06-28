@@ -109,7 +109,8 @@
                                         <td><%-i.amount %></td>
                                         <td><%-i.minimumPurchase %></td>
                                         <td>
-                                            <button type="button" class="btn btn-secondary btn-sm" onclick="removeCoupon('<%-i._id %>')">Remove</button>
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                onclick="removeCoupon('<%-i._id %>')">Remove</button>
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -139,14 +140,21 @@
     </script>
 
     <script>
-        function removeCoupon(id){
+        function removeCoupon(id) {
             axios
-            .post("/admin/removeCoupon" ,{id})
-            .then(({data}) => {
-                console.log(data);
-            }).catch((err) => {
-                console.log(err);
-            });
+                .post("/admin/removeCoupon", { id })
+                .then(({ data }) => {
+                    Swal.fire(
+                        'Removed Successfully',
+                        'back to coupon page',
+                        'success'
+                    )
+                    .then(() =>{
+                        window.location.href = "/admin/coupon"
+                    })
+                }).catch((err) => {
+                    console.log(err);
+                });
         }
     </script>
 </body>

@@ -115,7 +115,7 @@ export default {
       const orderSchema = new orderModel({
         address: afs,
         userId,
-        total: total[i],
+        total,
         product: products[i].productId,
         quantity: products[i].quantity,
         paymentType,

@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" type="image/x-icon" href="/img/cartFavicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/cartFavicon.png">
   <link rel="stylesheet" href="/css/login.css" />
 </head>
 
@@ -78,10 +78,16 @@
                       <h6><%-totalVal %></h6>
                     </div>
                     <hr class="my-4" />
-                    <div class="mb-4 pb-2 d-flex">
-                      <input type="text" name="" id="Apply coupon" class="ps-3 py-1" placeholder="COUPON" />
-                      <button class="ms-2 px-4 COUPON">Apply</button>
-                    </div> 
+                    <div class="mb-2 pb-2 d-flex">
+                      <input type="text" name="" id="applycouponCode" class="ps-3 py-1" placeholder="COUPON" />
+                      <button class="ms-2 px-4 COUPON" onclick="checkCoupon()">Apply</button>
+                    </div>
+                    <div>
+                      <p id="errMsg" class="text-danger fw-bolder"></p>
+                      <p id="successText" class="text-success fw-bolder" style="display: none;">
+                        Coupon Applied <i class="fa-solid fa-tag" style="color: #2f991a;"></i>
+                      </p>
+                    </div>
                     <hr class="my-4" />
                     <div class="d-flex justify-content-between mb-3">
                       <h5 class="text-uppercase">Order Total</h5>
@@ -103,7 +109,7 @@
                         Procced to Payment
                       </button>
                     </a>
-                    <p class="text-danger mt-3" id="errText"></p> 
+                    <p class="text-danger mt-3" id="errText"></p>
                   </div>
                 </div>
               </div>
@@ -121,9 +127,46 @@
     crossorigin="anonymous"></script>
 
   <script>
-    const productPrice = parseInt(
+    const errMsg = document.getElementById('errMsg')
+    let productPrice = parseInt(
       document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")
     );
+    function checkCoupon() {
+      const applycouponCode = document.getElementById('applycouponCode').value
+      axios
+        .post("/checkCoupon", { applycouponCode, productPrice })
+        .then(({ data }) => {
+          if (data == "notExist") {
+            errMsg.innerText = "!coupon Invalid"
+            setTimeout(() => {
+              errMsg.innerText = ""
+            }, 3000);
+          }
+          else if (data.message == "amountReached") {
+            errMsg.innerText = `coupon is applicable for ${data.minimumPurchase} above purchase`
+            setTimeout(() => {
+              errMsg.innerText = ""
+            }, 3000);
+          }
+          else if (data == "dateValidity") {
+            errMsg.innerText = 'Coupon Date validity expired'
+            setTimeout(() => {
+              errMsg.innerText = ""
+            }, 3000);
+          }
+          else {
+            const successText = document.getElementById('successText')
+            successText.style.display = "block"
+            const minusAmount = data.amount
+            productPrice -= minusAmount
+            document.getElementById("totalPrice").innerHTML = '₹' + productPrice
+
+          }
+        }).catch((err) => {
+          console.log(err);
+        });
+    }
+
     const address = document.getElementById("addressId");
     const selectButton = document.getElementById("selectButton");
     const paymentBtn = document.getElementById("paymentBtn");
@@ -174,16 +217,16 @@
               order: data.id,
               amount: data.amount
             }
-            if(paymentType == "Online"){
+            if (paymentType == "Online") {
               razorPay(order)
-            }else if (data == true){
+            } else if (data == true) {
               Swal.fire(
-              'Order Placed',
-              'back to shop',
-              'success'
-            ).then(() => {
-              window.location.href = "/shop/"
-            })
+                'Order Placed',
+                'back to shop',
+                'success'
+              ).then(() => {
+                window.location.href = "/shop/"
+              })
             }
           }).catch((err) => {
             console.log(err);
@@ -201,7 +244,7 @@
         handler: function (response) {
           if (response) {
             const paymentId = response.razorpay_payment_id
-            axios.post('/checkoutPost',{paymentId})
+            axios.post('/checkoutPost', { paymentId })
             Swal.fire(
               'Order Placed',
               'back to shop',

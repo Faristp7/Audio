@@ -81,14 +81,14 @@ export async function checkoutPost(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
-    const { address, paymentType ,paymentId } = req.body;
+    const { address, paymentType, paymentId } = req.body;
     const orderAddress = await userHelper.getUserAddres(
       req.session.user,
       address
     );
 
-    if(paymentId){
-      saveOrderDatabase(req,res)
+    if (paymentId) {
+      saveOrderDatabase(req, res)
     }
 
     if (paymentType == "Online") {
@@ -130,6 +130,31 @@ export async function checkoutPost(req, res) {
         ? await userHelper.quantityMinus(quantity)
         : undefined;
       return completeStatus;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function applyCoupon(req, res) {
+  try {
+    const productPrice = req.body.productPrice
+    const currentDate = new Date()
+    const status = await userHelper.CheckCoupon(req.body)
+    if(status == ""){
+      res.send("notExist")
+    }
+    else{
+      if(status[0].minimumPurchase > productPrice){
+        res.send({message : "amountReached" , minimumPurchase : status[0].minimumPurchase})
+      }
+      else if(status[0].validity <= currentDate){
+        res.send("dateValidity")
+      }
+      else{
+        totalVal -= status[0].amount
+        res.send({amount : status[0].amount})
+      }
     }
   } catch (error) {
     console.log(error);

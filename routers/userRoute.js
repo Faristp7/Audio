@@ -26,6 +26,7 @@ import { userAuth } from "../middleware/userAuth.js";
 import {
   addToCart,
   addToCartPost,
+  applyCoupon,
   checkout,
   checkoutPost,
   quantityController,
@@ -61,5 +62,6 @@ router.post("/removeProduct", removeProduct);
 router.post("/quantity", quantityController);
 router.post("/checkoutPost", checkoutPost);
 router.post("/cancelOrder", cancelOrder);
+router.post("/checkCoupon", applyCoupon);
 
 export default router;

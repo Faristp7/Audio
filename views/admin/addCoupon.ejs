@@ -83,35 +83,40 @@
             const amount = document.getElementById('amount').value
             const minPurchase = document.getElementById('minPurchase').value
             const errText = document.getElementById('errText')
+            if (amount > 5000) {
+                errText.innerText = "amount override"
+            }
+            else {
+                axios
+                    .post('/admin/postAddCoupon', {
+                        couponName: couponName,
+                        couponCode: couponCode,
+                        validity: validity,
+                        amount: amount,
+                        minimumPurchase: minPurchase
+                    })
+                    .then(({ data }) => {
+                        if (data == true) {
+                            Swal.fire(
+                                'Coupon Added',
+                                'Back to home page',
+                                'success'
+                            )
+                                .then(() => {
+                                    window.location.href = "/admin/coupon"
+                                })
+                        }
+                        else {
+                            errText.innerText = "Already Exist"
+                            setTimeout(() => {
+                                errText.innerText = ""
+                            }, 3000);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+            }
 
-            axios
-                .post('/admin/postAddCoupon', {
-                    couponName: couponName,
-                    couponCode: couponCode,
-                    validity: validity,
-                    amount: amount,
-                    minimumPurchase: minPurchase
-                })
-                .then(({ data }) => {
-                    if (data == true) {
-                        Swal.fire(
-                            'Coupon Added',
-                            'Back to home page',
-                            'success'
-                        )
-                        .then(() => {
-                            window.location.href = "/admin/coupon"
-                        })
-                    }
-                    else{
-                        errText.innerText = "Already Exist"
-                        setTimeout(() => {
-                            errText.innerText = ""
-                        }, 3000);
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                });
         })
 
     </script>

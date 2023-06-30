@@ -1,5 +1,6 @@
 import userHelper from "../databaseHelper/userHelper.js";
 import instance from "../helper/razorpay.js";
+import Razorpay from "razorpay";
 
 var totalVal = 0;
 var productCount = 0;
@@ -138,16 +139,32 @@ export async function checkoutPost(req, res) {
     async function saveOrderDatabase(req, res) {
       const productIds = quantity.map((item) => item.productId);
       const products = await userHelper.getProductArray(productIds);
-      const total = products.map((product) => product.productPrice);
-      const status = await userHelper.checkoutSave(
-        orderAddress,
-        paymentType,
-        req.session.user,
-        totalVal,
-        quantity,
-        paymentId
-      );
-
+      // const total = products.map((product) => product.productPrice);
+      const verifyPrice = totalVal;
+      if (totalVal !== verifyPrice) {
+        console.log("something wentWrong");
+      } else {
+        var status = await userHelper.checkoutSave(
+          orderAddress,
+          paymentType,
+          req.session.user,
+          totalVal,
+          quantity,
+          paymentId
+        );
+      }
+      let amount = totalVal * 100
+      try {
+        if (paymentId) {
+          const client = new Razorpay({
+            key_id: process.env.razor_pay_key_id,
+            key_secret: process.env.razor_pay_secrect_key,
+          });
+          await client.payments.capture(paymentId, amount);
+        }
+      } catch (error) {
+        console.log(error);
+      }
       const cartStatus = status
         ? await userHelper.destroyCart(req.session.user)
         : undefined;

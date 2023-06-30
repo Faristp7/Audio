@@ -80,7 +80,7 @@
                     <hr class="my-4" />
                     <div class="mb-2 pb-2 d-flex">
                       <input type="text" name="" id="applycouponCode" class="ps-3 py-1" placeholder="COUPON" />
-                      <button class="ms-2 px-4 COUPON" onclick="checkCoupon()">Apply</button>
+                      <button class="ms-2 px-4 COUPON" onclick="checkCoupon()" id="couponButton">Apply</button>
                     </div>
                     <div>
                       <p id="errMsg" class="text-danger fw-bolder"></p>
@@ -160,7 +160,8 @@
             const minusAmount = data.amount
             productPrice -= minusAmount
             document.getElementById("totalPrice").innerHTML = '₹' + productPrice
-
+            const button = document.getElementById('couponButton')
+            button.disabled = 'true'
           }
         }).catch((err) => {
           console.log(err);

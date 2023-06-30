@@ -337,8 +337,6 @@ export async function cancelOrder(req, res) {
           key_id: process.env.razor_pay_key_id,
           key_secret: process.env.razor_pay_secrect_key,
         });
-        const response = await client.payments.capture(paymentId, amount);
-
         //refund
         if (response.status == "captured") {
           const refund = await client.payments.refund(paymentId, {

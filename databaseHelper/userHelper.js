@@ -1,9 +1,9 @@
 import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
-import couponModel from "../models/couponModel.js"
+import couponModel from "../models/couponModel.js";
 
-let createdOrderId
+let createdOrderId;
 export default {
   getProduct: async (id) => {
     return await productModel.findById(id);
@@ -103,30 +103,44 @@ export default {
   quantityFinder: async (email) => {
     return await userModel.find({ email });
   },
-  checkoutSave: async (address, paymentType, userId, total, products, paymentId) => {
+  checkoutSave: async (
+    address,
+    paymentType,
+    userId,
+    total,
+    products,
+    paymentId
+  ) => {
     const afs = address;
     let paid = "pending";
     if (paymentType === "Online") {
       paid = "paid";
     }
-    
+
     products;
     for (let i = 0; i < products.length; i++) {
+      const productPrice = await productModel.findOne(
+        { _id: products[i].productId },
+        { productPrice: 1 }
+      );
       const orderSchema = new orderModel({
         address: afs,
         userId,
-        total,
+        total: productPrice.productPrice,
         product: products[i].productId,
         quantity: products[i].quantity,
         paymentType,
         paid,
-        paymentId : null,
+        paymentId: null,
       });
       const savedOrder = await orderSchema.save();
-      createdOrderId = savedOrder._id
+      createdOrderId = savedOrder._id;
     }
     if (paymentId !== null) {
-      await orderModel.updateOne({ _id : createdOrderId }, { $set: { paymentId: paymentId } })
+      await orderModel.updateOne(
+        { _id: createdOrderId },
+        { $set: { paymentId: paymentId } }
+      );
     }
     return true;
   },
@@ -187,11 +201,11 @@ export default {
     }
   },
   findOrderId: async (objectId) => {
-    const { id } = objectId
-    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 })
+    const { id } = objectId;
+    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 });
   },
-  CheckCoupon : async (data) => {
-    const {applycouponCode} = data
-    return await couponModel.find({couponCode : applycouponCode})
+  CheckCoupon: async (data) => {
+    const { applycouponCode } = data;
+    return await couponModel.find({ couponCode: applycouponCode });
   },
 };

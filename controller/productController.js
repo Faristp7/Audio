@@ -142,7 +142,7 @@ export async function checkoutPost(req, res) {
       // const total = products.map((product) => product.productPrice);
       const verifyPrice = totalVal;
       if (totalVal !== verifyPrice) {
-        console.log("something wentWrong");
+        console.log("something went Wrong");
       } else {
         var status = await userHelper.checkoutSave(
           orderAddress,

@@ -3,7 +3,7 @@ import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 import couponModel from "../models/couponModel.js";
 
-let createdOrderId;
+let createdOrderId = [];
 export default {
   getProduct: async (id) => {
     return await productModel.findById(id);
@@ -134,11 +134,11 @@ export default {
         paymentId: null,
       });
       const savedOrder = await orderSchema.save();
-      createdOrderId = savedOrder._id;
+      createdOrderId.push(savedOrder._id)
     }
     if (paymentId !== null) {
-      await orderModel.updateOne(
-        { _id: createdOrderId },
+      await orderModel.updateMany(
+        { _id: {$in : createdOrderId} },
         { $set: { paymentId: paymentId } }
       );
     }

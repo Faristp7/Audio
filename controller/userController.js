@@ -327,7 +327,7 @@ export async function cancelOrder(req, res) {
   try {
     const datas = await userHelper.findOrderId(req.body);
     const paymentId = datas[0].paymentId;
-    const amount = Number(datas[0].total) * 100;
+    const amount = Number(datas[0].total)* 100;
     const receiptNumber = Math.random().toString(36).substring(7);
 
     try {
@@ -338,7 +338,8 @@ export async function cancelOrder(req, res) {
           key_secret: process.env.razor_pay_secrect_key,
         });
         //refund
-        if (response.status == "captured") {
+        if (client) {
+          console.log("asdh");
           const refund = await client.payments.refund(paymentId, {
             amount: amount,
             speed: "optimum",
@@ -350,7 +351,7 @@ export async function cancelOrder(req, res) {
           
           const status = await userHelper.cancelOrder(req.body);
         } else {
-          console.log(response.error);
+          console.log("Client not found");
         }
       } else {
         const status = await userHelper.cancelOrder(req.body);

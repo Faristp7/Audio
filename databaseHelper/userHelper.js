@@ -109,12 +109,17 @@ export default {
     userId,
     total,
     products,
-    paymentId
+    paymentId,
+    applycouponCode
   ) => {
     const afs = address;
+    let couponAmount;
     let paid = "pending";
     if (paymentType === "Online") {
       paid = "paid";
+    }
+    if(applycouponCode){
+      couponAmount = await couponModel.findOne({couponCode : applycouponCode} , {amount : 1})
     }
 
     products;
@@ -132,6 +137,7 @@ export default {
         paymentType,
         paid,
         paymentId: null,
+        couponAmount : couponAmount.amount
       });
       const savedOrder = await orderSchema.save();
       createdOrderId.push(savedOrder._id)

@@ -212,7 +212,8 @@
         }, 3000);
       }
       else {
-        axios.post("/checkoutPost", { address, paymentType })
+        const applycouponCode = document.getElementById('applycouponCode').value
+        axios.post("/checkoutPost", { address, paymentType, applycouponCode })
           .then(({ data }) => {
             const order = {
               order: data.id,

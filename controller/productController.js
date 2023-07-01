@@ -107,7 +107,7 @@ export async function checkoutPost(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
-    const { address, paymentType, paymentId } = req.body;
+    const { address, paymentType, paymentId , applycouponCode} = req.body;
     const orderAddress = await userHelper.getUserAddres(
       req.session.user,
       address
@@ -150,7 +150,8 @@ export async function checkoutPost(req, res) {
           req.session.user,
           totalVal,
           quantity,
-          paymentId
+          paymentId,
+          applycouponCode
         );
       }
       let amount = totalVal * 100

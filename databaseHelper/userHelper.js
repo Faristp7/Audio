@@ -137,7 +137,7 @@ export default {
         paymentType,
         paid,
         paymentId: null,
-        couponAmount : couponAmount.amount
+        couponAmount : i === 0 && couponAmount ? couponAmount.amount : undefined
       });
       const savedOrder = await orderSchema.save();
       createdOrderId.push(savedOrder._id)
@@ -208,7 +208,7 @@ export default {
   },
   findOrderId: async (objectId) => {
     const { id } = objectId;
-    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 });
+    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 ,couponAmount : 1});
   },
   CheckCoupon: async (data) => {
     const { applycouponCode } = data;

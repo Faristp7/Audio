@@ -327,28 +327,28 @@ export async function cancelOrder(req, res) {
   try {
     const datas = await userHelper.findOrderId(req.body);
     const paymentId = datas[0].paymentId;
-    const amount = Number(datas[0].total)* 100;
+    const amount = Number(datas[0].total) * 100;
+    const couponAmount = datas[0].couponAmount
+    const lastAmount = amount - couponAmount
     const receiptNumber = Math.random().toString(36).substring(7);
 
     try {
       if (req.body.paymentType == "Online") {
-        //capture payment
         const client = new Razorpay({
           key_id: process.env.razor_pay_key_id,
           key_secret: process.env.razor_pay_secrect_key,
         });
         //refund
         if (client) {
-          console.log("asdh");
           const refund = await client.payments.refund(paymentId, {
-            amount: amount,
+            amount: lastAmount,
             speed: "optimum",
             notes: {
               reason: "customer requested a refund",
             },
             receipt: receiptNumber,
           });
-          
+
           const status = await userHelper.cancelOrder(req.body);
         } else {
           console.log("Client not found");

@@ -118,8 +118,11 @@ export default {
     if (paymentType === "Online") {
       paid = "paid";
     }
-    if(applycouponCode){
-      couponAmount = await couponModel.findOne({couponCode : applycouponCode} , {amount : 1})
+    if (applycouponCode) {
+      couponAmount = await couponModel.findOne(
+        { couponCode: applycouponCode },
+        { amount: 1 }
+      );
     }
 
     products;
@@ -137,14 +140,14 @@ export default {
         paymentType,
         paid,
         paymentId: null,
-        couponAmount : i === 0 && couponAmount ? couponAmount.amount : undefined
+        couponAmount: i === 0 && couponAmount ? couponAmount.amount : undefined,
       });
       const savedOrder = await orderSchema.save();
-      createdOrderId.push(savedOrder._id)
+      createdOrderId.push(savedOrder._id);
     }
     if (paymentId !== null) {
       await orderModel.updateMany(
-        { _id: {$in : createdOrderId} },
+        { _id: { $in: createdOrderId } },
         { $set: { paymentId: paymentId } }
       );
     }
@@ -171,7 +174,8 @@ export default {
   getOrders: async (email, page) => {
     const limit = 5;
     const skip = (page - 1) * limit;
-
+    const currentdate = new Date();
+    const showButton = [];
     const totalOrders = await orderModel.countDocuments({ userId: email });
     const totalPages = Math.ceil(totalOrders / limit);
     const orders = await orderModel
@@ -179,10 +183,19 @@ export default {
       .populate("product")
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean();
+
+    orders.forEach((order) => {
+      const deliveredDate = new Date(order.deliveredDate);
+      const timeDiffrence = currentdate.getTime() - deliveredDate.getTime();
+      const daysDiffrence = Math.ceil(timeDiffrence / (1000 * 60 * 60 * 24));
+      order.showButton = daysDiffrence <= 7;
+
+      showButton.push(order.showButton);
+    });
     return { orders, totalPages };
   },
-
   getProductArray: async (ids) => {
     const product = await productModel.find({ _id: { $in: ids } });
     return product;
@@ -208,7 +221,10 @@ export default {
   },
   findOrderId: async (objectId) => {
     const { id } = objectId;
-    return await orderModel.find({ _id: id }, { paymentId: 1, total: 1 ,couponAmount : 1});
+    return await orderModel.find(
+      { _id: id },
+      { paymentId: 1, total: 1, couponAmount: 1 }
+    );
   },
   CheckCoupon: async (data) => {
     const { applycouponCode } = data;

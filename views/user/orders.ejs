@@ -138,17 +138,16 @@
                                                                     <h6 class="ms-3"><%-i.paymentType %></h6>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <% if (!(i.orderStatus=='cancelled' ||
-                                                                        i.orderStatus=='delivered' )) { %>
-                                                                        <button class="actionCancel p-1"
-                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>','<%-i.paymentType %>')">
+                                                                    <% if (!(i.orderStatus=='cancelled' || i.orderStatus=='delivered' )) { %>
+                                                                        <button class="actionCancel p-1" onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>','<%-i.paymentType %>')">
                                                                             Cancel Order
                                                                         </button>
+                                                                    <% } else { %>
+                                                                        <% if (i.showButton) { %> 
+                                                                            <button type="button" class="btn btn-dark">Return</button>
                                                                         <% } %>
-                                                                </div>
-                                                                <div>
-                                                                    <button type="button" class="btn btn-dark ms-3 mb-2">Return</button>
-                                                                </div>
+                                                                    <% } %>
+                                                                </div>                                                                
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">

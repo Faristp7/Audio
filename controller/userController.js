@@ -327,9 +327,9 @@ export async function cancelOrder(req, res) {
   try {
     const datas = await userHelper.findOrderId(req.body);
     const paymentId = datas[0].paymentId;
-    const amount = Number(datas[0].total) * 100;
+    const amount = Number(datas[0].total) * 100
     const couponAmount = datas[0].couponAmount
-    const lastAmount = amount - couponAmount
+    let lastAmount = amount - couponAmount
     const receiptNumber = Math.random().toString(36).substring(7);
 
     try {

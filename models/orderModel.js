@@ -39,6 +39,9 @@ const orderSchema = new mongoose.Schema(
     couponAmount : {
       type : Number,
       default : 0
+    },
+    deliveredDate : {
+      type : Date,
     }
   },
   { timestamps: true }

@@ -68,10 +68,19 @@ export default {
     return await orderModel.find().sort({ createdAt: -1 }).populate("product");
   },
   orderControl: async (id, orderstatus) => {
-    return await orderModel.updateOne(
+    await orderModel.updateOne(
       { _id: id },
       { $set: { orderStatus: orderstatus } }
     );
+
+    if(orderstatus == "delivered"){
+      const currentDate = new Date()
+      await orderModel.updateOne(
+        {_id : id},
+        {$set : {deliveredDate : currentDate}}
+      )
+    }
+    return true
   },
   addCoupon: async (objects) => {
     const { couponName, couponCode, validity, amount, minimumPurchase } =

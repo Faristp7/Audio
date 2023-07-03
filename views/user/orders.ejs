@@ -146,6 +146,9 @@
                                                                         </button>
                                                                         <% } %>
                                                                 </div>
+                                                                <div>
+                                                                    <button type="button" class="btn btn-dark ms-3 mb-2">Return</button>
+                                                                </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">
@@ -180,7 +183,7 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, Remove it!'
-              })
+            })
                 .then((result) => {
                     if (result.isConfirmed) {
                         axios.post('/cancelOrder', { id, productId, quantity, paymentType })

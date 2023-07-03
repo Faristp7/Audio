@@ -144,7 +144,9 @@
                                                                         </button>
                                                                     <% } else { %>
                                                                         <% if (i.showButton) { %> 
-                                                                            <button type="button" class="btn btn-dark">Return</button>
+                                                                            <button type="button" class="btn btn-dark" onclick="returnRequest('<%-i._id %>','<%-i.product.id %>',)">
+                                                                                Return Product
+                                                                            </button>
                                                                         <% } %>
                                                                     <% } %>
                                                                 </div>                                                                
@@ -158,7 +160,7 @@
                                                         </div>
                                                     </div>
                                                     <% }) %>
-                                                        <!-- Modal -->
+                                            <!-- Modal -->
                                     </div>
                                 </div>
                             </div>
@@ -198,6 +200,11 @@
                         })
                     }
                 })
+        }
+
+        function returnRequest(id , productId){
+            axios
+            .post('')
         }
     </script>
 </body>

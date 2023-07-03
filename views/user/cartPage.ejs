@@ -53,7 +53,7 @@
                               </button>
 
                               <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
-                                value="<%= quantity[index] %>" type="number" class="form-control form-control-sm"
+                                value="<%=quantity[index] %>" type="number" class="form-control form-control-sm"
                                 disabled />
 
                               <button class="btn btn-link px-2"
@@ -146,8 +146,9 @@
     function qunantityUp(id, index) {
       const currentElement = document.getElementById(`form1-${index}`);
       const indexValue = parseInt(currentElement.value) + 1;
-
-      if (currentElement.value < currentElement.max) {
+      const currentValue = parseInt(currentElement.value)
+      const maxValue = parseInt(currentElement.max)
+      if (currentValue < maxValue) {
         axios
           .post("/quantity", { id, deside: true })
           .then(({ data }) => {
@@ -163,7 +164,8 @@
     }
     function qunantityDown(id, index) {
       const currentElement = document.getElementById(`form1-${index}`);
-      if (currentElement.value > 1) {
+      const currentValue = parseInt(currentElement.value)
+      if (currentValue > 1) {
         axios.post("/quantity", { id, deside: false }).then(({ data }) => {
           if (data == true) {
             currentElement.value = Number(currentElement.value) - 1;

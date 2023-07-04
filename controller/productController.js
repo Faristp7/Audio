@@ -179,9 +179,10 @@ export async function checkoutPost(req, res) {
   }
 }
 
-async function requestReturn(req,res){
+export async function requestReturn(req,res){
   try {
-    
+    const status = await userHelper.requestRefund(req.body.id)
+    status ? res.send(true) : res.send(false)
   } catch (error) {
     console.log(error);
   }

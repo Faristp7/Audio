@@ -230,4 +230,7 @@ export default {
     const { applycouponCode } = data;
     return await couponModel.find({ couponCode: applycouponCode });
   },
+  requestRefund: async (id) => {
+    return await orderModel.updateOne({_id : id} , {$set : {returnRequest : true}})
+  }
 };

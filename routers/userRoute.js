@@ -31,6 +31,7 @@ import {
   checkoutPost,
   quantityController,
   removeProduct,
+  requestReturn,
 } from "../controller/productController.js";
 
 const router = Router();
@@ -63,5 +64,6 @@ router.post("/quantity", quantityController);
 router.post("/checkoutPost", checkoutPost);
 router.post("/cancelOrder", cancelOrder);
 router.post("/checkCoupon", applyCoupon);
+router.post("/requestReturn", requestReturn);
 
 export default router;

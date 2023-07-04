@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
   },
   cart : {
     type:Array
+  },
+  wallet :{
+    type : Number
   }
 },{timestamps:true});
 const userModel = mongoose.model("users", userSchema);

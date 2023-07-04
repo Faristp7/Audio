@@ -129,10 +129,15 @@
                                         <td><%-element.paid %></td>
                                         <td id="orderStatus-<%=element.id %>"><%-element.orderStatus %></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary px-2 py-0"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal-<%=element._id %>">
+                                            <button type="button" class="btn btn-dark px-2 py-0" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal-<%=element._id %>">
                                                 more
                                             </button>
+                                            <% if (element.returnRequest) { %>
+                                                <span>
+                                                    <i class="fa-solid fa-bell"></i>
+                                                </span>
+                                                <% } %>
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -173,7 +178,7 @@
                             <h6 class="fw-bold">quantity : </h6>
                             <h6 class="fw-bold ps-2"><%-i.quantity %></h6>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body pb-0 ">
                             <h5 class="mb-3">Order Status</h5>
                             <form class="d-flex" id="orderForm">
                                 <div class="form-group">
@@ -181,8 +186,8 @@
                                         <p class="text-success fw-bold">Item is Delivered <i
                                                 class="fa-solid fa-check"></i></p>
                                         <% } else if (i.orderStatus=='cancelled' ) { %>
-                                            <p class="text-danger fw-bold">order has been cancelled by user <i class="fa-solid fa-xmark"
-                                                    style="color: #cb1515;"></i></p>
+                                            <p class="text-danger fw-bold">order has been cancelled by user <i
+                                                    class="fa-solid fa-xmark" style="color: #cb1515;"></i></p>
                                             <% } else { %>
                                                 <select name="orderStatus" id="order" class="custom-select">
                                                     <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
@@ -198,7 +203,18 @@
                                     </button>
                                     <% } %>
                                 </div>
+                                <!-- return controller -->
                             </form>
+                        </div>
+                        <div class="ms-3 mb-2">
+                            <% if (i.returnRequest) { %>
+                                <p class="fw-bold">cancallation request</p>
+                                <div>
+                                    <button type="button" class="btn btn-success btn-sm" onclick="approveRequest('<%-i.product._id %>')">
+                                        Approve
+                                    </button>
+                                </div>
+                                <% } %>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -252,6 +268,16 @@
                     console.log(err);
                 });
         }
+
+        function approveRequest(productId){
+            axios
+            .post('approveRequest' , {productId})
+            .then(({data}) => {
+                console.log(data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        } 
     </script>
 </body>
 

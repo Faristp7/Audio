@@ -213,3 +213,11 @@ export async function removeCoupon(req,res){
     console.log(error);
   }
 }
+
+export async function approveRequest(req,res){
+  try {
+    console.log(req.body);
+  } catch (error) {
+    console.log(error);
+  }
+}

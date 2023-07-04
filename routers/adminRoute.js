@@ -4,6 +4,7 @@ import {
   addCouponPost,
   addProduct,
   adminLogin,
+  approveRequest,
   couponController,
   dashboard,
   doUserUnBlock,
@@ -47,5 +48,6 @@ router.post("/postEditProduct", postEditProduct);
 router.post("/orderControl", orderControl);
 router.post("/postAddCoupon", addCouponPost);
 router.post("/removeCoupon", removeCoupon);
+router.post("/approveRequest", approveRequest);
 
 export default router;

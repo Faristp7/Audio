@@ -3,6 +3,8 @@ import productModel from "../models/productModel.js";
 import helper from "../databaseHelper/adminHelper.js";
 import { cloudinaryUploadImage } from "../helper/cloudinary.js";
 import userHelper from "../databaseHelper/userHelper.js";
+import Razorpay from "razorpay";
+
 let err;
 export function adminLogin(req, res) {
   try {
@@ -181,8 +183,8 @@ export async function orderControl(req, res) {
 
 export async function couponController(req, res) {
   try {
-    const coupons = await helper.getCoupon()
-    res.render("admin/coupon" , {coupons});
+    const coupons = await helper.getCoupon();
+    res.render("admin/coupon", { coupons });
   } catch (error) {
     console.log(error);
   }
@@ -205,20 +207,45 @@ export async function addCouponPost(req, res) {
   }
 }
 
-export async function removeCoupon(req,res){
+export async function removeCoupon(req, res) {
   try {
-    const status = await helper.removerCoupon(req.body)
-    status ? res.send(true) : res.send(false)
+    const status = await helper.removerCoupon(req.body);
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function approveRequest(req,res){
+export async function approveRequest(req, res) {
   try {
-    const status = await helper.approveRequest(req.body ,req.session.user)
-    if(status){
+    let finalAmount;
+    const status = await helper.approveRequest(req.body, req.session.user);
+    const productPriceCalculate = await userHelper.findOrderId(req.body);
+    if (status) {
+      finalAmount =
+        productPriceCalculate[0].total - productPriceCalculate[0].couponAmount;
+    }
+    if (productPriceCalculate[0].paymentType == "COD") {
+      const success = await helper.updateWallet(finalAmount, req.session.user);
+    } else {
+      const client = new Razorpay({
+        key_id: process.env.razor_pay_key_id,
+        key_secret: process.env.razor_pay_secrect_key,
+      });
+
+      const paymentId = productPriceCalculate[0].paymentId;
+      const receiptNumber = Math.random().toString(36).substring(7);
+      const amount = finalAmount * 100;
+      const refund = await client.payments.refund(paymentId, {
+        amount: amount,
+        speed: "optimum",
+        notes: {
+          reason: "customer requested a refund",
+        },
+        receipt: receiptNumber,
+      });
       
+      refund ? res.send('refundDone') : undefined
     }
   } catch (error) {
     console.log(error);

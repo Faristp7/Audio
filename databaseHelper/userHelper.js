@@ -223,7 +223,7 @@ export default {
     const { id } = objectId;
     return await orderModel.find(
       { _id: id },
-      { paymentId: 1, total: 1, couponAmount: 1 }
+      { paymentId: 1, total: 1, couponAmount: 1, paymentType: 1 }
     );
   },
   CheckCoupon: async (data) => {
@@ -231,6 +231,9 @@ export default {
     return await couponModel.find({ couponCode: applycouponCode });
   },
   requestRefund: async (id) => {
-    return await orderModel.updateOne({_id : id} , {$set : {returnRequest : true}})
-  }
+    return await orderModel.updateOne(
+      { _id: id },
+      { $set: { returnRequest: true } }
+    );
+  },
 };

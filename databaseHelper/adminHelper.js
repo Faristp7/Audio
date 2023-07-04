@@ -123,4 +123,7 @@ export default {
       );
     }
   },
+  updateWallet: async (amount ,email) => {
+    return await userModel.updateOne({email} ,{$set : {wallet : amount}})
+  }
 };

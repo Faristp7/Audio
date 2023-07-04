@@ -210,7 +210,8 @@
                             <% if (i.returnRequest) { %>
                                 <p class="fw-bold">cancallation request</p>
                                 <div>
-                                    <button type="button" class="btn btn-success btn-sm" onclick="approveRequest('<%-i.product._id %>')">
+                                    <button type="button" class="btn btn-success btn-sm"
+                                        onclick="approveRequest('<%-i.product._id %>', '<%-i._id %>', '<%-i.quantity %>')">
                                         Approve
                                     </button>
                                 </div>
@@ -269,14 +270,44 @@
                 });
         }
 
-        function approveRequest(productId){
-            axios
-            .post('approveRequest' , {productId})
-            .then(({data}) => {
-                console.log(data);
-            }).catch((err) => {
-                console.log(err);
-            });
+        function approveRequest(productId, id, quantity) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("hi");
+                    axios
+                        .post('approveRequest', { productId, id, quantity })
+                        .then(({ data }) => {
+                            console.log(data);
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Re-confirm it',
+                        'error'
+                    )
+                }
+            })
         } 
     </script>
 </body>

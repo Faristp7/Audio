@@ -73,14 +73,14 @@ export default {
       { $set: { orderStatus: orderstatus } }
     );
 
-    if(orderstatus == "delivered"){
-      const currentDate = new Date()
+    if (orderstatus == "delivered") {
+      const currentDate = new Date();
       await orderModel.updateOne(
-        {_id : id},
-        {$set : {deliveredDate : currentDate}}
-      )
+        { _id: id },
+        { $set: { deliveredDate: currentDate } }
+      );
     }
-    return true
+    return true;
   },
   addCoupon: async (objects) => {
     const { couponName, couponCode, validity, amount, minimumPurchase } =
@@ -107,7 +107,20 @@ export default {
   getCoupon: async () => {
     return await couponModel.find();
   },
-  removerCoupon : async (id) => {
-    return await couponModel.deleteOne()
-  }
+  removerCoupon: async (id) => {
+    return await couponModel.deleteOne();
+  },
+  approveRequest: async (data, email) => {
+    const { id, productId, quantity } = data;
+    const status = await orderModel.updateOne(
+      { _id: id },
+      { $set: { returnRequest: true } }
+    );
+    if (status) {
+      return await productModel.updateOne(
+        { _id: productId },
+        { $inc: { quantity: quantity } }
+      );
+    }
+  },
 };

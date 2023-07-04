@@ -216,7 +216,10 @@ export async function removeCoupon(req,res){
 
 export async function approveRequest(req,res){
   try {
-    console.log(req.body);
+    const status = await helper.approveRequest(req.body ,req.session.user)
+    if(status){
+      
+    }
   } catch (error) {
     console.log(error);
   }

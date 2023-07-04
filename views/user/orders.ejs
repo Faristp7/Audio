@@ -121,8 +121,7 @@
                                                                         <%-i.address.address[0].phone %>,
                                                                             <%-i.address.address[0].pinCode %>,
                                                                                 <%-i.address.address[0].flatHouse %>,
-                                                                                    <%-i.address.address[0].areaStreet
-                                                                                        %>,
+                                                                                    <%-i.address.address[0].areaStreet %>,
                                                                                         <%-i.address.address[0].landmark%>,
                                                                                             <%-i.address.address[0].townCity%>,
                                                                                                 <%-i.address.address[0].state%>,
@@ -139,7 +138,7 @@
                                                                 </div>
                                                                 <!-- modalbody -->
                                                                 <div class="modal-body">
-                                                                    <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered')) { %>
+                                                                    <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered' || i.orderStatus == 'returned')) { %>
                                                                         <button class="actionCancel p-1"
                                                                             onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>','<%-i.paymentType %>')">
                                                                             Cancel Order
@@ -152,7 +151,7 @@
                                                                                 Return Product
                                                                             </button>
                                                                         <% } %>
-                                                                        <% if (i.returnRequest) { %>
+                                                                        <% if (i.returnRequest && i.orderStatus !== 'returned') { %>
                                                                             <p class="mt-3 fw-bold" id="returnMsg">Your return request is under process</p>
                                                                         <% } %>
                                                                     <% } %>

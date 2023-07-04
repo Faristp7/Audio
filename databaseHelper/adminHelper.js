@@ -114,7 +114,7 @@ export default {
     const { id, productId, quantity } = data;
     const status = await orderModel.updateOne(
       { _id: id },
-      { $set: { returnRequest: true } }
+      { $set: { returnRequest: true  ,orderStatus : "returned"} }
     );
     if (status) {
       return await productModel.updateOne(

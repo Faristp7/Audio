@@ -227,6 +227,7 @@ export async function approveRequest(req, res) {
     }
     if (productPriceCalculate[0].paymentType == "COD") {
       const success = await helper.updateWallet(finalAmount, req.session.user);
+      success ? res.send('refundDone') : undefined
     } else {
       const client = new Razorpay({
         key_id: process.env.razor_pay_key_id,

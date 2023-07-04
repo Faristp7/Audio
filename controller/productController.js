@@ -57,8 +57,10 @@ export async function removeProduct(req, res) {
 
 export async function checkout(req, res) {
   try {
-    const [{ address }] = await userHelper.findAddress(req.session.user);
-    res.render("user/checkout", { address, totalVal, productCount });
+    const [{ address, wallet }] = await userHelper.findAddress(
+      req.session.user
+    );
+    res.render("user/checkout", { address, totalVal, productCount, wallet });
   } catch (error) {
     console.log(error);
   }
@@ -107,7 +109,7 @@ export async function checkoutPost(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
-    const { address, paymentType, paymentId , applycouponCode} = req.body;
+    const { address, paymentType, paymentId, applycouponCode } = req.body;
     const orderAddress = await userHelper.getUserAddres(
       req.session.user,
       address
@@ -154,7 +156,7 @@ export async function checkoutPost(req, res) {
           applycouponCode
         );
       }
-      let amount = totalVal * 100
+      let amount = totalVal * 100;
       try {
         if (paymentId) {
           const client = new Razorpay({
@@ -179,10 +181,10 @@ export async function checkoutPost(req, res) {
   }
 }
 
-export async function requestReturn(req,res){
+export async function requestReturn(req, res) {
   try {
-    const status = await userHelper.requestRefund(req.body.id)
-    status ? res.send(true) : res.send(false)
+    const status = await userHelper.requestRefund(req.body.id);
+    status ? res.send(true) : res.send(false);
   } catch (error) {
     console.log(error);
   }

@@ -30,8 +30,11 @@
                     <div class="d-flex justify-content-between align-items-center mb-5">
                       <h1 class="fw-bold mb-0 text-black">Checkout</h1>
                     </div>
-                    <h5>Select your address</h5>
-                    <hr class="my-4" />
+                    <div class="d-flex justify-content-between ">
+                      <h5>Select your address</h5>
+                      <h6 class="text-uppercase">items : <%-productCount %></h6>
+                    </div>
+                    <hr class="my-4 mt-3" />
                     <form id="addressForm">
                       <div class="align-items-center">
                         <% address.forEach( (i ,index)=> { %>
@@ -72,12 +75,21 @@
                   <div class="p-5 pb-3">
                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                     <hr class="my-4" />
-
-                    <div class="d-flex justify-content-between mb-1">
-                      <h6 class="text-uppercase">items <%-productCount %></h6>
-                      <h6><%-totalVal %></h6>
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        <input type="password" id="enterPassword" class="ps-3 py-1" placeholder="ENTER PASSWORD"
+                          style="display: none;" />
+                        <button type="button" class="btn btn-dark ms-2" id="validatePassword" style="display: none;"
+                          onclick="validatePassword()">Validate</button>
+                        <div class="d-flex align-items-center">
+                          <button type="button" class="btn btn-dark me-5" id="useWallet" onclick="useWalletAmount()">use
+                            wallet amount</button>
+                          <h5 class="ms-5 ps-3" id="walletAmount">₹ <%-wallet %></h5>
+                        </div>
+                      </div>
                     </div>
-                    <hr class="my-4" />
+                    <p class="mt-2 text-danger fw-bolder" id="passwordErrText"></p>
+                    <hr class="my-4 mt-2" />
                     <div class="mb-2 pb-2 d-flex">
                       <input type="text" name="" id="applycouponCode" class="ps-3 py-1" placeholder="COUPON" />
                       <button class="ms-2 px-4 COUPON" onclick="checkCoupon()" id="couponButton">Apply</button>
@@ -127,6 +139,27 @@
     crossorigin="anonymous"></script>
 
   <script>
+    //wallet
+    function useWalletAmount() {
+      document.getElementById('useWallet').style.display = 'none'
+      document.getElementById('walletAmount').style.display = 'none'
+      document.getElementById('enterPassword').style.display = 'block'
+      document.getElementById('validatePassword').style.display = 'block'
+    }
+
+    function validatePassword() {
+      const password = document.getElementById('enterPassword').value
+      axios
+        .post('/validatePassword', { password })
+        .then(({ data }) => {
+          if(data == 'no'){
+            const passwordErrText = document.getElementById('passwordErrText')
+            passwordErrText.innerText = "password not match"
+          }
+        })
+    }
+    // wallet end
+
     const errMsg = document.getElementById('errMsg')
     let productPrice = parseInt(
       document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")

@@ -133,7 +133,7 @@
                                                 data-bs-target="#exampleModal-<%=element._id %>">
                                                 more
                                             </button>
-                                            <% if (element.returnRequest) { %>
+                                            <% if (element.returnRequest && element.orderStatus !== 'returned') { %>
                                                 <span>
                                                     <i class="fa-solid fa-bell"></i>
                                                 </span>
@@ -188,13 +188,15 @@
                                         <% } else if (i.orderStatus=='cancelled' ) { %>
                                             <p class="text-danger fw-bold">order has been cancelled by user <i
                                                     class="fa-solid fa-xmark" style="color: #cb1515;"></i></p>
-                                            <% } else { %>
-                                                <select name="orderStatus" id="order" class="custom-select">
-                                                    <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
-                                                    <option value="confirmed">Confirmed</option>
-                                                    <option value="out of Delivery">out of Delivery</option>
-                                                    <option value="delivered">Delivered</option>
-                                                </select>
+                                            <% } else if (i.orderStatus=='returned' ) { %>
+                                                <p class="fw-bold text-success">Refund successful</p>
+                                                <%} else { %>
+                                                    <select name="orderStatus" id="order" class="custom-select">
+                                                        <option value="<%-i.orderStatus %>"><%-i.orderStatus %></option>
+                                                        <option value="confirmed">Confirmed</option>
+                                                        <option value="out of Delivery">out of Delivery</option>
+                                                        <option value="delivered">Delivered</option>
+                                                    </select>
                                 </div>
                                 <div>
                                     <button class="ms-3 submit-btn bg-secondary p-1 px-3"
@@ -207,7 +209,7 @@
                             </form>
                         </div>
                         <div class="ms-3 mb-2">
-                            <% if (i.returnRequest) { %>
+                            <% if (i.returnRequest && i.orderStatus !=='returned' ) { %>
                                 <p class="fw-bold">cancallation request</p>
                                 <div>
                                     <button type="button" class="btn btn-success btn-sm"

@@ -20,6 +20,7 @@ import {
   updateEmailOtpSend,
   updateUser,
   userSignup,
+  validatePassword,
   verifyOtp,
 } from "../controller/userController.js";
 import { userAuth } from "../middleware/userAuth.js";
@@ -65,5 +66,6 @@ router.post("/checkoutPost", checkoutPost);
 router.post("/cancelOrder", cancelOrder);
 router.post("/checkCoupon", applyCoupon);
 router.post("/requestReturn", requestReturn);
+router.post("/validatePassword", validatePassword);
 
 export default router;

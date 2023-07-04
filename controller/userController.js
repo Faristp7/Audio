@@ -327,9 +327,9 @@ export async function cancelOrder(req, res) {
   try {
     const datas = await userHelper.findOrderId(req.body);
     const paymentId = datas[0].paymentId;
-    const amount = Number(datas[0].total) * 100
-    const couponAmount = datas[0].couponAmount
-    let lastAmount = amount - couponAmount
+    const amount = Number(datas[0].total) * 100;
+    const couponAmount = datas[0].couponAmount;
+    let lastAmount = amount - couponAmount;
     const receiptNumber = Math.random().toString(36).substring(7);
 
     try {
@@ -359,6 +359,20 @@ export async function cancelOrder(req, res) {
     } catch (error) {
       console.log(error);
     }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function validatePassword(req, res) {
+  try {
+    const { password } = req.body;
+    const userPassword = await userHelper.findPassword(req.session.user);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      userPassword[0].password
+    );
+    isPasswordValid ? res.send("yes") : res.send("no");
   } catch (error) {
     console.log(error);
   }

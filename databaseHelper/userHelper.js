@@ -91,7 +91,7 @@ export default {
     );
   },
   findAddress: async (email) => {
-    return await userModel.find({ email }, { address: 1 });
+    return await userModel.find({ email }, { address: 1, wallet: 1 });
   },
   quantityController: async (email, obj) => {
     const quantityModifier = obj.deside ? 1 : -1;
@@ -235,5 +235,8 @@ export default {
       { _id: id },
       { $set: { returnRequest: true } }
     );
+  },
+  findPassword: async (email) => {
+    return await userModel.find({email} , {password : 1});
   },
 };

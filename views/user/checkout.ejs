@@ -143,6 +143,8 @@
     let productPrice = parseInt(
       document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")
     );
+    let walletAmount
+    let checkWalletUse = false
 
     //wallet
     function useWalletAmount() {
@@ -151,6 +153,9 @@
       document.getElementById('enterPassword').style.display = 'block'
       document.getElementById('validatePassword').style.display = 'block'
     }
+
+    const onlineInput = document.getElementById("online");
+    const onlineLabel = document.querySelector("label[for='online']");
 
     function validatePassword() {
       const password = document.getElementById('enterPassword').value
@@ -162,47 +167,65 @@
             passwordErrText.innerText = "password not match"
           }
           else {
+            productPrice = data.productAmount
+            walletAmount = data.wallet
 
+            document.getElementById("totalPrice").innerHTML = '₹' + productPrice
+            if (productPrice === 0) {
+              onlineInput.style.display = 'none'
+              onlineLabel.style.display = 'none'
+            }
+            checkWalletUse = true
           }
         })
     }
     // wallet end
 
     function checkCoupon() {
-      const applycouponCode = document.getElementById('applycouponCode').value
-      axios
-        .post("/checkCoupon", { applycouponCode, productPrice })
-        .then(({ data }) => {
-          if (data == "notExist") {
-            errMsg.innerText = "!coupon Invalid"
-            setTimeout(() => {
-              errMsg.innerText = ""
-            }, 3000);
-          }
-          else if (data.message == "amountReached") {
-            errMsg.innerText = `coupon is applicable for ${data.minimumPurchase} above purchase`
-            setTimeout(() => {
-              errMsg.innerText = ""
-            }, 3000);
-          }
-          else if (data == "dateValidity") {
-            errMsg.innerText = 'Coupon Date validity expired'
-            setTimeout(() => {
-              errMsg.innerText = ""
-            }, 3000);
-          }
-          else {
-            const successText = document.getElementById('successText')
-            successText.style.display = "block"
-            const minusAmount = data.amount
-            productPrice -= minusAmount
-            document.getElementById("totalPrice").innerHTML = '₹' + productPrice
-            const button = document.getElementById('couponButton')
-            button.disabled = 'true'
-          }
-        }).catch((err) => {
-          console.log(err);
-        });
+      if (productPrice !== 0) {
+        const applycouponCode = document.getElementById('applycouponCode').value
+        if (productPrice === 0) {
+        }
+        axios
+          .post("/checkCoupon", { applycouponCode, productPrice })
+          .then(({ data }) => {
+            if (data == "notExist") {
+              errMsg.innerText = "!coupon Invalid"
+              setTimeout(() => {
+                errMsg.innerText = ""
+              }, 3000);
+            }
+            else if (data.message == "amountReached") {
+              errMsg.innerText = `coupon is applicable for ${data.minimumPurchase} above purchase`
+              setTimeout(() => {
+                errMsg.innerText = ""
+              }, 3000);
+            }
+            else if (data == "dateValidity") {
+              errMsg.innerText = 'Coupon Date validity expired'
+              setTimeout(() => {
+                errMsg.innerText = ""
+              }, 3000);
+            }
+            else {
+              const successText = document.getElementById('successText')
+              successText.style.display = "block"
+              const minusAmount = data.amount
+              productPrice -= minusAmount
+              document.getElementById("totalPrice").innerHTML = '₹' + productPrice
+              const button = document.getElementById('couponButton')
+              button.disabled = 'true'
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
+      }
+      else {
+        errMsg.innerText = 'Total amount is zero'
+        setTimeout(() => {
+          errMsg.innerText = ""
+        }, 3000);
+      }
     }
 
     const address = document.getElementById("addressId");
@@ -250,7 +273,7 @@
       }
       else {
         const applycouponCode = document.getElementById('applycouponCode').value
-        axios.post("/checkoutPost", { address, paymentType, applycouponCode })
+        axios.post("/checkoutPost", { address, paymentType, applycouponCode, walletAmount, checkWalletUse })
           .then(({ data }) => {
             const order = {
               order: data.id,

@@ -109,7 +109,14 @@ export async function checkoutPost(req, res) {
     const productId = user[0]?.cart.map((item) => item.productId);
     const quantity = Object.values(user[0]?.cart);
     const product = await userHelper.findProductById(productId);
-    const { address, paymentType, paymentId, applycouponCode } = req.body;
+    const {
+      address,
+      paymentType,
+      paymentId,
+      applycouponCode,
+      walletAmount,
+      checkWalletUse,
+    } = req.body;
     const orderAddress = await userHelper.getUserAddres(
       req.session.user,
       address
@@ -120,6 +127,7 @@ export async function checkoutPost(req, res) {
     }
 
     if (paymentType == "Online") {
+      totalVal -= walletAmount;
       const amount = totalVal * 100;
       const Option = {
         amount,
@@ -174,7 +182,16 @@ export async function checkoutPost(req, res) {
       const completeStatus = cartStatus
         ? await userHelper.quantityMinus(quantity)
         : undefined;
-      return completeStatus;
+
+      if (checkWalletUse) {
+        const completeStatus = await userHelper.walletMinus(
+          req.session.user,
+          walletAmount
+        );
+        return completeStatus;
+      } else {
+        return completeStatus;
+      }
     }
   } catch (error) {
     console.log(error);

@@ -373,8 +373,9 @@ export async function validatePassword(req, res) {
       userPassword[0].password
     );
     let wallet = userPassword[0].wallet;
+    let walletAmount = wallet
     let productAmount = productPrice;
-    const minimumThreshold = 10;
+
     if (isPasswordValid) {
       if (productAmount <= wallet) {
         let productPrices = productAmount;
@@ -386,6 +387,11 @@ export async function validatePassword(req, res) {
         productAmount -= wallet;
         wallet = 0;
       }
+      const amounts = {
+        productAmount: productAmount,
+        wallet: walletAmount,
+      };
+      res.send(amounts);
     } else {
       res.send("no");
     }

@@ -147,13 +147,6 @@
     let checkWalletUse = false
 
     //wallet
-    function useWalletAmount() {
-      document.getElementById('useWallet').style.display = 'none'
-      document.getElementById('walletAmount').style.display = 'none'
-      document.getElementById('enterPassword').style.display = 'block'
-      document.getElementById('validatePassword').style.display = 'block'
-    }
-
     const onlineInput = document.getElementById("online");
     const onlineLabel = document.querySelector("label[for='online']");
 
@@ -178,6 +171,23 @@
             checkWalletUse = true
           }
         })
+    }
+
+    function useWalletAmount() {
+      const element = parseInt(document.getElementById("walletAmount").innerHTML.replace(/[^\d.-]/g, ""))
+      if(element === 0){
+        const passwordErrText = document.getElementById('passwordErrText')
+        passwordErrText.innerText = 'no amount in wallet'
+        setTimeout(() => {
+          passwordErrText.innerText = ''
+        }, 3000);
+      }
+      else{
+        document.getElementById('useWallet').style.display = 'none'
+        document.getElementById('walletAmount').style.display = 'none'
+        document.getElementById('enterPassword').style.display = 'block'
+        document.getElementById('validatePassword').style.display = 'block'
+      }
     }
     // wallet end
 

@@ -237,6 +237,6 @@ export default {
     );
   },
   findPassword: async (email) => {
-    return await userModel.find({email} , {password : 1});
+    return await userModel.find({email} , {password : 1 , wallet : 1});
   },
 };

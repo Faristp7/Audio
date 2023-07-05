@@ -139,6 +139,11 @@
     crossorigin="anonymous"></script>
 
   <script>
+    const errMsg = document.getElementById('errMsg')
+    let productPrice = parseInt(
+      document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")
+    );
+
     //wallet
     function useWalletAmount() {
       document.getElementById('useWallet').style.display = 'none'
@@ -150,20 +155,19 @@
     function validatePassword() {
       const password = document.getElementById('enterPassword').value
       axios
-        .post('/validatePassword', { password })
+        .post('/validatePassword', { password, productPrice })
         .then(({ data }) => {
-          if(data == 'no'){
+          if (data == 'no') {
             const passwordErrText = document.getElementById('passwordErrText')
             passwordErrText.innerText = "password not match"
+          }
+          else {
+
           }
         })
     }
     // wallet end
 
-    const errMsg = document.getElementById('errMsg')
-    let productPrice = parseInt(
-      document.getElementById("totalPrice").innerHTML.replace(/[^\d.-]/g, "")
-    );
     function checkCoupon() {
       const applycouponCode = document.getElementById('applycouponCode').value
       axios

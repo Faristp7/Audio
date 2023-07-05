@@ -366,13 +366,29 @@ export async function cancelOrder(req, res) {
 
 export async function validatePassword(req, res) {
   try {
-    const { password } = req.body;
+    const { password, productPrice } = req.body;
     const userPassword = await userHelper.findPassword(req.session.user);
     const isPasswordValid = await bcrypt.compare(
       password,
       userPassword[0].password
     );
-    isPasswordValid ? res.send("yes") : res.send("no");
+    let wallet = userPassword[0].wallet;
+    let productAmount = productPrice;
+    const minimumThreshold = 10;
+    if (isPasswordValid) {
+      if (productAmount <= wallet) {
+        let productPrices = productAmount;
+        let result = wallet - productAmount;
+        let minusAmount = wallet - result;
+        productAmount -= minusAmount;
+        wallet -= productPrices;
+      } else {
+        productAmount -= wallet;
+        wallet = 0;
+      }
+    } else {
+      res.send("no");
+    }
   } catch (error) {
     console.log(error);
   }

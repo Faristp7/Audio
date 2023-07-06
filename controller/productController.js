@@ -19,7 +19,12 @@ export async function addToCart(req, res) {
     );
     totalVal = total;
     productCount = count;
-    res.render("user/cartPage", { product, count, total, quantity });
+    res.render("user/cartPage", {
+      product,
+      count,
+      total,
+      quantity,
+    });
   } catch (error) {
     console.log(error);
   }

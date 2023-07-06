@@ -35,42 +35,44 @@
                       <h1 class="text-center">No Items</h1>
                       <% } %>
                         <% product.forEach((element ,index)=> { %>
-                          <div id="product-<%=index %>"
-                            class="row mb-4 d-flex justify-content-between align-items-center">
-                            <div class="col-md-2 col-lg-2 col-xl-2">
-                              <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone" />
+                          <% if (element.quantity !== 0) { %>
+                            <div id="product-<%=index %>"
+                              class="row mb-4 d-flex justify-content-between align-items-center">
+                              <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img class="cartProductImg" src="<%-element.coverImage %>" alt="TWS Headphone" />
+                              </div>
+                              <div class="col-md-3 col-lg-3 col-xl-3">
+                                <h6 class="text-muted"><%-element.category %></h6>
+                                <h6 class="text-black mb-0">
+                                  <%-element.productName %>
+                                </h6>
+                              </div>
+                              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                <button class="btn btn-link px-2"
+                                  onclick="qunantityDown('<%-element._id %>','<%=index %>')">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+  
+                                <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
+                                  value="<%=quantity[index] %>" type="number" class="form-control form-control-sm"
+                                  disabled />
+  
+                                <button class="btn btn-link px-2"
+                                  onclick="qunantityUp('<%-element._id %>','<%= index %>')">
+                                  <i class="fas fa-plus"></i>
+                                </button>
+                              </div>
+                              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h6 class="mb-0 productPrice" id="productPrice">
+                                  ₹ <%-element.productPrice %>
+                                </h6>
+                              </div>
+                              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')"
+                                  class="text-muted"><i class="fa-solid fa-trash"></i></a>
+                              </div>
                             </div>
-                            <div class="col-md-3 col-lg-3 col-xl-3">
-                              <h6 class="text-muted"><%-element.category %></h6>
-                              <h6 class="text-black mb-0">
-                                <%-element.productName %>
-                              </h6>
-                            </div>
-                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                              <button class="btn btn-link px-2"
-                                onclick="qunantityDown('<%-element._id %>','<%=index %>')">
-                                <i class="fas fa-minus"></i>
-                              </button>
-
-                              <input id="form1-<%=index %>" min="1" max="<%-element.quantity %>" name="quantity"
-                                value="<%=quantity[index] %>" type="number" class="form-control form-control-sm"
-                                disabled />
-
-                              <button class="btn btn-link px-2"
-                                onclick="qunantityUp('<%-element._id %>','<%= index %>')">
-                                <i class="fas fa-plus"></i>
-                              </button>
-                            </div>
-                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                              <h6 class="mb-0 productPrice" id="productPrice">
-                                ₹ <%-element.productPrice %>
-                              </h6>
-                            </div>
-                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                              <a href="#!" onclick="removeProduct('<%-element._id %>','<%=index %>')"
-                                class="text-muted"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                          </div>
+                          <% } %>
                           <% }) %>
                             <hr class="my-4" />
                             <div class="pt-5">

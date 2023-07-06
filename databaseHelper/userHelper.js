@@ -110,7 +110,7 @@ export default {
     total,
     products,
     paymentId,
-    applycouponCode,
+    applycouponCode
   ) => {
     const afs = address;
     let couponAmount;
@@ -141,7 +141,6 @@ export default {
         paid,
         paymentId: null,
         couponAmount: i === 0 && couponAmount ? couponAmount.amount : undefined,
-
       });
       const savedOrder = await orderSchema.save();
       createdOrderId.push(savedOrder._id);
@@ -238,9 +237,9 @@ export default {
     );
   },
   findPassword: async (email) => {
-    return await userModel.find({email} , {password : 1 , wallet : 1});
+    return await userModel.find({ email }, { password: 1, wallet: 1 });
   },
-  walletMinus : async (email ,amount) => {
-    return await userModel.updateOne({email} ,{$inc : {wallet : -amount}})
-  }
+  walletMinus: async (email, amount) => {
+    return await userModel.updateOne({ email }, { $inc: { wallet: -amount } });
+  },
 };

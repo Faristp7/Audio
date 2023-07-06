@@ -31,10 +31,10 @@ export async function dashboard(req, res) {
   try {
     if (req.session.admin) {
       const overallData = await helper.overallData();
-      const monthlySales = await helper.monthlyRevenue();
-      const salesValues = monthlySales
-      .sort((a,b) => a._id - b._id)
-      .map((month) => month.totalSales)
+
+      // const salesValues = monthlySales
+      // .sort((a,b) => a._id - b._id)
+      // .map((month) => month.totalSales)
 
       const data = {
         labels: [
@@ -51,9 +51,18 @@ export async function dashboard(req, res) {
           "November",
           "December",
         ],
-        values: salesValues,
+        values: [0,0,0,0,0,0,0,0,0,0,0,0],
       };
-      console.log(data);
+
+      const monthlySales = await helper.monthlyRevenue();
+
+      monthlySales.forEach((month) => {
+        const monthIndex = month._id - 1
+        if(monthIndex >= 0 && monthIndex < data.values.length){
+          data.values[monthIndex] = month.totalSales
+        }
+      })
+
       res.render("admin/dashboard", {
         data: JSON.stringify(data),
         overallData,

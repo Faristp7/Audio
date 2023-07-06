@@ -139,16 +139,47 @@ export default {
         $group: {
           _id: null,
           totalRevnue: {
-            $sum: {$subtract : ["$total" , "$couponAmount"]}
+            $sum: { $subtract: ["$total", "$couponAmount"] },
           },
         },
       },
     ]);
     const revenue = totalRevnue.length > 0 ? totalRevnue[0].totalRevnue : 0;
+
+    const currentDate = new Date();
+    const startOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+    const endMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      0
+    );
+
+    const totalRevnueThisMonth = await orderModel.aggregate([
+      {
+        $match: {
+          orderStatus: "delivered",
+          createdAt: { $gte: startOfMonth, $lt: endMonth },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevnue: { $sum: { $subtract: ["$total", "$couponAmount"] } },
+        },
+      },
+    ]);
+    const revenueThisMonth =
+      totalRevnueThisMonth.length > 0 ? totalRevnueThisMonth[0].totalRevnue : 0;
+
     const data = {
       users,
       products,
       revenue,
+      revenueThisMonth
     };
     return data;
   },

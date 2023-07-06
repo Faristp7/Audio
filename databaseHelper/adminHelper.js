@@ -183,4 +183,24 @@ export default {
     };
     return data;
   },
+  monthlyRevenue : async() => {
+    const monthlySales = await orderModel.aggregate([
+      {
+        $match : {
+          orderStatus: "delivered"
+        },
+      },
+      {
+        $group: {
+          _id : {$month: "$createdAt"},
+          totalSales : {$sum : {$subtract : ["$total", "$couponAmount"]}}
+        },
+      },
+      {
+        $sort : {_id : 1}
+      }
+    ])
+    
+    return monthlySales
+  }
 };

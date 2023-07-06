@@ -26,9 +26,16 @@ export function pageNotFound(req, res) {
     console.log(error);
   }
 }
+
 export async function dashboard(req, res) {
   try {
     if (req.session.admin) {
+      const overallData = await helper.overallData();
+      const monthlySales = await helper.monthlyRevenue();
+      const salesValues = monthlySales
+      .sort((a,b) => a._id - b._id)
+      .map((month) => month.totalSales)
+
       const data = {
         labels: [
           "January",
@@ -44,10 +51,13 @@ export async function dashboard(req, res) {
           "November",
           "December",
         ],
-        values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 10, 20],
+        values: salesValues,
       };
-      const overallData = await helper.overallData();
-      res.render("admin/dashboard", { data: JSON.stringify(data) ,overallData});
+      console.log(data);
+      res.render("admin/dashboard", {
+        data: JSON.stringify(data),
+        overallData,
+      });
     } else {
       res.redirect("/admin");
     }
@@ -55,6 +65,7 @@ export async function dashboard(req, res) {
     console.log(error);
   }
 }
+
 export async function user(req, res) {
   try {
     const users = await helper.getUsers();

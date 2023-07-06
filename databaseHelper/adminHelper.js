@@ -114,7 +114,7 @@ export default {
     const { id, productId, quantity } = data;
     const status = await orderModel.updateOne(
       { _id: id },
-      { $set: { returnRequest: true  ,orderStatus : "returned"} }
+      { $set: { returnRequest: true, orderStatus: "returned" } }
     );
     if (status) {
       return await productModel.updateOne(
@@ -123,7 +123,33 @@ export default {
       );
     }
   },
-  updateWallet: async (amount ,email) => {
-    return await userModel.updateOne({email} ,{$set : {wallet : amount}})
-  }
+  updateWallet: async (amount, email) => {
+    return await userModel.updateOne({ email }, { $set: { wallet: amount } });
+  },
+  overallData: async () => {
+    const users = await userModel.countDocuments();
+    const products = await productModel.countDocuments();
+    const totalRevnue = await orderModel.aggregate([
+      {
+        $match: {
+          orderStatus: "delivered",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevnue: {
+            $sum: {$subtract : ["$total" , "$couponAmount"]}
+          },
+        },
+      },
+    ]);
+    const revenue = totalRevnue.length > 0 ? totalRevnue[0].totalRevnue : 0;
+    const data = {
+      users,
+      products,
+      revenue,
+    };
+    return data;
+  },
 };

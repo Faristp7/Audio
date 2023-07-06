@@ -26,7 +26,7 @@ export function pageNotFound(req, res) {
     console.log(error);
   }
 }
-export function dashboard(req, res) {
+export async function dashboard(req, res) {
   try {
     if (req.session.admin) {
       const data = {
@@ -44,9 +44,10 @@ export function dashboard(req, res) {
           "November",
           "December",
         ],
-        values: [10, 20, 30, 40, 50 ,60 ,70 ,80 ,90 ,100 ,10 ,20],
+        values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 10, 20],
       };
-      res.render("admin/dashboard", { data: JSON.stringify(data) });
+      const overallData = await helper.overallData();
+      res.render("admin/dashboard", { data: JSON.stringify(data) ,overallData});
     } else {
       res.redirect("/admin");
     }

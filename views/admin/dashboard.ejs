@@ -96,7 +96,7 @@
               <div class="card bg-danger text-white text-center">
                 <div class="card-body">
                   <h2 class="card-title fw-bold text">Total Users</h2>
-                  <h3 class="card-text">2</h3>
+                  <h3 class="card-text"><%-overallData.users %></h3>
                 </div>
               </div>
             </div>
@@ -104,8 +104,7 @@
               <div class="card bg-warning text-dark text-center">
                 <div class="card-body">
                   <h2 class="card-title fw-bold text">Total Products</h2>
-                  <h3 class="card-text">3</h3>
-
+                  <h3 class="card-text"><%-overallData.products %></h3>
                 </div>
               </div>
             </div>
@@ -113,7 +112,7 @@
               <div class="card bg-primary text-white text-center">
                 <div class="card-body">
                   <h2 class="card-title fw-bold text">Total Revenue</h2>
-                  <h3 class="card-text">5</h3>
+                  <h3 class="card-text">₹ <%-overallData.revenue %></h3>
 
                 </div>
               </div>
@@ -157,7 +156,6 @@
 
       document.getElementById("clock").innerHTML = timeString;
     }
-
     updateTime();
     setInterval(updateTime, 1000);
 

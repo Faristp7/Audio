@@ -334,6 +334,7 @@ export async function cancelOrder(req, res) {
 
     try {
       if (req.body.paymentType == "Online") {
+        console.log("online");
         const client = new Razorpay({
           key_id: process.env.razor_pay_key_id,
           key_secret: process.env.razor_pay_secrect_key,
@@ -355,6 +356,7 @@ export async function cancelOrder(req, res) {
         }
       } else {
         const status = await userHelper.cancelOrder(req.body);
+        console.log(status);
       }
     } catch (error) {
       console.log(error);

@@ -140,7 +140,7 @@
                                                                 <div class="modal-body">
                                                                     <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered' || i.orderStatus == 'returned')) { %>
                                                                         <button class="actionCancel p-1"
-                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product.id %>','<%-i.quantity %>','<%-i.paymentType %>')">
+                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product._id %>','<%-i.quantity %>','<%-i.paymentType %>')">
                                                                             Cancel Order
                                                                         </button>
                                                                     <% } else { %>

@@ -127,10 +127,10 @@ export async function checkoutPost(req, res) {
     }
 
     if (paymentType == "Online") {
-      if(walletAmount > 0){
+      if (walletAmount > 0) {
         totalVal -= walletAmount;
       }
-      const amount = totalVal * 100
+      const amount = totalVal * 100;
       const Option = {
         amount,
         currency: "INR",

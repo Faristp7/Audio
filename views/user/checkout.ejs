@@ -162,6 +162,8 @@
           else {
             productPrice = data.productAmount
             walletAmount = data.wallet
+            const button = document.getElementById('validatePassword')
+            button.disabled = 'true'
 
             document.getElementById("totalPrice").innerHTML = '₹' + productPrice
             if (productPrice === 0) {

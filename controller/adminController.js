@@ -4,6 +4,7 @@ import helper from "../databaseHelper/adminHelper.js";
 import { cloudinaryUploadImage } from "../helper/cloudinary.js";
 import userHelper from "../databaseHelper/userHelper.js";
 import Razorpay from "razorpay";
+import { Chart } from "chart.js";
 
 let err;
 export function adminLogin(req, res) {
@@ -28,7 +29,24 @@ export function pageNotFound(req, res) {
 export function dashboard(req, res) {
   try {
     if (req.session.admin) {
-      res.render("admin/dashboard");
+      const data = {
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+        values: [10, 20, 30, 40, 50 ,60 ,70 ,80 ,90 ,100 ,10 ,20],
+      };
+      res.render("admin/dashboard", { data: JSON.stringify(data) });
     } else {
       res.redirect("/admin");
     }

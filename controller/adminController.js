@@ -47,22 +47,27 @@ export async function dashboard(req, res) {
           "November",
           "December",
         ],
-        values: [0,0,0,0,0,0,0,0,0,0,0,0],
+        values: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       };
 
       const monthlySales = await helper.monthlyRevenue();
 
       monthlySales.forEach((month) => {
-        const monthIndex = month._id - 1
-        if(monthIndex >= 0 && monthIndex < data.values.length){
-          data.values[monthIndex] = month.totalSales
+        const monthIndex = month._id - 1;
+        if (monthIndex >= 0 && monthIndex < data.values.length) {
+          data.values[monthIndex] = month.totalSales;
         }
-      })
+      });
 
-      const categoriesSale = await helper.categoriesRevenue()
+      const categoriesSale = await helper.categoriesRevenue();
+      const datas = {
+        labels: categoriesSale.map((category) => category._id),
+        values: categoriesSale.map((category) => category.totalRevenue),
+      };
 
       res.render("admin/dashboard", {
         data: JSON.stringify(data),
+        datas: JSON.stringify(datas),
         overallData,
       });
     } else {

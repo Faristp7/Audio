@@ -165,6 +165,7 @@
 
     // Retrieve the data object passed from the server
     const data = JSON.parse('<%-data %>')
+    const datas = JSON.parse('<%-datas %>')
 
     // Get the canvas element
     const ctx = document.getElementById('acquisitions').getContext('2d');
@@ -196,10 +197,10 @@
       var chart = new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: data.labels,
+          labels: datas.labels,
           datasets: [{
             label: 'Pie Chart',
-            data: data.values,
+            data: datas.values,
             backgroundColor: [
               'rgba(255, 99, 132, 0.5)',
               'rgba(54, 162, 235, 0.5)',

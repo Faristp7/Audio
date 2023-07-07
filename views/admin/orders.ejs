@@ -251,8 +251,9 @@
     <script>
         function statuSubmit(id, e) {
             e.preventDefault()
-            const form = document.getElementById('orderForm')
-            const orderStatus = form.order.value
+            // const form = document.getElementById('orderForm')
+            // const orderStatus = form.order.value
+            const orderStatus = document.getElementById('order').value
 
             axios.post('/admin/orderControl', { orderStatus, id })
                 .then(({ data }) => {

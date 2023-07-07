@@ -179,28 +179,56 @@ export default {
       users,
       products,
       revenue,
-      revenueThisMonth
+      revenueThisMonth,
     };
     return data;
   },
-  monthlyRevenue : async() => {
+  monthlyRevenue: async () => {
     const monthlySales = await orderModel.aggregate([
       {
-        $match : {
-          orderStatus: "delivered"
+        $match: {
+          orderStatus: "delivered",
         },
       },
       {
         $group: {
-          _id : {$month: "$createdAt"},
-          totalSales : {$sum : {$subtract : ["$total", "$couponAmount"]}}
+          _id: { $month: "$createdAt" },
+          totalSales: { $sum: { $subtract: ["$total", "$couponAmount"] } },
         },
       },
       {
-        $sort : {_id : 1}
-      }
-    ])
-    
-    return monthlySales
-  }
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    return monthlySales;
+  },
+  categoriesRevenue: async () => {
+    const revenueByCategories = await orderModel.aggregate([
+      {
+        $match: {
+          orderStatus: "delivered",
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      {
+        $unwind: "$productDetails",
+      },
+      {
+        $group: {
+          _id: "$productDetails.category",
+          totalRevenue: { $sum: { $multiply: ["$total", "$quantity"] } },
+        },
+      },
+    ]);
+
+    return revenueByCategories;
+  },
 };

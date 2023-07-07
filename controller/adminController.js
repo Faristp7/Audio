@@ -32,10 +32,6 @@ export async function dashboard(req, res) {
     if (req.session.admin) {
       const overallData = await helper.overallData();
 
-      // const salesValues = monthlySales
-      // .sort((a,b) => a._id - b._id)
-      // .map((month) => month.totalSales)
-
       const data = {
         labels: [
           "January",
@@ -62,6 +58,8 @@ export async function dashboard(req, res) {
           data.values[monthIndex] = month.totalSales
         }
       })
+
+      const categoriesSale = await helper.categoriesRevenue()
 
       res.render("admin/dashboard", {
         data: JSON.stringify(data),
@@ -213,6 +211,7 @@ export async function getOrders(req, res) {
 export async function orderControl(req, res) {
   try {
     const { id, orderStatus } = req.body;
+    console.log(orderStatus);
     const status = await helper.orderControl(id, orderStatus);
     status ? res.send(true) : res.send(false);
   } catch (error) {

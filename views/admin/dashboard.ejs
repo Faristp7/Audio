@@ -14,16 +14,17 @@
     integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-      .audio {
-        font-size: 100px;
-        font-weight: bold;
-      }
-      .card-title.text{
-        font-size: 24px;
-        font-weight: 700;
-      }
-    </style>
+  <style>
+    .audio {
+      font-size: 100px;
+      font-weight: bold;
+    }
+
+    .card-title.text {
+      font-size: 24px;
+      font-weight: 700;
+    }
+  </style>
 </head>
 
 <body>
@@ -78,7 +79,7 @@
           </a>
         </li>
       </ul>
-      
+
       <div class="text-center">
         <h1 class="audio">A</h1>
         <h1 class="audio">U</h1>
@@ -129,6 +130,9 @@
         <!-- box -->
         <div class="mx-5 mt-3">
           <canvas id="acquisitions"></canvas>
+        </div>
+        <div class="mx-5 mt-5 col-lg-5">
+          <canvas id="myChart"></canvas>
         </div>
       </div>
     </div>
@@ -185,6 +189,33 @@
           }
         }
       }
+    });
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: 'Pie Chart',
+            data: data.values,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
     });
   </script>
 </body>

@@ -2,6 +2,7 @@ import orderModel from "../models/orderModel.js";
 import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 import couponModel from "../models/couponModel.js";
+import bannerModel from "../models/bannerModel.js";
 
 export default {
   getUsers: async () => {
@@ -231,4 +232,17 @@ export default {
 
     return revenueByCategories;
   },
+  addBanner: async (datas, urls) => {
+    const { bannerHeading, Description, couponCode } = datas;
+    const bannerSchema = new bannerModel({
+      bannerHeading,
+      Image : urls[0],
+      Description,
+      couponCode,
+    });
+    return await bannerSchema.save();
+  },
+  bannerDatas:async () => {
+    return await bannerModel.find()
+  }
 };

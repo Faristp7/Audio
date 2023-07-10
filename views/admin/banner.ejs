@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/admin/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/css/admin/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -81,7 +81,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row-reverse mb-3">
-                        <a href="/admin/addBanner"><button type="button" class="btn btn-dark">Add Banner</button></a>
+                        <a href="/admin/addBanner"><button type="button" class="btn btn-dark">
+                                Add Banner
+                            </button></a>
                     </div>
                     <div class="table-responsive">
                         <table id="myTable" class="table table-hover display">
@@ -96,14 +98,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <% banner.forEach((element, i)=> { %>
+                                    <tr>
+                                        <td><%-i+1 %></td>
+                                        <td><%-element.bannerHeading %></td>
+                                        <td><%-element.Description %></td>
+                                        <td><%-element.couponCode %></td>
+                                        <td><%-element.Image %></td>
+                                        <td>delete</td>
+                                    </tr>
+                                    <% }) %>
                             </tbody>
                         </table>
                     </div>
@@ -125,7 +129,9 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $("#myTable").DataTable();
         });
     </script>
 </body>
+
+</html>

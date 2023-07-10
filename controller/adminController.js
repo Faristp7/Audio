@@ -296,18 +296,34 @@ export async function approveRequest(req, res) {
   }
 }
 
-
-export async function banner ( req,res){
+export async function banner(req, res) {
   try {
-    res.render('admin/banner')
+    const banner = await helper.bannerDatas()
+    res.render("admin/banner" ,{banner});
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function addBanner (req,res){
+export async function addBanner(req, res) {
   try {
-    res.render('admin/addBanner')
+    res.render("admin/addBanner");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function postAddbanner(req, res) {
+  try {
+    const image = [req.body.Image]
+    cloudinaryUploadImage(image)
+      .then(async (urls) => {
+        const status = await helper.addBanner(req.body, urls);
+        if (status) res.send(true);
+        else res.send(false);
+        console.log("image url", urls);
+      })
+      .catch((err) => res.status(500).send(err));
   } catch (error) {
     console.log(error);
   }

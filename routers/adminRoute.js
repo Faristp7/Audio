@@ -18,6 +18,7 @@ import {
   orderControl,
   pageNotFound,
   postAddProduct,
+  postAddbanner,
   postEditProduct,
   postadminLogin,
   product,
@@ -53,5 +54,6 @@ router.post("/orderControl", orderControl);
 router.post("/postAddCoupon", addCouponPost);
 router.post("/removeCoupon", removeCoupon);
 router.post("/approveRequest", approveRequest);
+router.post("/postAddBanner", postAddbanner);
 
 export default router;

@@ -21,10 +21,11 @@
                 <h2 class="heading ms-5">Add Banner</h2>
                 <div class="form mt-4">
                     <label for="name" class="fw-bold fs-6">Heading (banner tag)</label>
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="name" id="heading" />
                 </div>
                 <div class="form mt-4">
-                    <label for="exampleFormControlTextarea1" class="form-label fw-bold fs-6">Description (about product)</label>
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold fs-6">Description (about
+                        product)</label>
                     <textarea class="form-control" id="Description" rows="6"></textarea>
                 </div>
                 <div class="form mt-2">
@@ -37,7 +38,7 @@
                 </div>
                 <div class="mt-4 d-flex">
                     <div>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" onclick="saveBanner()">Save changes</button>
                     </div>
                 </div>
                 <p class="mt-2 text-danger" id="showErr"></p>
@@ -47,7 +48,61 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        async function saveBanner() {
+            const heading = document.getElementById('heading').value
+            const description = document.getElementById('Description').value
+            const couponCode = document.getElementById('CouponCode').value
+            const coverImage = document.getElementById('coverImage').files[0]
+            const fileExtension = coverImage.name.split('.').pop().toLowerCase();
+
+            let image
+            const validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (!validExtensions.includes(fileExtension)) {
+                Swal.fire(
+                    'Format Error',
+                    'The Image format is not supported',
+                    'question'
+                )
+                document.getElementById('coverImage').value = '';
+            }
+            else {
+                image = await convertBase64(coverImage)
+            }
+
+            axios
+                .post('/admin/postAddBanner', {
+                    bannerHeading: heading,
+                    Description: description,
+                    couponCode: couponCode,
+                    Image: image
+                })
+                .then(({ data }) => {
+                    if(data == true){
+                        window.location.href = '/admin/banner'
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+        }
+
+        function convertBase64(file) {
+            return new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = () => {
+                    resolve(fileReader.result);
+                };
+                fileReader.onerror = (error) => {
+                    reject(error);
+                };
+            });
+        }
+    </script>
 </body>
 
 </html>

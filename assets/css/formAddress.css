@@ -7,6 +7,7 @@
     font-size: 30px;
 }
 
+
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -14,6 +15,10 @@ select[name="state"],
 select[name="state"] {
     border: 1px solid rgb(102, 98, 98);
     height: 30px;
+}
+
+textarea#Description {
+    border: 1px solid rgb(102, 98, 98);
 }
 
 select[name="state"] {
@@ -171,14 +176,14 @@ html {
     --prime: #EC5757;
     --prime-dark: #AA3333;
     --second: #1b2431;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
+}
 
-  .delete-button {
+* {
+    box-sizing: border-box;
+}
+
+
+.delete-button {
     padding: 18px;
     width: 12rem;
     height: auto;
@@ -188,9 +193,9 @@ html {
     overflow: hidden;
     cursor: pointer;
     transition: all 250ms;
-  }
-  
-  .delete-button .empty {
+}
+
+.delete-button .empty {
     z-index: 2;
     transform: translateX(-100%);
     border-radius: 0;
@@ -198,19 +203,19 @@ html {
     width: 100%;
     height: 100%;
     transition: all 3000ms;
-  }
-  
-  .delete-button .delete-first-step {
+}
+
+.delete-button .delete-first-step {
     z-index: 4;
     background-color: var(--prime);
-  }
-  
-  .delete-button .delete-second-step {
+}
+
+.delete-button .delete-second-step {
     z-index: 3;
     opacity: 0;
-  }
-  
-  .delete-button div {
+}
+
+.delete-button div {
     transition: all 250ms;
     border-radius: 1.5rem;
     display: flex;
@@ -224,25 +229,24 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-  }
-  
-  .delete-button.aktive > .delete-first-step {
-    opacity: 0;
-  }
-  
-  .empty.aktive {
-    transform: translateX(0);
-  }
-  
-  .delete-second-step.aktive {
-    opacity: 1;
-  }
+}
 
-  .updateUserButton{
+.delete-button.aktive>.delete-first-step {
+    opacity: 0;
+}
+
+.empty.aktive {
+    transform: translateX(0);
+}
+
+.delete-second-step.aktive {
+    opacity: 1;
+}
+
+.updateUserButton {
     background-color: #0d6efd;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
-  }
-  
+}

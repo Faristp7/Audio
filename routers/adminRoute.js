@@ -1,11 +1,12 @@
 import express, { Router } from "express";
 import {
+  addBanner,
   addCoupon,
   addCouponPost,
   addProduct,
   adminLogin,
   approveRequest,
-  coupon,
+  banner,
   couponController,
   dashboard,
   doUserUnBlock,
@@ -38,7 +39,8 @@ router.get("/editProduct/:id", editProduct);
 router.get("/orders", getOrders);
 router.get("/coupon", couponController);
 router.get("/addCoupon", addCoupon);
-router.get("/banner", coupon);
+router.get("/banner", banner);
+router.get("/addBanner", addBanner);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);

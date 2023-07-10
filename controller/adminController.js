@@ -297,9 +297,17 @@ export async function approveRequest(req, res) {
 }
 
 
-export async function coupon ( req,res){
+export async function banner ( req,res){
   try {
     res.render('admin/banner')
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addBanner (req,res){
+  try {
+    res.render('admin/addBanner')
   } catch (error) {
     console.log(error);
   }

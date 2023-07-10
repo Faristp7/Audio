@@ -5,6 +5,7 @@ import {
   addProduct,
   adminLogin,
   approveRequest,
+  coupon,
   couponController,
   dashboard,
   doUserUnBlock,
@@ -37,6 +38,7 @@ router.get("/editProduct/:id", editProduct);
 router.get("/orders", getOrders);
 router.get("/coupon", couponController);
 router.get("/addCoupon", addCoupon);
+router.get("/banner", coupon);
 
 router.post("/login", postadminLogin);
 router.post("/addProduct", postAddProduct);

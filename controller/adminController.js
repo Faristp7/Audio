@@ -295,3 +295,12 @@ export async function approveRequest(req, res) {
     console.log(error);
   }
 }
+
+
+export async function coupon ( req,res){
+  try {
+    res.render('admin/banner')
+  } catch (error) {
+    console.log(error);
+  }
+}

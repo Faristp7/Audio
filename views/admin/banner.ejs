@@ -28,11 +28,9 @@
                     <a href="#" class="nav-link">
                         <div class="nav-profile-image">
                             <span class="login-status online"></span>
-                            <!--change to offline or busy as needed-->
                         </div>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/dashboard">
                         <i class="fa-solid fa-house"></i>
@@ -58,9 +56,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/banner">
-                        <i class="fa-solid fa-ticket"></i>
-                        <span class="menu-title pl-2">Banners</span>
+                    <a class="nav-link" href="/admin/coupon">
+                        <i class="fa-solid fa-gift"></i>
+                        <span class="menu-title pl-2">Coupons</span>
                     </a>
                 </li>
             </ul>
@@ -83,37 +81,29 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row-reverse mb-3">
-                        <a href="/admin/addCoupon"><button type="button" class="btn btn-dark">Add Coupon</button></a>
-
+                        <a href=""><button type="button" class="btn btn-dark">Add Banner</button></a>
                     </div>
                     <div class="table-responsive">
                         <table id="myTable" class="table table-hover display">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>coupon name</th>
-                                    <th>coupon</th>
-                                    <th>validity</th>
-                                    <th>amount</th>
-                                    <th>minimum purachase</th>
+                                    <th>Image</th>
+                                    <th>Heading</th>
+                                    <th>Description</th>
+                                    <th>CouponCode</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% coupons.forEach((i ,index)=> { %>
-                                    <tr>
-                                        <td><%-index + 1 %></td>
-                                        <td><%-i.couponName %></td>
-                                        <td><%-i.couponCode %></td>
-                                        <td><%-i.validity %></td>
-                                        <td><%-i.amount %></td>
-                                        <td><%-i.minimumPurchase %></td>
-                                        <td>
-                                            <button type="button" class="btn btn-secondary btn-sm"
-                                                onclick="removeCoupon('<%-i._id %>')">Remove</button>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -138,25 +128,4 @@
             $('#myTable').DataTable();
         });
     </script>
-
-    <script>
-        function removeCoupon(id) {
-            axios
-                .post("/admin/removeCoupon", { id })
-                .then(({ data }) => {
-                    Swal.fire(
-                        'Removed Successfully',
-                        'back to coupon page',
-                        'success'
-                    )
-                    .then(() =>{
-                        window.location.href = "/admin/coupon"
-                    })
-                }).catch((err) => {
-                    console.log(err);
-                });
-        }
-    </script>
 </body>
-
-</html>

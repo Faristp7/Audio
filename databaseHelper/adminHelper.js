@@ -244,5 +244,8 @@ export default {
   },
   bannerDatas:async () => {
     return await bannerModel.find()
+  },
+  bannerDelete: async (id) => {
+    return await bannerModel.deleteOne({_id : id})
   }
 };

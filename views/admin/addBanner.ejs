@@ -21,12 +21,12 @@
                 <h2 class="heading ms-5">Add Banner</h2>
                 <div class="form mt-4">
                     <label for="name" class="fw-bold fs-6">Heading (banner tag)</label>
-                    <input type="text" name="name" id="heading" />
+                    <input type="text" name="name" id="heading" required />
                 </div>
                 <div class="form mt-4">
                     <label for="exampleFormControlTextarea1" class="form-label fw-bold fs-6">Description (about
                         product)</label>
-                    <textarea class="form-control" id="Description" rows="6"></textarea>
+                    <textarea class="form-control" id="Description" rows="6" required></textarea>
                 </div>
                 <div class="form mt-2">
                     <label for="CouponCode" class="fw-bold fs-6">CouponCode</label>
@@ -38,7 +38,8 @@
                 </div>
                 <div class="mt-4 d-flex">
                     <div>
-                        <button type="button" class="btn btn-primary" onclick="saveBanner()">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="button" onclick="saveBanner()">Save
+                            changes</button>
                     </div>
                 </div>
                 <p class="mt-2 text-danger" id="showErr"></p>
@@ -57,37 +58,49 @@
             const description = document.getElementById('Description').value
             const couponCode = document.getElementById('CouponCode').value
             const coverImage = document.getElementById('coverImage').files[0]
-            const fileExtension = coverImage.name.split('.').pop().toLowerCase();
+            const showErr = document.getElementById('showErr')
+
 
             let image
-            const validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (coverImage && heading && description) {
+                const fileExtension = coverImage.name.split('.').pop().toLowerCase();
+                const validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                if (!validExtensions.includes(fileExtension)) {
+                    Swal.fire(
+                        'Format Error',
+                        'The Image format is not supported',
+                        'question'
+                    )
+                    document.getElementById('coverImage').value = '';
+                }
+                else {
+                    image = await convertBase64(coverImage)
+                }
 
-            if (!validExtensions.includes(fileExtension)) {
-                Swal.fire(
-                    'Format Error',
-                    'The Image format is not supported',
-                    'question'
-                )
-                document.getElementById('coverImage').value = '';
+                const button = document.getElementById('button')
+                button.disabled = true
+
+                axios
+                    .post('/admin/postAddBanner', {
+                        bannerHeading: heading,
+                        Description: description,
+                        couponCode: couponCode,
+                        Image: image
+                    })
+                    .then(({ data }) => {
+                        if (data == true) {
+                            window.location.href = '/admin/banner'
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
             }
             else {
-                image = await convertBase64(coverImage)
+                showErr.innerText = "verify once more"
+                setTimeout(() => {
+                    showErr.innerText = ""
+                }, 3000);
             }
-
-            axios
-                .post('/admin/postAddBanner', {
-                    bannerHeading: heading,
-                    Description: description,
-                    couponCode: couponCode,
-                    Image: image
-                })
-                .then(({ data }) => {
-                    if(data == true){
-                        window.location.href = '/admin/banner'
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                });
         }
 
         function convertBase64(file) {

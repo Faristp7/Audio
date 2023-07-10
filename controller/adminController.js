@@ -328,3 +328,13 @@ export async function postAddbanner(req, res) {
     console.log(error);
   }
 }
+
+export async function deleteBanner(req,res) {
+  try {
+    const {id} = req.body
+    const status = await helper.bannerDelete(id)
+    status ? res.send(true) : res.send(false)
+  } catch (error) {
+    console.log(error);
+  }
+}

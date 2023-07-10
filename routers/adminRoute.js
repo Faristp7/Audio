@@ -9,6 +9,7 @@ import {
   banner,
   couponController,
   dashboard,
+  deleteBanner,
   doUserUnBlock,
   doUserblock,
   editProduct,
@@ -55,5 +56,6 @@ router.post("/postAddCoupon", addCouponPost);
 router.post("/removeCoupon", removeCoupon);
 router.post("/approveRequest", approveRequest);
 router.post("/postAddBanner", postAddbanner);
+router.post("/deleteBanner", deleteBanner);
 
 export default router;

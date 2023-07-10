@@ -101,11 +101,20 @@
                                 <% banner.forEach((element, i)=> { %>
                                     <tr>
                                         <td><%-i+1 %></td>
+                                        <td>
+                                            <div>
+                                                <img src="<%-element.Image %>" alt="">
+                                            </div>
+                                        </td>
                                         <td><%-element.bannerHeading %></td>
                                         <td><%-element.Description %></td>
                                         <td><%-element.couponCode %></td>
-                                        <td><%-element.Image %></td>
-                                        <td>delete</td>
+                                        <td>
+                                            <div>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="deleteBanner('<%-element._id %>')">Delete</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <% }) %>
                             </tbody>
@@ -131,6 +140,55 @@
         $(document).ready(function () {
             $("#myTable").DataTable();
         });
+    </script>
+    <script>
+        function deleteBanner(id) {
+            console.log(id);
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                        .then(() => {
+                            window.location.href = '/admin/banner'
+                        })
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary file is safe :)',
+                        'error'
+                    )
+                }
+            })
+            axios
+                .post('/admin/deleteBanner', { id })
+                .then(({ data }) => {
+                    if (data == true) {
+
+                    }
+                })
+        }
     </script>
 </body>
 

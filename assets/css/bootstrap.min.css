@@ -6501,7 +6501,7 @@ fieldset:disabled .btn {
 }
 
 .carousel-inner::after {
-    display: block;
+    display: flex;
     clear: both;
     content: "";
 }

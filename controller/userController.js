@@ -8,9 +8,10 @@ import instance from "../helper/razorpay.js";
 import { response } from "express";
 import Razorpay from "razorpay";
 
-export function getHome(req, res) {
+export async function getHome(req, res) {
   try {
-    res.render("user/index");
+    const banner = await helper.bannerDatas();
+    res.render("user/index", { banner });
   } catch (error) {
     console.log(error);
   }
@@ -375,7 +376,7 @@ export async function validatePassword(req, res) {
       userPassword[0].password
     );
     let wallet = userPassword[0].wallet;
-    let walletAmount = wallet
+    let walletAmount = wallet;
     let productAmount = productPrice;
 
     if (isPasswordValid) {

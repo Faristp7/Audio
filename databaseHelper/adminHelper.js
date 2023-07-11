@@ -236,16 +236,16 @@ export default {
     const { bannerHeading, Description, couponCode } = datas;
     const bannerSchema = new bannerModel({
       bannerHeading,
-      Image : urls[0],
+      Image: urls[0],
       Description,
       couponCode,
     });
     return await bannerSchema.save();
   },
-  bannerDatas:async () => {
+  bannerDatas: async () => {
     return await bannerModel.find()
   },
   bannerDelete: async (id) => {
-    return await bannerModel.deleteOne({_id : id})
-  }
+    return await bannerModel.deleteOne({ _id: id });
+  },
 };

@@ -243,9 +243,36 @@ export default {
     return await bannerSchema.save();
   },
   bannerDatas: async () => {
-    return await bannerModel.find()
+    return await bannerModel.find();
   },
   bannerDelete: async (id) => {
     return await bannerModel.deleteOne({ _id: id });
+  },
+  featuredProducts: async () => {
+    const products = await orderModel.aggregate([
+      {
+        $group: {
+          _id: "$product",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 },
+      },
+      {
+        $limit: 4,
+      },
+      {
+        $project: {
+          _id: 0,
+          product: "$_id",
+        },
+      },
+    ]);
+
+    if (products) {
+      const productIds = products.map((obj) => obj.product.toString());
+      return await productModel.find({ _id: { $in: productIds } });
+    }
   },
 };

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/templatemo.css">
+    <link rel="stylesheet" href="/css/card.css">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet"
@@ -173,7 +174,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="/img/category/istockphoto-removebg-preview.png"
+                <a href="/shop?category=TWS"><img src="/img/category/istockphoto-removebg-preview.png"
                         class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3">Earpods</h5>
                 <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
@@ -182,7 +183,7 @@
                 <a href="#"><img src="/img/Audio-logos_transparent.png" class="img-fluid "></a>
             </div>
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="/img/category/pngtree-headphone-removebg-preview.png"
+                <a href="/shop?category=Headphone"><img src="/img/category/pngtree-headphone-removebg-preview.png"
                         class="rounded-circle img-fluid border"></a>
                 <h2 class="h5 text-center mt-3 mb-3">Headphone</h2>
                 <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
@@ -198,27 +199,33 @@
                 <div class="col-lg-6 m-auto">
                     <h1 class="h1">Featured Product</h1>
                     <p>
-                        Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident.
+                        Explore customer-favorites: Reliable, quality, and trend-setting must-haves for you.
                     </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/feature_prod_01.jpg" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Gym Weight</a>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia
-                                deserunt.
-                            </p>
+            <div class="row" id="featured-products">
+                <% featuredProduct.forEach(element => { %>
+                    <% if (element.quantity !== 0) { %>
+                        <div class="col-12 col-md-3 mb-4">
+                            <div class="card h-100">
+                                <a href="/shopSingle/<%-element._id %>">
+                                    <div class="card-img-container rounded-0 img-fluid">
+                                        <img src="<%-element.coverImage %> %>" class="card-img-top" alt="...">
+                                    </div>
+                                </a>
+                                <div class="card-body pb-0">   
+                                    <div class="card-container">
+                                        <a href="/shopSingle/<%-element._id %>" target="_blank" class="h3 fw-bolder text-decoration-none text-dark text-center"><%-element.productName %></a>
+                                        
+                                    </div>  
+                                </div>
+                                <h5 class="card-text fw-bold text-center my-4">
+                                    ₹ <%-element.productPrice %>
+                                </h5>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    <% } %>
+                <% }) %>
             </div>
         </div>
     </section>

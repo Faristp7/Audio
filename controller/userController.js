@@ -3,7 +3,6 @@ import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import helper from "../databaseHelper/adminHelper.js";
 import userHelper from "../databaseHelper/userHelper.js";
-import productModel from "../models/productModel.js";
 import instance from "../helper/razorpay.js";
 import { response } from "express";
 import Razorpay from "razorpay";
@@ -11,7 +10,8 @@ import Razorpay from "razorpay";
 export async function getHome(req, res) {
   try {
     const banner = await helper.bannerDatas();
-    res.render("user/index", { banner });
+    const featuredProduct = await helper.featuredProducts();
+    res.render("user/index", { banner, featuredProduct });
   } catch (error) {
     console.log(error);
   }

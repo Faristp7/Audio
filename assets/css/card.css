@@ -1,0 +1,15 @@
+.card-img-container {
+    height: 300px; /* Adjust the height as desired */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+  

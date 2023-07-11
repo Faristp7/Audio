@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Orders</title>
+    <title>Banner</title>
     <link rel="stylesheet" href="/css/admin/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/css/admin/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -81,9 +81,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row-reverse mb-3">
-                        <a href="/admin/addBanner"><button type="button" class="btn btn-dark">
-                                Add Banner
-                            </button></a>
+                        <% if (banner.length> 3) { %>
+                            <a href="/admin/addBanner">
+                                <button type="button" class="btn btn-dark">
+                                    Add Banner
+                                </button>
+                            </a>
+                            <% } %>
                     </div>
                     <div class="table-responsive">
                         <table id="myTable" class="table table-hover display">
@@ -107,7 +111,14 @@
                                             </div>
                                         </td>
                                         <td><%-element.bannerHeading %></td>
-                                        <td><%-element.Description %></td>
+                                        <td>
+                                            <div>
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal-<%=element._id %>">
+                                                    See More
+                                                </button>
+                                            </div>
+                                        </td>
                                         <td><%-element.couponCode %></td>
                                         <td>
                                             <div>
@@ -120,6 +131,29 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- Button trigger modal -->
+                    <!-- Modal -->
+                    <% banner.forEach(element => { %>
+                        <div class="modal fade" id="exampleModal-<%=element._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Description</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <%-element.Description %>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
                 </div>
             </div>
         </div>
@@ -189,6 +223,7 @@
                     }
                 })
         }
+
     </script>
 </body>
 

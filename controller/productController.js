@@ -44,6 +44,7 @@ async function findProductFromMongodb(req) {
 
 export async function addToCartPost(req, res) {
   try {
+    
     const status = await userHelper.addToCart(req.body, req.session.user);
     status ? res.send("Added to Cart") : res.send("failed");
   } catch (error) {

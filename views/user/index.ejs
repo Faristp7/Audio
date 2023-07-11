@@ -21,7 +21,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        
+
     </style>
 </head>
 
@@ -96,7 +96,7 @@
                                     <h5 class="fw-bolder">Use Coupon <span class="custom-badge">
                                             <%=banner[0].couponCode %>
                                         </span></h5>
-                                <% } %>
+                                    <% } %>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                     <h5 class="fw-bolder">Use Coupon <span class="custom-badge">
                                             <%=banner[1].couponCode %>
                                         </span></h5>
-                                <% } %>
+                                    <% } %>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                                     <h5 class="fw-bolder">Use Coupon <span class="custom-badge">
                                             <%=banner[2].couponCode %>
                                         </span></h5>
-                                <% } %>
+                                    <% } %>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                 </p>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="category">
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a href="/shop?category=TWS"><img src="/img/category/istockphoto-removebg-preview.png"
                         class="rounded-circle img-fluid border"></a>
@@ -204,8 +204,8 @@
                 </div>
             </div>
             <div class="row" id="featured-products">
-                <% featuredProduct.forEach(element => { %>
-                    <% if (element.quantity !== 0) { %>
+                <% featuredProduct.forEach(element=> { %>
+                    <% if (element.quantity !==0) { %>
                         <div class="col-12 col-md-3 mb-4">
                             <div class="card h-100">
                                 <a href="/shopSingle/<%-element._id %>">
@@ -213,19 +213,21 @@
                                         <img src="<%-element.coverImage %> %>" class="card-img-top" alt="...">
                                     </div>
                                 </a>
-                                <div class="card-body pb-0">   
+                                <div class="card-body pb-0">
                                     <div class="card-container">
-                                        <a href="/shopSingle/<%-element._id %>" target="_blank" class="h3 fw-bolder text-decoration-none text-dark text-center"><%-element.productName %></a>
-                                        
-                                    </div>  
+                                        <a href="/shopSingle/<%-element._id %>" target="_blank"
+                                            class="h3 fw-bolder text-decoration-none text-dark text-center"><%-element.productName
+                                                %></a>
+
+                                    </div>
                                 </div>
                                 <h5 class="card-text fw-bold text-center my-4">
                                     ₹ <%-element.productPrice %>
                                 </h5>
                             </div>
                         </div>
-                    <% } %>
-                <% }) %>
+                        <% } %>
+                            <% }) %>
             </div>
         </div>
     </section>
@@ -240,28 +242,24 @@
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
+                            South Calicut mg road
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                            <a class="text-decoration-none" href="tel:9562146113">9562146113</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                            <a class="text-decoration-none"
+                                href="mailto:faristpwork@gmail.com">faristpwork@gmail.com</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#category">TWS</a></li>
+                        <li><a class="text-decoration-none" href="#category">Headphone</a></li>
                     </ul>
                 </div>
 
@@ -285,30 +283,21 @@
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.facebook.com/profile.php?id=100072785839058"><i
                                     class="fab fa-facebook-f fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                                href="https://instagram.com/faris_tp_?igshid=ZDc4ODBmNjlmNQ=="><i
+                                    class="fab fa-instagram fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                                href="https://www.linkedin.com/in/faris-tp-3497341b2/"><i
+                                    class="fab fa-linkedin fa-lg fa-fw"></i></a>
                         </li>
                     </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Email address</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
-                            placeholder="Email address">
-                        <div class="input-group-text btn-success text-light">Subscribe</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -318,9 +307,9 @@
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name
-                            | Designed by <a rel="sponsored" href="https://templatemo.com"
-                                target="_blank">TemplateMo</a>
+                            Copyright &copy; 2023 Audio
+                            | Designed by <a rel="sponsored" href="https://github.com/Faristp7/Audio"
+                                target="_blank">Faris</a>
                         </p>
                     </div>
                 </div>

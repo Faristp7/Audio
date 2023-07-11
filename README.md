@@ -1,9 +1,6 @@
 # Audio
 ## Audio - TWS and Headphone eCommerce Website
 
-![Project Logo](assets/img/favIcon.png)
-
-
 ## Installation
 
 1. Clone the repository:
@@ -51,3 +48,4 @@ Hi there! I'm [Faris], the creator of this Audio TWS and Headphone eCommerce web
 
 I would love to hear your feedback or answer any questions you may have about the project.
 
+![Project Logo](assets/img/favIcon.png)

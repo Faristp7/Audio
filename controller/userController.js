@@ -30,15 +30,20 @@ export async function getshop(req, res) {
     const category = req.query.category;
     const price = req.query.price;
     let product;
+    const value = await helper.notification(req.session.user);
+    let notification
+    if(req.session.user){
+      notification = value[0].cart.length
+    }
     if (req.query.category) {
       product = await helper.getProducts(category);
-      res.render("user/shop", { product });
+      res.render("user/shop", { product, notification });
     } else if (req.query.price) {
       product = await helper.sortProduct(price);
-      res.render("user/shop", { product });
+      res.render("user/shop", { product, notification });
     } else {
       product = await helper.findProduct();
-      res.render("user/shop", { product });
+      res.render("user/shop", { product, notification });
     }
   } catch (error) {
     console.log(error);

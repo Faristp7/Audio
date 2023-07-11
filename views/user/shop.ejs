@@ -75,7 +75,7 @@
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
-                        <ul id="searchSuggestions" class="list-group mt-2">f</ul>
+                        <ul id="searchSuggestions" class="list-group mt-2"></ul>
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
                         data-bs-target="#templatemo_search">
@@ -83,18 +83,12 @@
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/addToCart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa-solid fa-heart"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                        <% if (notification !==0) { %>
+                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%-notification %></span>
+                        <% } %>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/login">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                     </a>
                 </div>
             </div>
@@ -183,8 +177,7 @@
                                             <div
                                                 class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                                 <ul class="list-unstyled">
-                                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i
-                                                                class="far fa-heart"></i></a></li>
+                                                    
                                                     <li><a class="btn btn-success text-white mt-2"
                                                             href="/shopSingle/<%-element._id %>" target="_blank"><i
                                                                 class="far fa-eye"></i></a></li>

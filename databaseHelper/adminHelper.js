@@ -260,7 +260,7 @@ export default {
         $sort: { count: -1 },
       },
       {
-        $limit: 4,
+        $limit: 5,
       },
       {
         $project: {
@@ -274,5 +274,8 @@ export default {
       const productIds = products.map((obj) => obj.product.toString());
       return await productModel.find({ _id: { $in: productIds } });
     }
+  },
+  notification: async (email) => {
+    return (await userModel.find({ email }, { cart : 1}))
   },
 };

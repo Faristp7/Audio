@@ -62,6 +62,16 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+.custom-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: #ff8800;
+    border-radius: 0.5rem;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;
 }

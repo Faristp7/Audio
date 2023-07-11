@@ -7,7 +7,7 @@
 ## Installation
 
 1. Clone the repository:
-git clone https://github.com/your-username/audio-ecommerce.git
+git clone https://github.com/Faristp7/Audio.git
 
 2. Install the dependencies:
 cd audio-ecommerce

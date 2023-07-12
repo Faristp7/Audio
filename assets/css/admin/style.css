@@ -1,3 +1,10 @@
+select {
+    font-size: 18px;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid #302f2f;
+  }
+
 .blockButton{
     color: red !important;
     outline: auto !important;

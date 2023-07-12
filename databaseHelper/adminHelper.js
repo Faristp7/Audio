@@ -260,7 +260,7 @@ export default {
         $sort: { count: -1 },
       },
       {
-        $limit: 5,
+        $limit: 4,
       },
       {
         $project: {

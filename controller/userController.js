@@ -52,6 +52,7 @@ export async function getshop(req, res) {
 
 export async function shopSingle(req, res) {
   try {
+    
     const singleProduct = await userHelper.getProduct(req.params.id);
     const relatedProduct = await userHelper.relatedProduct(req.params.id);
     res.render("user/shopSingle", { singleProduct, relatedProduct });

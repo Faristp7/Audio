@@ -44,9 +44,14 @@ async function findProductFromMongodb(req) {
 
 export async function addToCartPost(req, res) {
   try {
-    
-    const status = await userHelper.addToCart(req.body, req.session.user);
-    status ? res.send("Added to Cart") : res.send("failed");
+    const check = await userHelper.checkAlreadyExist(req.body ,req.session.user)
+    if(check){
+      const status = await userHelper.addToCart(req.body, req.session.user);
+      status ? res.send("Added to Cart") : res.send("failed");
+    }
+    else{
+      res.send('already')
+    }
   } catch (error) {
     console.log(error);
   }

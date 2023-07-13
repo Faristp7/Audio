@@ -78,6 +78,9 @@ export default {
       { $addToSet: { cart: quantity } }
     );
   },
+  checkAlreadyExist: async (data, email) => {
+    await userModel.find({email} )
+  },
   findUser: async (email) => {
     return await userModel.find({ email }, { cart: 1 });
   },

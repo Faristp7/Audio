@@ -24,6 +24,7 @@ import {
   postadminLogin,
   product,
   removeCoupon,
+  salesReport,
   unListProduct,
   user,
 } from "../controller/adminController.js";
@@ -57,5 +58,6 @@ router.post("/removeCoupon", removeCoupon);
 router.post("/approveRequest", approveRequest);
 router.post("/postAddBanner", postAddbanner);
 router.post("/deleteBanner", deleteBanner);
+router.post("/salesReport", salesReport);
 
 export default router;

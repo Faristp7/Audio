@@ -298,8 +298,8 @@ export async function approveRequest(req, res) {
 
 export async function banner(req, res) {
   try {
-    const banner = await helper.bannerDatas()
-    res.render("admin/banner" ,{banner});
+    const banner = await helper.bannerDatas();
+    res.render("admin/banner", { banner });
   } catch (error) {
     console.log(error);
   }
@@ -315,7 +315,7 @@ export async function addBanner(req, res) {
 
 export async function postAddbanner(req, res) {
   try {
-    const image = [req.body.Image]
+    const image = [req.body.Image];
     cloudinaryUploadImage(image)
       .then(async (urls) => {
         const status = await helper.addBanner(req.body, urls);
@@ -329,11 +329,53 @@ export async function postAddbanner(req, res) {
   }
 }
 
-export async function deleteBanner(req,res) {
+export async function deleteBanner(req, res) {
   try {
-    const {id} = req.body
-    const status = await helper.bannerDelete(id)
-    status ? res.send(true) : res.send(false)
+    const { id } = req.body;
+    const status = await helper.bannerDelete(id);
+    status ? res.send(true) : res.send(false);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function salesReport(req, res) {
+  try {
+    const { selectedValue } = req.body;
+    const currentDate = new Date();
+    let startDate, endDate;
+
+    if (selectedValue === "week") {
+      const currentDay = currentDate.getDay();
+      startDate = new Date(
+        currentDate.setDate(currentDate.getDate() - currentDay)
+      );
+      endDate = new Date(currentDate.setDate(currentDate.getDate() + 6));
+    } else if (selectedValue === "month") {
+      const month = currentDate.getMonth() + 1;
+      const year = currentDate.getFullYear();
+      startDate = new Date(year, month - 1, 1);
+      endDate = new Date(year, month, 0);
+    } else if (selectedValue === "year") {
+      const year = currentDate.getFullYear();
+      startDate = new Date(year, 0, 1);
+      endDate = new Date(year, 11, 31);
+    }
+
+    const filtredOrder = await helper.filteredOrders(startDate ,endDate)
+    
+    const salesReport = filtredOrder.map(order => ({
+      productName : order.product.productName,
+      price : order.total
+    }))
+
+    const totalSales = salesReport.reduce((sum, order) => sum + order.price, 0)
+
+    salesReport ? res.send("gotit") : null
+
+    const {downloadFormat} = req.body
+    console.log(downloadFormat);
+
   } catch (error) {
     console.log(error);
   }

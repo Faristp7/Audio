@@ -278,4 +278,10 @@ export default {
   notification: async (email) => {
     return (await userModel.find({ email }, { cart : 1}))
   },
+  filteredOrders:async (startDate ,endDate) => {
+    return await orderModel.find({
+      createdAt : {$gte: startDate, $lte: endDate},
+      orderStatus: 'delivered'
+    }).populate('product')
+  }
 };

@@ -274,6 +274,8 @@
     }
 
     function downloadFormat() {
+      document.getElementById('salesReportDiv').style.display = 'block'
+      document.getElementById('downloadTypeDiv').style.display = 'none'
       const downloadFormat = 'execl'
       axios
         .post('/admin/salesReport', { downloadFormat })
@@ -289,7 +291,7 @@
         })
     }
 
-   
+
   </script>
 </body>
 

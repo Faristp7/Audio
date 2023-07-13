@@ -387,6 +387,10 @@ export async function salesReport(req, res) {
     const salesReports = filtredOrder.map((order) => ({
       productName: order.product.productName,
       price: order.total,
+      qunatity: order.quantity,
+      paymentType : order.paymentType,
+      category : order.product.category,
+      couponApplied : order.couponAmount
     }));
     const a = ["apple","ball"]
     sheet.addRows(a);

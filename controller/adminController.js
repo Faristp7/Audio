@@ -4,6 +4,7 @@ import helper from "../databaseHelper/adminHelper.js";
 import { cloudinaryUploadImage } from "../helper/cloudinary.js";
 import userHelper from "../databaseHelper/userHelper.js";
 import Razorpay from "razorpay";
+import ExeclJS from "exceljs";
 import { Chart } from "chart.js";
 
 let err;
@@ -339,6 +340,8 @@ export async function deleteBanner(req, res) {
   }
 }
 
+var pdfVal = 0;
+var salesExecl;
 export async function salesReport(req, res) {
   try {
     const { selectedValue } = req.body;
@@ -362,20 +365,46 @@ export async function salesReport(req, res) {
       endDate = new Date(year, 11, 31);
     }
 
-    const filtredOrder = await helper.filteredOrders(startDate ,endDate)
+    const filtredOrder = await helper.filteredOrders(startDate, endDate);
+
+    const salesReport = filtredOrder.map((order) => ({
+      productName: order.product.productName,
+      price: order.total,
+    }));
+
+    const totalSales = salesReport.reduce((sum, order) => sum + order.price, 0);
+    if (salesReport.length !== 0) {
+      res.send("gotit");
+    }
+
     
-    const salesReport = filtredOrder.map(order => ({
-      productName : order.product.productName,
-      price : order.total
-    }))
 
-    const totalSales = salesReport.reduce((sum, order) => sum + order.price, 0)
+    const { downloadFormat } = req.body;
 
-    salesReport ? res.send("gotit") : null
+    const workbook = new ExeclJS.Workbook();
+    const sheet = workbook.addWorksheet("Sales Report");
 
-    const {downloadFormat} = req.body
-    console.log(downloadFormat);
+    const salesReports = filtredOrder.map((order) => ({
+      productName: order.product.productName,
+      price: order.total,
+    }));
+    const a = ["apple","ball"]
+    sheet.addRows(a);
+    await workbook.xlsx.writeFile("sales-report.xlsx");
 
+    if (totalSales !== 0) {
+      pdfVal = totalSales;
+      salesExecl = salesReports
+    }
+
+    if (downloadFormat === "execl") {
+      res.json({
+        salesReports: salesExecl,
+        downloadURL: `/api/sales-report/download?downloadFormat=${downloadFormat}`,
+      });
+    } else {
+      console.log("nop");
+    }
   } catch (error) {
     console.log(error);
   }

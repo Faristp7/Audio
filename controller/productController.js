@@ -44,11 +44,13 @@ async function findProductFromMongodb(req) {
 
 export async function addToCartPost(req, res) {
   try {
-    const check = await userHelper.checkAlreadyExist(req.body ,req.session.user)
-    if(check){
-      res.send('already')
-    }
-    else{
+    const check = await userHelper.checkAlreadyExist(
+      req.body,
+      req.session.user
+    );
+    if (check) {
+      res.send("already");
+    } else {
       const status = await userHelper.addToCart(req.body, req.session.user);
       status ? res.send("Added to Cart") : res.send("failed");
     }
@@ -189,21 +191,34 @@ export async function checkoutPost(req, res) {
       } catch (error) {
         console.log(error);
       }
-      const cartStatus = status
-        ? await userHelper.destroyCart(req.session.user)
-        : undefined;
-      const completeStatus = cartStatus
-        ? await userHelper.quantityMinus(quantity)
-        : undefined;
-
-      if (checkWalletUse) {
-        const completeStatus = await userHelper.walletMinus(
-          req.session.user,
-          walletAmount
-        );
-        return completeStatus;
+      if (paymentType == "COD") {
+        manger()
       } else {
-        return completeStatus;
+        if (paymentId) {
+          manger()
+        }
+        else{
+
+        }
+      }
+      
+      async function manger() {
+        const cartStatus = status
+          ? await userHelper.destroyCart(req.session.user)
+          : undefined;
+        const completeStatus = cartStatus
+          ? await userHelper.quantityMinus(quantity)
+          : undefined;
+
+        if (checkWalletUse) {
+          const completeStatus = await userHelper.walletMinus(
+            req.session.user,
+            walletAmount
+          );
+          return completeStatus;
+        } else {
+          return completeStatus;
+        }
       }
     }
   } catch (error) {

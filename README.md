@@ -2,7 +2,7 @@
 ## Audio - TWS and Headphone eCommerce Website
 
 ## web link
- - faris.website
+  faris.website
 
 ## Installation
 

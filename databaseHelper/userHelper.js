@@ -79,7 +79,16 @@ export default {
     );
   },
   checkAlreadyExist: async (data, email) => {
-    await userModel.find({email} )
+    const user = await userModel.findOne({email})
+    if(user){
+      const product = user.cart.find(item => item.productId === data.productId);
+      if(product){
+        return true
+      }
+      else{
+        return false
+      }
+    }
   },
   findUser: async (email) => {
     return await userModel.find({ email }, { cart: 1 });

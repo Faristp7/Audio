@@ -46,11 +46,11 @@ export async function addToCartPost(req, res) {
   try {
     const check = await userHelper.checkAlreadyExist(req.body ,req.session.user)
     if(check){
-      const status = await userHelper.addToCart(req.body, req.session.user);
-      status ? res.send("Added to Cart") : res.send("failed");
+      res.send('already')
     }
     else{
-      res.send('already')
+      const status = await userHelper.addToCart(req.body, req.session.user);
+      status ? res.send("Added to Cart") : res.send("failed");
     }
   } catch (error) {
     console.log(error);

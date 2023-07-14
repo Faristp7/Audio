@@ -197,11 +197,8 @@ export async function checkoutPost(req, res) {
         if (paymentId) {
           manger()
         }
-        else{
-
-        }
       }
-      
+
       async function manger() {
         const cartStatus = status
           ? await userHelper.destroyCart(req.session.user)

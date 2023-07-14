@@ -32,142 +32,160 @@
                                         </div>
                                         <hr class="my-4" />
                                         <% orders.forEach((element,index)=> { %>
-                                            <div id="product"
-                                                class="row mb-4 d-flex justify-content-between align-items-center order">
-                                                <div class="col-md-2 col-lg-2 col-xl-1">
-                                                    <img class="cartProductImg" src="<%-element.product.coverImage %>"
-                                                        alt="TWS Headphone" />
-                                                </div>
-                                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                                    <h6 class="text-muted"></h6>
-                                                    <h6 class="text-black mb-0">
-                                                        <p class="text-secondary mb-2"><%-element.product.category %>
-                                                        </p>
-                                                        <%-element.product.productName %>
-                                                    </h6>
-                                                </div>
-                                                <div class="col-md-3 col-lg-2 col-xl-1 d-flex align-items-center">
-                                                    <h6 class="mb-0 productPrice" id="productPrice">
-                                                        ₹ <%-element.product.productPrice %>
-                                                    </h6>
-                                                </div>
-                                                <div class="col-md-3 col-lg-2 col-xl-1 d-flex align-items-center">
-                                                    <h6 class="text-black mb-0 d-flex align-items-center">
-                                                        <% if (element.orderStatus=="pending" ) { %>
-                                                            <i class="fa-solid fa-circle fa-2xs"
-                                                                style="color: #04b0ff;"></i>
-                                                            <p class="m-2 mt-0">pending</p>
-                                                            <% } else if (element.orderStatus=='delivered' ) { %>
+                                                <div id="product"
+                                                    class="row mb-4 d-flex justify-content-between align-items-center order">
+                                                    <div class="col-md-2 col-lg-2 col-xl-1">
+                                                        <img class="cartProductImg"
+                                                            src="<%-element.product.coverImage %>"
+                                                            alt="TWS Headphone" />
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                                        <h6 class="text-muted"></h6>
+                                                        <h6 class="text-black mb-0">
+                                                            <p class="text-secondary mb-2"><%-element.product.category
+                                                                    %>
+                                                            </p>
+                                                            <%-element.product.productName %>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 col-xl-1 d-flex align-items-center">
+                                                        <h6 class="mb-0 productPrice" id="productPrice">
+                                                            ₹ <%-element.product.productPrice %>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 col-xl-1 d-flex align-items-center">
+                                                        <h6 class="text-black mb-0 d-flex align-items-center">
+                                                            <% if (element.orderStatus=="pending" ) { %>
                                                                 <i class="fa-solid fa-circle fa-2xs"
-                                                                    style="color: #26c51b;"></i>
-                                                                <p class="m-2 mt-0">delivered</p>
-                                                                <% } else if (element.orderStatus=='cancelled' ){ %>
+                                                                    style="color: #04b0ff;"></i>
+                                                                <p class="m-2 mt-0">pending</p>
+                                                                <% } else if (element.orderStatus=='delivered' ) { %>
                                                                     <i class="fa-solid fa-circle fa-2xs"
-                                                                        style="color: #ff0000;"></i>
-                                                                    <p class="m-2 mt-0">cancelled</p>
-                                                                    <% } else { %>
-                                                                        <p class="m-2 mt-0"><%-element.orderStatus %>
-                                                                        </p>
-                                                                        <%} %>
+                                                                        style="color: #26c51b;"></i>
+                                                                    <p class="m-2 mt-0">delivered</p>
+                                                                    <% } else if (element.orderStatus=='cancelled' ){ %>
+                                                                        <i class="fa-solid fa-circle fa-2xs"
+                                                                            style="color: #ff0000;"></i>
+                                                                        <p class="m-2 mt-0">cancelled</p>
+                                                                        <% } else { %>
+                                                                            <p class="m-2 mt-0"><%-element.orderStatus
+                                                                                    %>
+                                                                            </p>
+                                                                            <%} %>
 
-                                                    </h6>
-                                                </div>
-
-                                                <div class="col-md-1 col-lg-2 col-xl-2">
-                                                    <h6 class="text-muted"></h6>
-                                                    <h6 class="text-black mb-0 d-flex align-items-center">
-                                                        <button type="button" class="btn btn-primary ms-2"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal-<%=element._id %>">
-                                                            more
-                                                        </button>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                            <% }) %>
-                                                <hr class="my-3" />
-                                                <div class="d-flex justify-content-between me-5">
-                                                    <div class="d-flex">
-                                                        <a href="/shop/" class="text-body"><i
-                                                                class="fas fa-long-arrow-alt-left me-2"></i>Back
-                                                            to shop</a>
+                                                        </h6>
                                                     </div>
-                                                    <div class="d-flex me-5">
-                                                        <% for( let i=1; i <=totalPages; i++ ) { %>
-                                                            <a href="/orders?page=<%=i %>"
-                                                                class="btn btn-light ms-1 <%=i === currentPage ? 'active' : ''%>">
-                                                                <%=i %>
-                                                            </a>
-                                                            <% } %>
+
+                                                    <div class="col-md-1 col-lg-2 col-xl-2">
+                                                        <h6 class="text-muted"></h6>
+                                                        <h6 class="text-black mb-0 d-flex align-items-center">
+                                                            <button type="button" class="btn btn-primary ms-2"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal-<%=element._id %>">
+                                                                more
+                                                            </button>
+                                                        </h6>
                                                     </div>
                                                 </div>
-                                                <!-- Modal -->
-                                                <% orders.forEach(i=> { %>
-                                                    <div class="modal fade" id="exampleModal-<%=i._id %>" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        About order
-                                                                    </h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <h6 class="fw-bold">Ordered Address</h6>
-                                                                    <%-i.address.address[0].firstName %>,
-                                                                        <%-i.address.address[0].phone %>,
-                                                                            <%-i.address.address[0].pinCode %>,
-                                                                                <%-i.address.address[0].flatHouse %>,
-                                                                                    <%-i.address.address[0].areaStreet %>,
-                                                                                        <%-i.address.address[0].landmark%>,
-                                                                                            <%-i.address.address[0].townCity%>,
-                                                                                                <%-i.address.address[0].state%>,
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <h6 class="fw-bold">Ordered Date</h6>
-                                                                    <p><%-i.createdAt.toLocaleString() %></p>
-                                                                </div>
-                                                                <div class="modal-body d-flex">
-                                                                    <h6 class="fw-bolder">Quantity : </h6>
-                                                                    <h6 class="fw-bolder ps-2"><%-i.quantity %></h6>
-                                                                    <h6 class="ms-5">Payment Type : </h6>
-                                                                    <h6 class="ms-3"><%-i.paymentType %></h6>
-                                                                </div>
-                                                                <!-- modalbody -->
-                                                                <div class="modal-body">
-                                                                    <% if (!(i.orderStatus == 'cancelled' || i.orderStatus == 'delivered' || i.orderStatus == 'returned')) { %>
-                                                                        <button class="actionCancel p-1"
-                                                                            onclick="cancelOrder('<%-i._id %>','<%-i.product._id %>','<%-i.quantity %>','<%-i.paymentType %>')">
-                                                                            Cancel Order
-                                                                        </button>
-                                                                    <% } else { %>
-                                                                        <% if (i.showButton && !i.returnRequest) { %>
-                                                                            <button type="button" class="btn btn-dark btn-sm"
-                                                                                id="requestReturn"
-                                                                                onclick="returnRequest('<%-i._id %>','<%-i.product._id %>','<%-i.paymentType %>')">
-                                                                                Return Product
-                                                                            </button>
-                                                                        <% } %>
-                                                                        <% if (i.returnRequest && i.orderStatus !== 'returned') { %>
-                                                                            <p class="mt-3 fw-bold" id="returnMsg">Your return request is under process</p>
-                                                                        <% } %>
+                                                    <% }) %>
+                                                        <hr class="my-3" />
+                                                        <div class="d-flex justify-content-between me-5">
+                                                            <div class="d-flex">
+                                                                <a href="/shop/" class="text-body"><i
+                                                                        class="fas fa-long-arrow-alt-left me-2"></i>Back
+                                                                    to shop</a>
+                                                            </div>
+                                                            <div class="d-flex me-5">
+                                                                <% for( let i=1; i <=totalPages; i++ ) { %>
+                                                                    <a href="/orders?page=<%=i %>"
+                                                                        class="btn btn-light ms-1 <%=i === currentPage ? 'active' : ''%>">
+                                                                        <%=i %>
+                                                                    </a>
                                                                     <% } %>
-                                                                </div>
-                                                                <!-- modalbody -->
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">
-                                                                        Close
-                                                                    </button>
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <% }) %>
                                                         <!-- Modal -->
+                                                        <% orders.forEach(i=> { %>
+                                                            <div class="modal fade" id="exampleModal-<%=i._id %>"
+                                                                tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="exampleModalLabel">
+                                                                                About order
+                                                                            </h1>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <h6 class="fw-bold">Ordered Address</h6>
+                                                                            <%-i.address.address[0].firstName %>,
+                                                                                <%-i.address.address[0].phone %>,
+                                                                                    <%-i.address.address[0].pinCode %>,
+                                                                                        <%-i.address.address[0].flatHouse
+                                                                                            %>,
+                                                                                            <%-i.address.address[0].areaStreet
+                                                                                                %>,
+                                                                                                <%-i.address.address[0].landmark%>,
+                                                                                                    <%-i.address.address[0].townCity%>,
+                                                                                                        <%-i.address.address[0].state%>,
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <h6 class="fw-bold">Ordered Date</h6>
+                                                                            <p><%-i.createdAt.toLocaleString() %></p>
+                                                                        </div>
+                                                                        <div class="modal-body d-flex">
+                                                                            <h6 class="fw-bolder">Quantity : </h6>
+                                                                            <h6 class="fw-bolder ps-2"><%-i.quantity %>
+                                                                            </h6>
+                                                                            <h6 class="ms-5">Payment Type : </h6>
+                                                                            <h6 class="ms-3"><%-i.paymentType %></h6>
+                                                                        </div>
+                                                                        <!-- modalbody -->
+                                                                        <div class="modal-body">
+                                                                            <% if (!(i.orderStatus=='cancelled' ||
+                                                                                i.orderStatus=='delivered' ||
+                                                                                i.orderStatus=='returned' )) { %>
+                                                                                <button class="actionCancel p-1"
+                                                                                    onclick="cancelOrder('<%-i._id %>','<%-i.product._id %>','<%-i.quantity %>','<%-i.paymentType %>')">
+                                                                                    Cancel Order
+                                                                                </button>
+                                                                                <% } else { %>
+                                                                                    <% if (i.showButton &&
+                                                                                        !i.returnRequest) { %>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-dark btn-sm"
+                                                                                            id="requestReturn"
+                                                                                            onclick="returnRequest('<%-i._id %>','<%-i.product._id %>','<%-i.paymentType %>')">
+                                                                                            Return Product
+                                                                                        </button>
+                                                                                        <% } %>
+                                                                                            <% if (i.returnRequest &&
+                                                                                                i.orderStatus
+                                                                                                !=='returned' ) { %>
+                                                                                                <p class="mt-3 fw-bold"
+                                                                                                    id="returnMsg">Your
+                                                                                                    return request is
+                                                                                                    under process</p>
+                                                                                                <% } %>
+                                                                                                    <% } %>
+                                                                        </div>
+                                                                        <!-- modalbody -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">
+                                                                                Close
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% }) %>
+                                                                <!-- Modal -->
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +231,7 @@
             axios
                 .post('requestReturn', { id, productId, paymentType })
                 .then(({ data }) => {
-                    if(data == true){
+                    if (data == true) {
                         document.getElementById('requestReturn').style.display = 'none'
                         document.getElementById('returnMsg').style.display = 'block'
                     }

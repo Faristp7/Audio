@@ -183,6 +183,9 @@ export default {
       return false;
     }
   },
+  checkOrdersNull : async (email) => {
+    await orderModel.deleteMany({userId : email, paymentType : 'Online' , paymentId: null})
+  },
   getOrders: async (email, page) => {
     const limit = 5;
     const skip = (page - 1) * limit;

@@ -320,6 +320,7 @@ export async function updateEmailOtpSend(req, res) {
 
 export async function orderButton(req, res) {
   try {
+    await userHelper.checkOrdersNull(req.session.user)
     const page = parseInt(req.query.page) || 1;
     const orderData = await userHelper.getOrders(req.session.user, page);
     const { orders, totalPages } = orderData;

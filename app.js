@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import 'dotenv/config.js';
 import express from "express";
 import path from "path";
 import logger from "morgan";
@@ -48,7 +48,7 @@ app.use(express.static(__dirname + "/assets"));
 connectDb();
 
 //Routers
-dotenv.config();
+// dotenv.config();
 app.use("/", userindex);
 app.use("/admin", adminindex);
 

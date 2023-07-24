@@ -116,6 +116,7 @@ export async function applyCoupon(req, res) {
   }
 }
 
+
 export async function checkoutPost(req, res) {
   try {
     const user = await userHelper.findUser(req.session.user);
@@ -160,18 +161,18 @@ export async function checkoutPost(req, res) {
       const status = saveOrderDatabase(req, res);
       status ? res.send(true) : res.send(false);
     }
-
+    
     async function saveOrderDatabase(req, res) {
       const productIds = quantity.map((item) => item.productId);
       const products = await userHelper.getProductArray(productIds);
-      // const total = products.map((product) => product.productPrice);
+      
       const verifyPrice = totalVal;
       if (totalVal !== verifyPrice) {
         console.log("something went Wrong");
       } else {
         var status = await userHelper.checkoutSave(
           orderAddress,
-          paymentType,
+          paymentType ,
           req.session.user,
           totalVal,
           quantity,
@@ -192,10 +193,10 @@ export async function checkoutPost(req, res) {
         console.log(error);
       }
       if (paymentType == "COD") {
-        manger()
+        manger();
       } else {
         if (paymentId) {
-          manger()
+          manger();
         }
       }
 

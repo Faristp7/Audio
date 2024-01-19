@@ -48,7 +48,7 @@ app.use(express.static(__dirname + "/assets"));
 connectDb();
 
 //Routers
-// dotenv.config();
+
 app.use("/", userindex);
 app.use("/admin", adminindex);
 

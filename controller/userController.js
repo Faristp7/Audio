@@ -6,6 +6,7 @@ import userHelper from "../databaseHelper/userHelper.js";
 import instance from "../helper/razorpay.js";
 import { response } from "express";
 import Razorpay from "razorpay";
+import "dotenv/config"
 
 export async function getHome(req, res) {
   try {

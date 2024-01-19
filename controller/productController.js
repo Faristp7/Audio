@@ -1,6 +1,7 @@
 import userHelper from "../databaseHelper/userHelper.js";
 import instance from "../helper/razorpay.js";
 import Razorpay from "razorpay";
+import "dotenv/config"
 
 var totalVal = 0;
 var productCount = 0;
